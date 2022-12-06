@@ -36,7 +36,7 @@
                 <div class="card-body">
                     <form id="formValidateReg">
                     <div class="row">
-                        <div class="form-group col-lg-2">
+                        <div class="form-group col-lg-3">
                             <label for="" class="m-0">Codigo: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
@@ -45,7 +45,7 @@
                                 <input type="text" class="form-control form-control-sm" id="codigo" name="codigo">
                             </div>
                         </div>
-                        <div class="form-group col-lg-5">
+                        <div class="form-group col-lg-3">
                             <label for="" class="m-0">Usuario: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
@@ -54,13 +54,36 @@
                                 <input type="text" class="form-control form-control-sm" id="usuario" name="usuario">
                             </div>
                         </div>
-                        <div class="form-group col-lg-5">
+                        <div class="form-group col-lg-3">
                             <label for="" class="m-0">Direccion: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-location-dot"></i></span>
                                 </div>
                                 <input type="text" class="form-control form-control-sm" id="direccion" name="direccion">
+                            </div>
+                        </div>
+                        <!-- <div class="form-group col-lg-3">
+                            <label for="" class="m-0">Plantilla:</label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold"><i class="fa fa-location-dot"></i></span>
+                                </div>
+                                <input type="text" class="form-control form-control-sm" id="Plantilla" name="Plantilla">
+                                <select class="form-control form-control-sm" id="plantilla">
+                                    <option selected disabled> Seleccione una plantilla</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="form-group col-lg-3">
+                            <label class="m-0" style="visibility: hidden;">Plantilla:</label>
+                            <div class="input-group input-group-sm">
+                                <select class="custom-select" id="plantilla">
+                                    <option selected disabled> Seleccione una plantilla</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success loadItems" type="button">Cargar items</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,7 +120,7 @@
                                         <td class="text-center">-</td>
                                     </tr>
                                     <tr class="font-weight-bold">
-                                        <td colspan="2"><button class="btn btn-success btn-sm w-100"  data-toggle="modal" data-target="#staticBackdrop"><i class="fa fa-plus"></i> Agregar detalle</button></td>
+                                        <td colspan="2"><button class="btn btn-primary btn-sm w-100"  data-toggle="modal" data-target="#staticBackdrop"><i class="fa fa-plus"></i> Agregar detalle</button></td>
                                         <td colspan="3">Precio del Servicio Colateral sin IGV (1+2)</td>
                                         <td class="text-center shadow precioSerCol" style="background-color: #68c98f;">0</td>
                                         <td class="text-center">-</td>
@@ -133,11 +156,30 @@
     $(document).ready( function () {
         // tablaDeRegistros=$('.contenedorRegistros').html();
         $('.overlayPagina').css("display","none");
+        fillPlantilla();
         // initDatatable('registros');
     } );
     $('.savePresupuesto').on('click',function(){
         savePresupuesto();
     });
+    $('.loadItems').on('click',function(){
+        loadItems();
+    });
+    
+    function fillPlantilla()
+    {
+        jQuery.ajax(
+        { 
+            url: "{{url('plantilla/listar')}}",
+            method: 'get',
+            success: function(result){
+                $.each(result.data,function(indice,fila){
+                    $('#plantilla').append("<option value='"+fila.idPlantilla+"'>"+fila.nombre+' '+fila.cantidad+"</option>");
+                });
+                
+            }
+        });
+    }
     function data(tipo)
     {
         return {
@@ -172,7 +214,9 @@
         var dataDetalle = {ids:ids,cods:cods,cantidades:cantidades};
         var datos = data();
         Object.assign(datos,dataDetalle);
-        console.dir(datos);
+        console.log('--------------');
+        console.log(datos);
+        console.log('--------------');
         jQuery.ajax(
         { 
             url: "{{url('presupuesto/registrar')}}",
@@ -184,6 +228,48 @@
                 window.location.href = "{{url('presupuesto/presupuesto')}}";
             }
         });
+    }
+    function loadItems()
+    {
+        if($('#plantilla').val()===null)
+        {
+            msjSimple(false,'Seleccione una plantilla');
+            return;
+        }
+        jQuery.ajax(
+        { 
+            url: "{{url('plantilla/show')}}",
+            data: {id:$('#plantilla').val()},
+            method: 'get',
+            success: function(r){
+                console.log(r);
+                for (var i = 0; i < r.data.length; i++) {
+                    fillDetalle(r.data[i]);
+                }
+            }
+        });
+    }
+    function fillDetalle(detalle)
+    {
+        let reg = '<tr class="kevins idDetalle" data-id="'+detalle.idCp+'" data-codigo="'+detalle.codigo+'">'+
+                '<td class="text-center align-middle font-weight-bold">'+detalle.codigo+'</td>'+
+                '<td class="align-middle">'+detalle.actividad+'</td>'+
+                '<td class="text-center align-middle">'+detalle.unidad+'</td>'+
+                '<td class="text-center align-middle">'+
+                    '<div class="form-group m-0 col-9 m-auto">'+
+                        '<div class="input-group input-group-sm">'+
+                            '<div class="input-group-prepend">'+
+                                '<span class="input-group-text font-weight-bold"><i class="fa fa-hashtag"></i></span>'+
+                            '</div>'+
+                            '<input type="text" class="form-control form-control-sm text-center cantDetalle" value="0" onkeyup="calForDetalle(this);">'+
+                        '</div>'+
+                    '</div>'+
+                '</td>'+
+                '<td class="text-center align-middle regCostoUnitario">'+detalle.tarifa+'</td>'+
+                '<td class="text-center align-middle regCosto font-weight-bold">0</td>'+
+                '<td class="text-center align-middle"><button type="button" class="btn text-danger" title="Eliminar registro" onclick="delReg(this)"><i class="fa fa-trash"></i></button></td>'+
+            '</tr>';
+        $('#primeraFila').after(reg);
     }
     $("#formValidateReg").validate({
         errorClass: "text-danger font-italic font-weight-normal",

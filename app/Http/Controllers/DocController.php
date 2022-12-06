@@ -65,15 +65,20 @@ class DocController extends Controller
         // $anio = strftime("%Y", strtotime($dia));
         // if($tCliente!=null)
         // {
-            $tp->setValue('firmador',$firmador->nombre.' '.$firmador->apellido);
-            $tp->setValue('nombre',$req->docNombre);
-            $tp->setValue('dni',$req->docDni);
-            $tp->setValue('hora',$req->docHora);
+        $tp->setValue('inscrinro',$req->inscrinro);
+        $tp->setValue('firmador',$firmador->nombre.' '.$firmador->apellido);
+        $tp->setValue('nombre',$req->docNombre);
+        $tp->setValue('dni',$req->docDni);
+        $tp->setValue('hora',$req->docHora);
 
-            $tp->setValue('caldes',$req->caldes);
-            $tp->setValue('caltip',$req->caltip);
-            $tp->setValue('prenro',$req->prenro);
-            $tp->setValue('nomfircon',$req->nomfircon);
+        $tp->setValue('caldes',$req->caldes);
+        $tp->setValue('caltip',$req->caltip);
+        $tp->setValue('prenro',$req->prenro);
+        $tp->setValue('nomfircon',$req->nomfircon);
+        $tp->setValue('urbdes',$req->urbdes);
+        $tp->setValue('urbtip',$req->urbtip);
+            
+
             
             
         // }

@@ -11,7 +11,7 @@ if($conn_sis)
 	// echo("con exitosa");
 	// echo "<br>";
 	$tsql = "select top 10 * from CONEXION";  
-	$tsql = "select co.*, rz.CalDes, rz.CalTip from CONEXION co inner join RZCALLE rz on co.PreCalle=rz.CalCod where co.Confiax=CONVERT(varchar,GETDATE(),5)";
+	$tsql = "select co.*, rz.CalDes, rz.CalTip, rl.UrbDes, rl.UrbTip  from CONEXION co inner join RZCALLE rz on co.PreCalle=rz.CalCod inner join RLURBA rl on co.PreUrba=rl.UrbCod where co.Confiax=CONVERT(varchar,GETDATE(),5)";
 	$stmt = sqlsrv_query($conn_sis, $tsql); 
 	$arreglo = array(); 
 	$html='';
@@ -26,7 +26,7 @@ if($conn_sis)
             '<td>'.
                 '<div class="btn-group btn-group-sm" role="group">'.
                     '<a class="btn text-info" title="Descargar documento" onclick="sendData('.$row['InscriNro'].')" id="'.$row['InscriNro'].'" 
-                    data-clinomx="'.$row['Clinomx'].'" data-clilelx="'.$row['Clilelx'].'" data-caldes="'.$row['CalDes'].'" data-caltip="'.$row['CalTip'].'" data-prenro="'.$row['PreNro'].'" data-nomfircon="'.$row['NomFirCon'].'"><i class="fa fa-download"></i></a>'.
+                    data-clinomx="'.$row['Clinomx'].'" data-clilelx="'.$row['Clilelx'].'" data-caldes="'.$row['CalDes'].'" data-caltip="'.$row['CalTip'].'" data-prenro="'.$row['PreNro'].'" data-nomfircon="'.$row['NomFirCon'].'" data-UrbDes="'.$row['UrbDes'].'" data-UrbTip="'.$row['UrbTip'].'" data-inscrinro="'.$row['InscriNro'].'"><i class="fa fa-download"></i></a>'.
                 '</div>'.
             '</td>'.
         '</tr>';

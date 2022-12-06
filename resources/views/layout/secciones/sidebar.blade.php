@@ -20,11 +20,25 @@
                         <p data-npms="dashboard">Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{url('doc/doc')}}" class="nav-link bg-secondary">
-                        <i class="fas fa-file nav-icon"></i>
-                        <p>Generar Doc.</p>
+                <li class="nav-item has-treeview smPms">
+                    <a href="#" class="nav-link bg-secondary">
+                        <i class="nav-icon fa fa-gears"></i>
+                        <p>GENERAR<i class="right fas fa-angle-left"></i></p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('doc/doc')}}" class="nav-link sba2">
+                                <i class="fa fa-person nav-icon"></i>
+                                <p data-npms="persona">Contrato</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('solicitud/solicitud')}}" class="nav-link sba2">
+                                <i class="fa fa-person nav-icon"></i>
+                                <p data-npms="persona">Solicitud</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item has-treeview smPms">
                     <a href="#" class="nav-link bg-secondary">
@@ -52,6 +66,12 @@
                         <p>Presupuesto<i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('plantilla/plantilla')}}" class="nav-link sba2">
+                                <i class="fa fa-person nav-icon"></i>
+                                <p data-npms="persona">Crear agrupacion</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{url('presupuesto/cuadroPresupuestal')}}" class="nav-link sba2">
                                 <i class="fa fa-person nav-icon"></i>

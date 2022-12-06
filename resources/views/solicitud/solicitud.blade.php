@@ -4,7 +4,7 @@
 <div class="main-header p-1">
     <div class="row">
         <div class="col-lg-6 col-sm-6 col-12 m-auto">
-            <h6 class="my-0 ml-3">Listar clientes</h6>
+            <h6 class="my-0 ml-3">Listar solicitudes</h6>
         </div>
         <div class="col-lg-6 col-sm-6 col-12">
             <button class="btn btn-sm btn-success float-right btnPmsRegistrar" data-toggle="modal" data-target="#modalRegistrar" style="display: none;">
@@ -25,7 +25,7 @@
                     <img src="{{asset('img/imgAdicionales/spinerLetter2.svg')}}" class="svgLoadLetter">
                 </div>
                 <div class="card-header border-transparent py-2">
-                    <h3 class="card-title m-0 font-weight-bold"><i class="fa fa-person"></i> Listado de clientes</h3>
+                    <h3 class="card-title m-0 font-weight-bold"><i class="fa fa-person"></i> Listar solicitudes</h3>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning msjPms" style="display: none;">
@@ -36,7 +36,7 @@
                             <table id="registros" class="table table-hover table-striped table-bordered dt-responsive nowrap">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th class="text-center" data-priority="2">Num.Inscripcion</th>
+                                        <th class="text-center" data-priority="2">Num.Sol.</th>
                                         <th class="text-center" data-priority="2">Dni</th>
                                         <th class="text-center" data-priority="2">Nombre</th>
                                         <th class="text-center" data-priority="1">Direccion</th>
@@ -47,7 +47,7 @@
                                 </tbody>
                                 <tfoot class="thead-light">
                                     <tr>
-                                        <th class="text-center" data-priority="2">Num.Inscripcion</th>
+                                        <th class="text-center" data-priority="2">Num.Sol.</th>
                                         <th class="text-center" data-priority="2">Dni</th>
                                         <th class="text-center" data-priority="2">Nombre</th>
                                         <th class="text-center" data-priority="1">Direccion</th>
@@ -62,61 +62,31 @@
         </div>
     </div>
 </div>
-<form method="post" action="{{url('doc/download')}}" id="formtest">
-    <input type="hidden" name="inscrinro" id="inscrinro">
-    <input type="hidden" name="docNombre" id="docNombre">
-    <input type="hidden" name="docDni" id="docDni">
-    <input type="hidden" name="caldes" id="caldes">
-    <input type="hidden" name="caltip" id="caltip">
-    <input type="hidden" name="prenro" id="prenro">
+<form method="post" action="{{url('solicitud/download')}}" id="formSol">
+    <input type="hidden" name="solnro" id="solnro">
+    <input type="hidden" name="solnombre" id="solnombre">
+    <input type="hidden" name="soltipcal" id="soltipcal">
+    <input type="hidden" name="soldirec" id="soldirec">
+    <input type="hidden" name="soldirnro" id="soldirnro">
+    <input type="hidden" name="soldircom" id="soldircom">
+    <input type="hidden" name="solurban" id="solurban">
+    <input type="hidden" name="solelect" id="solelect">
+    <input type="hidden" name="solfex" id="solfex">
     <input type="hidden" name="docHora" id="docHora">
-    <input type="hidden" name="nomfircon" id="nomfircon">
-    <input type="hidden" name="urbdes" id="urbdes">
-    <input type="hidden" name="urbtip" id="urbtip">
-    
+    <input type="hidden" name="soltelef" id="soltelef">
     @csrf
 </form>
 <script>
     $(document).ready( function () {
-        tablaDeRegistros=$('.contenedorRegistros').html();
-        // fillRegistros();
         takeRegistros();
-        // $('.overlayPagina').css("display","none");
+        $('.overlayPagina').css("display","none");
     } );
-    function fillRegistros()
-    {
-        $('.contenedorRegistros').css('display','block');
-        jQuery.ajax(
-        { 
-            url: "{{url('doc/listar')}}",
-            method: 'get',
-            success: function(result){
-                console.log(result.data);
-                var html = '';
-                for (var i = 0; i < result.data.length; i++) 
-                {
-                    html += '<tr>' +
-                        '<td>' + result.data[i].dni + '</td>' +
-                        '<td>' + result.data[i].nombre +'</td>' +
-                        '<td class="text-center">'+
-                            '<div class="btn-group btn-group-sm" role="group">'+
-                                '<a href="{{url('doc/download')}}/'+result.data[i].idCliente+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
-                            '</div>'+
-                        '</td>'+
-                    '</tr>';
-                }
-                $('#data').html(html);
-                initDatatable('registros');
-                $('.overlayRegistros').css('display','none');
-            }
-        });
-    }
     function takeRegistros()
     {
         $('.contenedorRegistros').css('display','block');
         jQuery.ajax(
         { 
-            url: "../../conexionBD.php",
+            url: "../../conexionBDsolicitud.php",
             method: 'get',
             success: function(result){
                 console.log(result);
@@ -126,33 +96,30 @@
             }
         });
     }
-    function sendData(id)
+    function sendData(numero)
     {
-        // let data = JSON.stringify()
-        // alert(typeof id);
-        // alert(id.toString().padStart(8, 0));
         let hoy = new Date();
         let hora = hoy.getHours().toString().padStart(2, 0);
         let minutos = hoy.getMinutes().toString().padStart(2, 0);
         let segunHora = hora >= 12 ? 'PM' : 'AM';
         let docHora = hora+':'+minutos+' '+segunHora;
 
-        let inscri = id.toString().padStart(8, 0);
-        $('#inscrinro').val($('#'+inscri).attr('data-inscrinro'));
-        $('#docNombre').val($('#'+inscri).attr('data-clinomx'));
-        $('#docDni').val($('#'+inscri).attr('data-clilelx'));
-        $('#caldes').val($('#'+inscri).attr('data-caldes'));
-        $('#caltip').val($('#'+inscri).attr('data-caltip'));
-        $('#prenro').val($('#'+inscri).attr('data-prenro'));
-        $('#nomfircon').val($('#'+inscri).attr('data-nomfircon'));
-        $('#urbdes').val($('#'+inscri).attr('data-urbdes'));
-        $('#urbtip').val($('#'+inscri).attr('data-urbtip'));
+        // let solNro = numero.toString().padStart(8, 0);
+        let solNro = numero;
+        $('#solnro').val($('#'+solNro).attr('data-solnro'));
+        $('#solnombre').val($('#'+solNro).attr('data-solnombre'));
+        $('#soltipcal').val($('#'+solNro).attr('data-soltipcal'));
+        $('#soldirec').val($('#'+solNro).attr('data-soldirec'));
+        $('#soldirnro').val($('#'+solNro).attr('data-soldirnro'));
+        $('#soldircom').val($('#'+solNro).attr('data-soldircom'));
+        $('#solurban').val($('#'+solNro).attr('data-solurban'));
+        $('#solelect').val($('#'+solNro).attr('data-solelect'));
+        $('#solfex').val($('#'+solNro).attr('data-solfex'));
+        $('#soltelef').val($('#'+solNro).attr('data-soltelef'));
+        
         
         $('#docHora').val(docHora);
-        
-        $('#formtest').submit();
-
-        // alert(data);
+        $('#formSol').submit();
     }
 </script>
 @endsection
