@@ -16,7 +16,7 @@ class PlantillaController extends Controller
     public function actListar()
     {
     	// SELECT p.idPlantilla,p.nombre,count(d.idDp) FROM plantilla p inner join detalle_plantilla d on p.idPlantilla=d.idPlantilla GROUP by p.idPlantilla
-    	$sql = "SELECT p.idPlantilla,p.nombre,p.descripcion,p.fr,p.fa,count(d.idDp) as cantidad FROM plantilla p inner join detalle_plantilla d on p.idPlantilla=d.idPlantilla GROUP by p.idPlantilla,p.nombre,p.descripcion,p.fr,p.fa";
+    	$sql = "SELECT p.idPlantilla,p.nombre,p.descripcion,p.tipoTerreno,p.tipoConexion,p.diametro,p.fr,p.fa,count(d.idDp) as cantidad FROM plantilla p inner join detalle_plantilla d on p.idPlantilla=d.idPlantilla GROUP by p.idPlantilla,p.nombre,p.descripcion,p.tipoTerreno,p.tipoConexion,p.diametro,p.fr,p.fa";
         $data=DB::select($sql);
         // return response()->json(["data"=>$data]);
     	// $list=TPlantilla::all();
@@ -31,6 +31,21 @@ class PlantillaController extends Controller
         else
         {$model->fa=now();}
         return $model->save();
+    }
+    public function saveEditDetalle($req,$idPlantilla)
+    {
+        $detalles=TDp::where('idPlantilla',$idPlantilla)->get();
+        if($detalles!=null)
+        {
+            foreach ($detalles as $detalle) 
+            {
+                if(!$detalle->delete())
+                {
+                    return false;
+                }
+            }
+        }
+        return $this->saveDetalle($req,$idPlantilla);
     }
     public function saveDetalle($req,$idPlantilla)
     {
@@ -98,5 +113,36 @@ class PlantillaController extends Controller
             "data"=>$data,
         ]);
     }
-    
+    public function actEditar(Request $req)
+    {
+    	// dd('esta ki en actEditar');
+        $registro = TPlantilla::find($req->id);
+        $list = TDp::where('idPlantilla',$req->id)->get();
+        $list = TDp::select('cuadro_presupuestal.*','detalle_plantilla.*')
+        	->join('cuadro_presupuestal', 'cuadro_presupuestal.idCp', '=', 'detalle_plantilla.idCp')
+        	->where('detalle_plantilla.idPlantilla',$req->id)
+        	->get();
+        return response()->json([
+            "data"=>$registro,
+            "list"=>$list
+        ]);
+    }
+    public function actGuardarCambios(Request $req)
+    {
+        // dd($req->all());
+        $tPla = TPlantilla::find($req->idPlantilla);
+        // dd($tPla);
+        $tPla->fill($req->all());
+        if($tPla->save() && $this->agregarCampAdi($tPla,0))
+        {
+            if($this->saveEditDetalle($req,$tPla->idPlantilla))
+            {
+                return response()->json([
+                    "msg"=>"Operacion exitosa.",
+                    "estado"=>true
+                ]);
+            }
+        }
+        // dd($req->all());
+    }
 }

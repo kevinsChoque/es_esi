@@ -38,6 +38,9 @@
                                     <tr>
                                         <th class="text-center" data-priority="1">Nombre</th>
                                         <th class="text-center" data-priority="2">Descripcion</th>
+                                        <th class="text-center" data-priority="2">Tipo de terreno</th>
+                                        <th class="text-center" data-priority="2">Tipo de connexion</th>
+                                        <th class="text-center" data-priority="2">Diametro</th>
                                         <th class="text-center" data-priority="3">Cantidad</th>
                                         <th class="text-center" data-priority="4">F.Reg.</th>
                                         <th class="text-center" data-priority="4">F.Act.</th>
@@ -50,6 +53,9 @@
                                     <tr>
                                         <th class="text-center" data-priority="1">Nombre</th>
                                         <th class="text-center" data-priority="2">Descripcion</th>
+                                        <th class="text-center" data-priority="2">Tipo de terreno</th>
+                                        <th class="text-center" data-priority="2">Tipo de connexion</th>
+                                        <th class="text-center" data-priority="2">Diametro</th>
                                         <th class="text-center" data-priority="3">Cantidad</th>
                                         <th class="text-center" data-priority="4">F.Reg.</th>
                                         <th class="text-center" data-priority="4">F.Act.</th>
@@ -66,6 +72,7 @@
 </div>
 
 @include('plantilla.modals')
+@include('plantilla.modalsEdit')
 <script>
     var tablaDeRegistros;
     var flip=0;
@@ -73,6 +80,7 @@
         tablaDeRegistros=$('.contenedorRegistros').html();
         fillRegistros();
         fillCp();
+        fillCpEdit();
         // $('.overlayPagina').css("display","none");
     } );
     
@@ -92,10 +100,14 @@
                     html += '<tr class="text-center">' +
                         '<td>' + result.data[i].nombre + '</td>' +
                         '<td>' + result.data[i].descripcion  + '</td>' +
+                        '<td>' + novDato(result.data[i].tipoTerreno)+'</td>' +
+                        '<td>' + novDato(result.data[i].tipoConexion) + '</td>' +
+                        '<td>' + novDato(result.data[i].diametro)+ '</td>' +
                         '<td><span class="badge badge-info"><i class="fa fa-list"></i> ' + result.data[i].cantidad + ' Items</span></td>' +
                         '<td>' + formatoDateHours(result.data[i].fr) + '</td>' +
                         '<td>' + verificarFecha(novDato(result.data[i].fa)) + '</td>' +
                         '<td><div class="btn-group btn-group-sm" role="group">'+
+                            '<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+result.data[i].idPlantilla+');"><i class="fa fa-edit"></i></button>'+
                             '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+result.data[i].idPlantilla+');"><i class="fa fa-trash"></i></button>'+
                         '</div></td></tr>';
                 }
@@ -168,10 +180,24 @@
         $('.contenedorRegistros>div').remove();
         $('.contenedorRegistros').html(tablaDeRegistros);
     }
-    // function limpiarForm()
-    // {
-    //     $(".select2").val("0").trigger("change.select2");
-    //     $('.contenedorFormularioRegistrar :input').val('');
-    // }
+    function limpiarForm(segun)
+    {
+        if(segun)
+        {
+            // $('#tipoTerreno,#tipoConexion,#diametro').val('0');
+            $('#tipoTerreno').val('0');
+            $('#tipoConexion').val('0');
+            $('#diametro').val('0');
+            $('.contenedorFormularioRegistrar :input').val('');
+            $('.itemCp').remove();
+        }
+        else
+        {
+            $('#etipoTerreno,#etipoConexion,#ediametro').val('0');
+            $('.contenedorFormularioEditar :input').val('');
+            $('.eitemCp').remove();
+        }
+        
+    }
 </script>
 @endsection

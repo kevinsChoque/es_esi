@@ -22,7 +22,7 @@
             <div class="card card-default card-info card-outline">
                 <div class="overlay dark overlayRegistros">
                     <!-- <i class="fas fa-2x fa-sync-alt"></i> -->
-                    <img src="{{asset('img/imgAdicionales/spinerLetter2.svg')}}" class="svgLoadLetter">
+                    <img src="{{asset('img/imgAdicionales/spinerLetter.svg')}}" class="svgLoadLetter">
                 </div>
                 <div class="card-header border-transparent py-2">
                     <h3 class="card-title m-0 font-weight-bold"><i class="fa fa-person"></i> Listado de clientes</h3>

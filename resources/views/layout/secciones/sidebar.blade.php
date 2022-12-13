@@ -27,14 +27,20 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
+                            <a href="{{url('numero/numero')}}" class="nav-link sba2">
+                                <i class="fa fa-file-word nav-icon"></i>
+                                <p data-npms="persona" style="font-size: 0.91rem !important;">Numero de documentos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{url('doc/doc')}}" class="nav-link sba2">
-                                <i class="fa fa-person nav-icon"></i>
+                                <i class="fa fa-file-word nav-icon"></i>
                                 <p data-npms="persona">Contrato</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{url('solicitud/solicitud')}}" class="nav-link sba2">
-                                <i class="fa fa-person nav-icon"></i>
+                                <i class="fa fa-file-word nav-icon"></i>
                                 <p data-npms="persona">Solicitud</p>
                             </a>
                         </li>
@@ -69,7 +75,7 @@
                         <li class="nav-item">
                             <a href="{{url('plantilla/plantilla')}}" class="nav-link sba2">
                                 <i class="fa fa-person nav-icon"></i>
-                                <p data-npms="persona">Crear agrupacion</p>
+                                <p data-npms="persona">Plantillas</p>
                             </a>
                         </li>
                         <li class="nav-item">

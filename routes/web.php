@@ -8,6 +8,7 @@ use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\PlantillaController;
 use App\Http\Controllers\PresupuestoController;
 use App\Http\Controllers\CpController;
+use App\Http\Controllers\NumeroController;
 
 
 Route::get('/', function () {
@@ -23,6 +24,8 @@ Route::post('doc/download',[DocController::class, 'actDownload']);
 // generar solicitud de instalacion
 Route::get('solicitud/solicitud',[SolController::class, 'actSol']);
 Route::post('solicitud/download',[SolController::class, 'actDownload']);
+Route::get('solicitud/registrar',[SolController::class, 'actRegistrar']);
+Route::get('solicitud/show',[SolController::class, 'actShow']);
 // crud de persona
 Route::get('persona/persona',[PersonaController::class, 'actPersona']);
 Route::get('persona/listar',[PersonaController::class, 'actListar']);
@@ -37,6 +40,8 @@ Route::get('plantilla/registrar',[PlantillaController::class, 'actRegistrar']);
 Route::get('plantilla/listar',[PlantillaController::class, 'actListar']);
 Route::get('plantilla/eliminar',[PlantillaController::class, 'actEliminar']);
 Route::get('plantilla/show',[PlantillaController::class, 'actShow']);
+Route::get('plantilla/editar',[PlantillaController::class, 'actEditar']);
+Route::get('plantilla/guardarCambios',[PlantillaController::class, 'actGuardarCambios']);
 
 // presupuesto para un usuario
 Route::get('presupuesto/cuadroPresupuestal',[PresupuestoController::class, 'actCuadroPresupuestal']);
@@ -54,6 +59,10 @@ Route::get('cp/listar',[CpController::class, 'actListar']);
 Route::get('cp/cp',[CpController::class, 'actCp']);
 Route::get('cp/saveEditTarifa',[CpController::class, 'actSaveEditTarifa']);
 
+//numero de documentos para autogenerar
+Route::get('numero/numero',[NumeroController::class, 'actNumero']);
+Route::get('numero/listar',[NumeroController::class, 'actListar']);
+Route::get('numero/registrar',[NumeroController::class, 'actRegistrar']);
 
 
 

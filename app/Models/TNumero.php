@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TPlantilla extends Model
+class TNumero extends Model
 {
-    protected $table='plantilla';
-	protected $primaryKey='idPlantilla';
+    protected $table='numeroDoc';
+	protected $primaryKey='id';
 	public $incrementing=true;
 	public $timestamps=false;
 
     protected $fillable = [
-        'nombre', 
-        'descripcion', 
-        'tipoTerreno',
-		'tipoConexion',
-		'diametro',
+        'documento', 
+        'numero', 
     ];
+
+    
 }
