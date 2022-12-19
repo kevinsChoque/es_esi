@@ -16,7 +16,7 @@ class PlantillaController extends Controller
     public function actListar()
     {
     	// SELECT p.idPlantilla,p.nombre,count(d.idDp) FROM plantilla p inner join detalle_plantilla d on p.idPlantilla=d.idPlantilla GROUP by p.idPlantilla
-    	$sql = "SELECT p.idPlantilla,p.nombre,p.descripcion,p.tipoTerreno,p.tipoConexion,p.diametro,p.fr,p.fa,count(d.idDp) as cantidad FROM plantilla p inner join detalle_plantilla d on p.idPlantilla=d.idPlantilla GROUP by p.idPlantilla,p.nombre,p.descripcion,p.tipoTerreno,p.tipoConexion,p.diametro,p.fr,p.fa";
+    	$sql = "SELECT p.idPlantilla,p.nombre,p.descripcion,p.tipoTerreno,p.tipoConexion,p.diametro,p.fr,p.fa,count(d.idDp) as cantidad FROM plantilla p inner join detalle_plantilla d on p.idPlantilla=d.idPlantilla GROUP by p.idPlantilla,p.nombre,p.descripcion,p.tipoTerreno,p.tipoConexion,p.diametro,p.fr,p.fa order by p.idPlantilla desc";
         $data=DB::select($sql);
         // return response()->json(["data"=>$data]);
     	// $list=TPlantilla::all();

@@ -95,7 +95,9 @@ function fillRegistros()
             var html = '';
             for (var i = 0; i < result.data.length; i++) 
             {
-                edit = '<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+result.data[i].idPre+');"><i class="fa fa-edit" ></i></button>';
+                print = '<a href="{{url('presupuesto')}}/print/'+result.data[i].idPre+'" target="_blank" class="btn text-info" title="Imprimir presupuesto"><i class="fa fa-print"></i></a>';
+
+                edit = '<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+result.data[i].idPre+');"><i class="fa fa-edit"></i></button>';
                 dele = '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+result.data[i].idPre+');"><i class="fa fa-trash"></i></button>';
                 html += '<tr>' +
                     '<td class="text-center font-weight-bold">' + result.data[i].codigo + '</td>' +
@@ -105,6 +107,7 @@ function fillRegistros()
                     '<td class="text-center">' + formatoDateHours(result.data[i].fr) + '</td>' +
                     '<td class="text-center">' + verificarFecha(novDato(result.data[i].fa)) + '</td>' +
                     '<td class="text-center"><div class="btn-group btn-group-sm" role="group">'+
+                    print+
                     edit+
                     dele+
                     '</div></td></tr>';

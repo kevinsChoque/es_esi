@@ -170,7 +170,7 @@
                     '</div>'+
                 '</td>'+
                 '<td class="text-center align-middle regCostoUnitario">'+detalle.tarifa+'</td>'+
-                '<td class="text-center align-middle regCosto font-weight-bold">'+total+'</td>'+
+                '<td class="text-center align-middle regCosto font-weight-bold">'+total.toFixed(2)+'</td>'+
                 '<td class="text-center align-middle"><button type="button" class="btn text-danger" title="Eliminar registro" onclick="delReg(this)"><i class="fa fa-trash"></i></button></td>'+
             '</tr>';
         $('#primeraFila').after(reg);

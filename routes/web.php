@@ -52,6 +52,8 @@ Route::get('presupuesto/eliminar',[PresupuestoController::class, 'actEliminar'])
 Route::get('presupuesto/editCuadroPresupuestal',[PresupuestoController::class, 'actEditCuadroPresupuestal']);
 Route::get('presupuesto/editCp',[PresupuestoController::class, 'actEditCp']);
 Route::get('presupuesto/guardarCambios',[PresupuestoController::class, 'actGuardarCambios']);
+Route::post('presupuesto/imprimir',[PresupuestoController::class, 'actImprimir']);
+Route::get('presupuesto/print/{id}',[PresupuestoController::class, 'actPrint']);
 
 
 //actividad o rendimiento

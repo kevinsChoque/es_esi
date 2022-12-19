@@ -22,7 +22,7 @@
                 </li>
                 <li class="nav-item has-treeview smPms">
                     <a href="#" class="nav-link bg-secondary">
-                        <i class="nav-icon fa fa-gears"></i>
+                        <i class="nav-icon fa fa-file"></i>
                         <p>GENERAR<i class="right fas fa-angle-left"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -60,7 +60,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{url('cp/cp')}}" class="nav-link sba2">
-                                <i class="fa fa-person nav-icon"></i>
+                                <i class="fa-solid fa-sack-dollar nav-icon"></i>
                                 <p data-npms="persona">Costos colaterales</p>
                             </a>
                         </li>
@@ -74,20 +74,20 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{url('plantilla/plantilla')}}" class="nav-link sba2">
-                                <i class="fa fa-person nav-icon"></i>
-                                <p data-npms="persona">Plantillas</p>
+                                <i class="fa-solid fa-vr-cardboard nav-icon"></i>
+                                <p data-npms="persona">Plantilla presupuestal</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{url('presupuesto/cuadroPresupuestal')}}" class="nav-link sba2">
-                                <i class="fa fa-person nav-icon"></i>
+                                <i class="fa fa-file-circle-plus nav-icon"></i>
                                 <p data-npms="persona">Registrar presupuesto</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{url('presupuesto/presupuesto')}}" class="nav-link sba2">
                                 <i class="fa fa-list nav-icon"></i>
-                                <p data-npms="persona">Ver lista</p>
+                                <p data-npms="persona">Lista de presupuestos</p>
                             </a>
                         </li>
                     </ul>
