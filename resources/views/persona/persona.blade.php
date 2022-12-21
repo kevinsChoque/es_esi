@@ -1,6 +1,8 @@
 @extends('layout.layout')
 @section('nombreContenido', '----')
 @section('cabecera')
+<!-- <script src="https://unpkg.com/popper.js@1"></script>
+<script src="https://unpkg.com/tippy.js@5"></script> -->
 <div class="main-header p-1">
     <div class="row">
         <div class="col-lg-6 col-sm-6 col-12 m-auto">
@@ -37,6 +39,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th class="text-center" data-priority="1">DOC</th>
+                                        <th class="text-center" data-priority="2">Cargo</th>
                                         <th class="text-center" data-priority="2">Nombre</th>
                                         <th class="text-center" data-priority="3">Celular</th>
                                         <th class="text-center" data-priority="3">Correo</th>
@@ -51,6 +54,7 @@
                                 <tfoot class="thead-light">
                                     <tr>
                                         <th class="text-center" data-priority="1">DOC</th>
+                                        <th class="text-center" data-priority="2">Cargo</th>
                                         <th class="text-center" data-priority="2">Nombre</th>
                                         <th class="text-center" data-priority="3">Celular</th>
                                         <th class="text-center" data-priority="3">Correo</th>
@@ -68,15 +72,22 @@
         </div>
     </div>
 </div>
+<!-- <button class="btn btn-success" id="tipicha">casca</button> -->
 @include('persona.modals')
 <script>
+    // tippy('#tipicha', {
+    //   content: 'unsafeUserData',
+    //   allowHTML: false
+    // });
     var tablaDeRegistros;
     var flip=0;
     $(document).ready( function () {
         tablaDeRegistros=$('.contenedorRegistros').html();
         fillRegistros();
+        fillCargo();
         // $('.overlayPagina').css("display","none");
     } );
+    
     function fillRegistros()
     {
         $('.contenedorRegistros').css('display','block');
@@ -93,6 +104,7 @@
                     firma = result.data[i].firma=='1'?'<button type="button" class="btn btn-info btn-sm py-0 shadow font-italic"><i class="fa fa-signature"></i> Firma</button>':'<button type="button" class="btn btn-secondary btn-sm py-0 font-italic" onclick="cambiarFirmador('+result.data[i].idPersona+');"><i class="fa fa-signature"></i> Cambiar</button>';
                     html += '<tr class="text-center">' +
                         '<td>' + formatoTipoDoc(result.data[i].tipoDoc) + ' ' + result.data[i].doc + '</td>' +
+                        '<td>' + novDato(result.data[i].nombreCargo) + '</td>' +
                         '<td>' + result.data[i].nombre + ' ' + result.data[i].apellido + '</td>' +
                         '<td>' + novDato(result.data[i].celular) + '</td>' +
                         '<td>' + novDato(result.data[i].correo) + '</td>' +

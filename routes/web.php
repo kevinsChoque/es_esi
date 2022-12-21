@@ -9,6 +9,7 @@ use App\Http\Controllers\PlantillaController;
 use App\Http\Controllers\PresupuestoController;
 use App\Http\Controllers\CpController;
 use App\Http\Controllers\NumeroController;
+use App\Http\Controllers\CargoController;
 
 
 Route::get('/', function () {
@@ -34,6 +35,8 @@ Route::get('persona/eliminar',[PersonaController::class, 'actEliminar']);
 Route::get('persona/editar',[PersonaController::class, 'actEditar']);
 Route::get('persona/guardarCambios',[PersonaController::class, 'actGuardarCambios']);
 Route::get('persona/cambiarFirmador',[PersonaController::class, 'actCambiarFirmador']);
+Route::get('persona/listarTecnicos',[PersonaController::class, 'actListarTecnicos']);
+
 // plantilla : agrupacion de items
 Route::get('plantilla/plantilla',[PlantillaController::class, 'actPlantilla']);
 Route::get('plantilla/registrar',[PlantillaController::class, 'actRegistrar']);
@@ -65,6 +68,8 @@ Route::get('cp/saveEditTarifa',[CpController::class, 'actSaveEditTarifa']);
 Route::get('numero/numero',[NumeroController::class, 'actNumero']);
 Route::get('numero/listar',[NumeroController::class, 'actListar']);
 Route::get('numero/registrar',[NumeroController::class, 'actRegistrar']);
+// cargos de personas
+Route::get('cargo/listar',[CargoController::class, 'actListar']);
 
 
 

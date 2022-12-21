@@ -41,7 +41,7 @@
                         <li class="nav-item">
                             <a href="{{url('solicitud/solicitud')}}" class="nav-link sba2">
                                 <i class="fa fa-file-word nav-icon"></i>
-                                <p data-npms="persona">Solicitud</p>
+                                <p data-npms="persona">Anexo N.1</p>
                             </a>
                         </li>
                     </ul>

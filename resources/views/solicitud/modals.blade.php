@@ -248,6 +248,24 @@
                                 <input type="text" class="form-control form-control-sm" id="otros" name="otros">
                             </div>
                         </div>
+                        <div class="form-group col-lg-6">
+                            <label for="" class="m-0">Numero de telefono:</label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold"><i class="fa fa-phone"></i></span>
+                                </div>
+                                <input type="text" class="form-control form-control-sm soloNumeros" id="telefono" name="telefono" maxlength="9">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="" class="m-0">Numero alternativo:</label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold"><i class="fa fa-phone"></i></span>
+                                </div>
+                                <input type="text" class="form-control form-control-sm soloNumeros" id="telefonoAlternativo" name="telefonoAlternativo" maxlength="9">
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -299,6 +317,9 @@ function data()
         item6:$('#item6').prop('checked'),
 
         otros:$('#otros').val(),
+
+        telefono:$('#telefono').val(),
+        telefonoAlternativo:$('#telefonoAlternativo').val(),
 
 	}
 }
@@ -354,15 +375,28 @@ function registrarAdicional(solnro)
                 // $('#item6').prop('checked',r.data.item6);
 
                 $('#otros').val(r.data.otros);
+
+                $('#telefono').val(r.data.telefono);
+                $('#telefonoAlternativo').val(r.data.telefonoAlternativo);
             }
             else
             {
-                // alert('no fue registrado');
+                $('#tipoPredio').val('Habilitado');
+                $('#ubicacionPre').val($('#'+solnro).attr('data-soltipcal')+' '+$('#'+solnro).attr('data-soldirec'));
+                $('#numeroPre').val($('#'+solnro).attr('data-soldirnro'));
+                $('#categoria').val('Domestico');
+                $('#usoServicio').val('Permanente');
+
+                $('#item1').prop('checked',true);
+                $('#item2').prop('checked',true);
+                $('#item3').prop('checked',true);
+
+                $('#item5').prop('checked',true);
+                $('#item6').prop('checked',true);
             }
             $('#modalRegistrarAdicional').modal('show');
         }
     });
-    
 }
 function guardarEdit(solnro)
 {

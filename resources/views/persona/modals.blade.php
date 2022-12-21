@@ -17,7 +17,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text font-weight-bold"><i class="fa fa-clipboard-user"></i></span>
                             </div>
-                            <select class="form-control form-control-sm tipoDoc" name="tipoDoc" id="tipoDoc">
+                            <select class="form-control form-control-sm tipoDoc" name="tipoDoc" id="tipoDoc" disabled>
                                 <option disabled>Seleccione el tipo de documento</option>
                                 <option value="DNI" selected>DNI</option>
                                 <option value="CARNET DE EXTRANJERIA">CARNET DE EXTRANJERIA</option>
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-lg-4">
+                    <!-- <div class="form-group col-lg-4">
                         <label for="" class="m-0">RUC:</label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
@@ -53,7 +53,7 @@
                                 <span class="input-group-text font-weight-bold cant">0/11</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group col-lg-4">
                         <label for="" class="m-0">Nombre: <span class="text-danger">*</span></label>
                         <div class="input-group input-group-sm">
@@ -103,6 +103,16 @@
                         </div>
                     </div>
                     <div class="form-group col-lg-4">
+                        <label for="" class="m-0">Cargo:</label>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text font-weight-bold"><i class="fa fa-clipboard-user"></i></span>
+                            </div>
+                            <select class="form-control form-control-sm" name="cargo" id="cargo">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group col-lg-4">
                         <label for="" class="m-0">Fecha de nacimiento:</label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
@@ -110,7 +120,7 @@
                             </div>
                             <input type="date" class="form-control form-control-sm" id="fechaNacimiento" name="fechaNacimiento">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 </form>
             </div>
@@ -166,7 +176,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-lg-4">
+                    <!-- <div class="form-group col-lg-4">
                         <label for="" class="m-0">RUC:</label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
@@ -177,7 +187,7 @@
                                 <span class="input-group-text font-weight-bold cant">0/11</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group col-lg-4">
                         <label for="" class="m-0">Nombre: <span class="text-danger">*</span></label>
                         <div class="input-group input-group-sm">
@@ -227,6 +237,16 @@
                         </div>
                     </div>
                     <div class="form-group col-lg-4">
+                        <label for="" class="m-0">Cargo:</label>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text font-weight-bold"><i class="fa fa-clipboard-user"></i></span>
+                            </div>
+                            <select class="form-control form-control-sm" name="ecargo" id="ecargo">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group col-lg-4">
                         <label for="" class="m-0">Fecha de nacimiento:</label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
@@ -234,7 +254,7 @@
                             </div>
                             <input type="date" class="form-control form-control-sm" id="efechaNacimiento" name="efechaNacimiento">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 </form>
             </div>
@@ -261,7 +281,22 @@ $('.etipoDoc').on('change',function(){
     esetInputSegunDoc($(this).val());
 });
 
-
+function fillCargo()
+{
+    jQuery.ajax(
+    { 
+        url: "{{url('cargo/listar')}}",
+        method: 'get',
+        success: function(r){
+            $('#cargo').append('<option selected disabled value="0">Seleccione cargo . . .</option>');
+            $('#ecargo').append('<option selected disabled value="0">Seleccione cargo . . .</option>');
+            $.each(r.data,function(indice,fila){
+                $('#cargo').append("<option value='"+fila.idCargo+"'>"+fila.nombre+"</option>");
+                $('#ecargo').append("<option value='"+fila.idCargo+"'>"+fila.nombre+"</option>");
+            });
+        }
+    });
+}
 function data(tipo)
 {
 	// segun la accion enviara datos de editar o registrar
@@ -276,6 +311,8 @@ function data(tipo)
         correo:$('#'+segunAccion+'correo').val(),
         domicilio:$('#'+segunAccion+'domicilio').val(),
         fechaNacimiento:$('#'+segunAccion+'fechaNacimiento').val(),
+
+        idCargo:$('#'+segunAccion+'cargo').val(),
 	}
 }
 function guardar()
@@ -343,6 +380,7 @@ function editar(id)
             $('#ecorreo').val(result.data.correo);
             $('#edomicilio').val(result.data.domicilio);
             $('#efechaNacimiento').val(result.data.fechaNacimiento);
+            $('#ecargo').val(result.data.idCargo);
             $('#modalEditar').modal('show');
         }
     });

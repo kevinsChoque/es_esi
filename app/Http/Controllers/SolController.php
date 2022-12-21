@@ -29,7 +29,7 @@ class SolController extends Controller
 		$tp->setValue('solurban',$req->solurban);
 		$tp->setValue('solelect',$req->solelect);
 		$tp->setValue('solfex',$req->solfex);
-		$tp->setValue('soltelef',$req->soltelef);
+		// $tp->setValue('soltelef',$req->soltelef);
 		// $tp->setValue('dateVencimiento',str_replace('-','/',date("d-m-Y",strtotime($dateActual."+ 1 month"))));
 		$tp->setValue('hora',$req->docHora);
         // ------------------------
@@ -99,6 +99,9 @@ class SolController extends Controller
 
             $tp->setValue('otros',$ts->otros=='' || $ts->otros==null?'':$ts->otros);
 
+            $tp->setValue('soltelef',$ts->telefono=='' || $ts->telefono==null?'':$ts->telefono);
+            $tp->setValue('telefonoAlternativo',$ts->telefonoAlternativo=='' || $ts->telefonoAlternativo==null?'':$ts->telefonoAlternativo);
+
         }
         else
         {
@@ -143,6 +146,9 @@ class SolController extends Controller
             $tp->setValue('item6','');
 
             $tp->setValue('otros','');
+
+            $tp->setValue('soltelef','');
+            $tp->setValue('telefonoAlternativo','');
         }
         // $newFecha=explode("-", $ts->fechaVencimiento);
         // $fecha1=$newFecha[2].'/'.$newFecha[1].'/'.$newFecha[0];

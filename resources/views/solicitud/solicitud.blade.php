@@ -63,6 +63,7 @@
     </div>
 </div>
 @include('solicitud.modals')
+@include('solicitud.mFactibilidad')
 <form method="post" action="{{url('solicitud/download')}}" id="formSol">
     <input type="hidden" name="solnroSend" id="solnroSend">
     <input type="hidden" name="solnombre" id="solnombre">
@@ -81,6 +82,7 @@
     $(document).ready( function () {
         takeRegistros();
         $('.overlayPagina').css("display","none");
+        fillTecnicos();
     } );
     function takeRegistros()
     {

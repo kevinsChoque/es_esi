@@ -3,13 +3,13 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-        <!-- <li class="nav-item border-right border-left ml-3 tcvPmsNavbar">
-            <a class="nav-link border-right border-left" href="{{url('tcv/tcv')}}" title="Registrar tarjeta de circulacion">
+        <li class="nav-item border-right border-left ml-3 tcvPmsNavbar">
+            <a class="nav-link border-right border-left" href="{{url('presupuesto/cuadroPresupuestal')}}" title="Registrar Presupuesto">
                 <i class="fas fa-plus d-none d-sm-inline-block"></i>
-                <span class="description-text">TUC</span>
+                <span class="description-text">PRE</span>
             </a>
         </li>
-        <li class="nav-item border-right infraccionPmsNavbar">
+        <!-- <li class="nav-item border-right infraccionPmsNavbar">
             <a class="nav-link border-right" href="{{url('infraccion/infraccion')}}" title="Registrar infraccion">
                 <i class="fas fa-plus d-none d-sm-inline-block"></i>
                 <span class="description-text">INF</span>

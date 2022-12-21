@@ -27,8 +27,21 @@ class PersonaController extends Controller
     }
     public function actListar()
     {
-        $registros = TPersona::select('persona.*')
+        $registros = TPersona::select('persona.*','cargo.nombre as nombreCargo')
+            ->leftjoin('cargo','cargo.idCargo','=','persona.idCargo')
             ->where('persona.estado','!=','-')
+            ->orderBy('persona.idPersona', 'DESC')
+            ->get();
+        return response()->json([
+                "data"=>$registros,
+            ]);
+    }
+    public function actListarTecnicos()
+    {
+        $registros = TPersona::select('persona.*','cargo.nombre as nombreCargo')
+            ->join('cargo','cargo.idCargo','=','persona.idCargo')
+            ->where('persona.estado','!=','-')
+            ->where('cargo.nombre','=','Tecnico')
             ->orderBy('persona.idPersona', 'DESC')
             ->get();
         return response()->json([

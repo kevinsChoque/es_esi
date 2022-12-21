@@ -148,7 +148,7 @@
                 </form>
                 <div class="card-footer py-1 border-transparent">
                     <button type="button" class="btn btn-sm btn-success float-right savePresupuesto"><i class="fa fa-plus"></i> Guardar Presupuesto</button>
-                    <button type="submit" class="btn btn-sm btn-primary float-right mr-2" form="formImp"><i class="fa fa-print"></i> Imprimir Presupuesto</button>
+                    <button type="submit" class="btn btn-sm btn-primary float-right mr-2" form="formImp" style="display: none;s"><i class="fa fa-print"></i> Imprimir Presupuesto</button>
                 </div>
             </div>
         </div>

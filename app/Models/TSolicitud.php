@@ -41,5 +41,7 @@ class TSolicitud extends Model
 		'item5',
 		'item6',
 		'otros',
+		'telefono',
+		'telefonoAlternativo',
     ];
 }

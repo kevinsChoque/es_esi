@@ -13,6 +13,7 @@ class TPersona extends Model
 	public $timestamps=false;
 
     protected $fillable = [
+        'idCargo', 
         'doc', 
         'tipoDoc', 
         'ruc', 
