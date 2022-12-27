@@ -1,5 +1,3 @@
-<!-- modal modalRegistrar -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script> -->
 <style>
     @media (min-width: 1200px)
     {
@@ -7,7 +5,6 @@
             max-width: 1250px !important;
         }
     }
-        
 </style>
 <div class="modal fade" id="modalRegistrarAdicional" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">

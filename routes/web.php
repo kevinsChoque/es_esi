@@ -10,7 +10,8 @@ use App\Http\Controllers\PresupuestoController;
 use App\Http\Controllers\CpController;
 use App\Http\Controllers\NumeroController;
 use App\Http\Controllers\CargoController;
-
+use App\Http\Controllers\FactibilidadController;
+use App\Http\Controllers\MedicionController;
 
 Route::get('/', function () {
     return view('login.login');
@@ -27,6 +28,25 @@ Route::get('solicitud/solicitud',[SolController::class, 'actSol']);
 Route::post('solicitud/download',[SolController::class, 'actDownload']);
 Route::get('solicitud/registrar',[SolController::class, 'actRegistrar']);
 Route::get('solicitud/show',[SolController::class, 'actShow']);
+Route::get('solicitud/geFactibilidad',[SolController::class, 'actGeFactibilidad']);
+Route::get('solicitud/showFactibilidad',[SolController::class, 'actShowFactibilidad']);
+Route::get('solicitud/listar',[SolController::class, 'actListar']);
+// geFactibilidad
+Route::get('factibilidad/factibilidad',[FactibilidadController::class, 'actFactibilidad']);
+Route::get('factibilidad/listar',[FactibilidadController::class, 'actListar']);
+Route::get('factibilidad/showLastFactibilidad',[FactibilidadController::class, 'actShowLastFactibilidad']);
+Route::get('factibilidad/saveFacRep',[FactibilidadController::class, 'actSaveFacRep']);
+Route::get('factibilidad/listarHistorial',[FactibilidadController::class, 'actListarHistorial']);
+Route::get('factibilidad/saveDataFac',[FactibilidadController::class, 'actSaveDataFac']);
+Route::get('factibilidad/show',[FactibilidadController::class, 'actShow']);
+// medicion
+Route::get('medicion/medicion',[MedicionController::class, 'actMedicion']);
+Route::get('medicion/listar',[MedicionController::class, 'actListar']);
+Route::get('medicion/saveMedicion',[MedicionController::class, 'actSaveMedicion']);
+Route::get('medicion/showLastMedicion',[MedicionController::class, 'actShowLastMedicion']);
+
+
+
 // crud de persona
 Route::get('persona/persona',[PersonaController::class, 'actPersona']);
 Route::get('persona/listar',[PersonaController::class, 'actListar']);

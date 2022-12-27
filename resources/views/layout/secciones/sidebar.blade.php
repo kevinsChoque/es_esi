@@ -22,6 +22,26 @@
                 </li>
                 <li class="nav-item has-treeview smPms">
                     <a href="#" class="nav-link bg-secondary">
+                        <i class="nav-icon fa fa-gears"></i>
+                        <p>MANTENIMIENTO<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('persona/persona')}}" class="nav-link sba2">
+                                <i class="fa fa-person nav-icon"></i>
+                                <p data-npms="persona">Persona</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('cp/cp')}}" class="nav-link sba2">
+                                <i class="fa-solid fa-sack-dollar nav-icon"></i>
+                                <p data-npms="persona">Costos colaterales</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview smPms">
+                    <a href="#" class="nav-link bg-secondary">
                         <i class="nav-icon fa fa-file"></i>
                         <p>GENERAR<i class="right fas fa-angle-left"></i></p>
                     </a>
@@ -46,25 +66,17 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview smPms">
-                    <a href="#" class="nav-link bg-secondary">
-                        <i class="nav-icon fa fa-gears"></i>
-                        <p>MANTENIMIENTO<i class="right fas fa-angle-left"></i></p>
+                <li class="nav-item">
+                    <a href="{{url('factibilidad/factibilidad')}}" class="nav-link bg-secondary">
+                        <i class="nav-icon fa-solid fa-business-time"></i>
+                        <p>FACTIBILIDAD</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{url('persona/persona')}}" class="nav-link sba2">
-                                <i class="fa fa-person nav-icon"></i>
-                                <p data-npms="persona">Persona</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{url('cp/cp')}}" class="nav-link sba2">
-                                <i class="fa-solid fa-sack-dollar nav-icon"></i>
-                                <p data-npms="persona">Costos colaterales</p>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('medicion/medicion')}}" class="nav-link bg-secondary">
+                        <i class="nav-icon fa-solid fa-ruler"></i>
+                        <p>MEDICION</p>
+                    </a>
                 </li>
                 <li class="nav-item has-treeview smPms">
                     <a href="#" class="nav-link bg-secondary">

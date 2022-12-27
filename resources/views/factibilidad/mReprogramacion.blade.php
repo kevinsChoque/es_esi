@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header py-1 border-transparent" style="background-color: rgba(0, 0, 0, 0.03);">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa-solid fa-business-time"></i> Factibilidad</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa-solid fa-business-time"></i> Reprogramacion de Factibilidad</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -24,19 +24,29 @@
                                 <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
                             </div>
                         </div>
+                        <div class="form-group col-lg-12">
+                            <label for="" class="m-0">Motivo:</label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
+                                </div>
+                                <!-- <input type="date" class="form-control form-control-sm" id="fecha" name="fecha"> -->
+                                <textarea class="form-control" name="motivoReprogramacion" id="motivoReprogramacion" cols="30" rows="5"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer py-1 border-transparent">
                 <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-sm btn-success geFactibilidad"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-sm btn-success saveFacRep"><i class="fa fa-save"></i> Guardar Reprogramacion</button>
             </div>
         </div>
     </div>
 </div>
 <script>
-$('.geFactibilidad').on('click',function(){
-    geFactibilidad();
+$('.saveFacRep').on('click',function(){
+    saveFacRep();
 });
 function fillTecnicos()
 {
@@ -62,15 +72,16 @@ function dataFactibilidad()
         solnro:$('#solnro').val(),
         idPersona:$('#personal').val(),
         fecha:$('#fecha').val(),
+        motivo:$('#motivoReprogramacion').val(),
     }
 }
-function regFactibilidad(solnro)
+function repFactibilidad(solnro)
 {
     $('#solnro').val(solnro);
     // $('#modRegFactibilidad').modal('show');
     jQuery.ajax(
     { 
-        url: "{{url('solicitud/showFactibilidad')}}",
+        url: "{{url('factibilidad/showLastFactibilidad')}}",
         data: {solnro:solnro},
         method: 'get',
         success: function(r){
@@ -79,21 +90,25 @@ function regFactibilidad(solnro)
             {
                 $('#personal').val(r.data.idPersona).trigger("change.select2");
                 $('#fecha').val(r.data.fecha);
+                $('#motivoReprogramacion').val(r.data.motivo);
             }
             $('#modRegFactibilidad').modal('show');
         }
     });
 }
-function geFactibilidad()
+function saveFacRep()
 {
     if($('#formValRegFac').valid()==false)
-        return;
+    {   return;}
     jQuery.ajax(
     { 
-        url: "{{url('solicitud/geFactibilidad')}}",
+        url: "{{url('factibilidad/saveFacRep')}}",
         data: dataFactibilidad(),
         method: 'get',
         success: function(r){
+            $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+            construirTabla();
+            fillRegistros();
             $('#modRegFactibilidad').modal('hide');
             msjRee(r);
         }
@@ -111,6 +126,7 @@ $("#formValRegFac").validate({
     rules: {
         personal: "required",
         fecha: "required",
+        motivo: "required",
     },
 });
 </script>

@@ -176,6 +176,10 @@ function formatoBadge(est)
 {
     return est!='--'?'<span class="badge badge-info shadow">'+est+'</span>':'--';
 }
+function formatoGeneral(texto,icono,valor,salt='')
+{
+    return valor!==null && valor!=''?texto+': <span class="badge badge-info"><i class="'+icono+'"></i> '+valor+'</span>'+salt:'';
+}
 
 
 // le da formato

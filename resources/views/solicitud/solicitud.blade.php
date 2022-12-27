@@ -81,6 +81,7 @@
 <script>
     $(document).ready( function () {
         takeRegistros();
+        // fillRegistros();
         $('.overlayPagina').css("display","none");
         fillTecnicos();
     } );
@@ -94,6 +95,47 @@
             success: function(result){
                 console.log(result);
                 $('#data').html(result);
+                initDatatable('registros');
+                $('.overlayRegistros').css('display','none');
+            }
+        });
+    }
+    function fillRegistros()
+    {
+        $('.contenedorRegistros').css('display','block');
+        jQuery.ajax(
+        { 
+            url: "{{url('solicitud/listar')}}",
+            method: 'get',
+            success: function(r){
+                console.log(r);
+                var html = '';
+                for (var i = 0; i < r.data.length; i++) 
+                {
+                    if(r.data[i].estado>='2')
+                    {   $banFactibilidad = '<button type="button" class="btn text-success" title="La fecha de Factibilidad ya fue programada"><i class="fa-solid fa-business-time"></i></button>';}
+                    else
+                    {   $banFactibilidad = '<button type="button" class="btn text-secondary" title="Programar factivilidad" onclick="regFactibilidad(' + r.data[i].SolNro + ')"><i class="fa-solid fa-business-time"></i></button>';}
+                    console.log(r.data[i].SolNombre);
+                    html += '<tr class="text-center">' +
+                        '<td class="font-weight-bold">' + novDato(r.data[i].SolNro) + '</td>' +
+                        '<td class="font-weight-bold">' + novDato(r.data[i].SolElect) + '</td>' +
+                        '<td>' + novDato(r.data[i].SolNombre) + '</td>' +
+                        '<td>' + 
+                            r.data[i].SolTipCal + 
+                            r.data[i].SolDirec + 
+                            r.data[i].SolDirNro + 
+                        '</td>' +
+                        '<td>'+
+                            '<div class="btn-group btn-group-sm" role="group">'+
+                                $banFactibilidad+
+                                '<button type="button" class="btn text-info" title="Editar archivo" onclick="registrarAdicional(' + r.data[i].SolNro + ')"><i class="fa fa-edit" ></i></button>'+
+                                '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+r.data[i].SolNombre+');"><i class="fa fa-trash"></i></button>'+
+                            '</div>'+
+                        '</td>'+
+                        '</tr>';
+                }
+                $('#data').html(html);
                 initDatatable('registros');
                 $('.overlayRegistros').css('display','none');
             }

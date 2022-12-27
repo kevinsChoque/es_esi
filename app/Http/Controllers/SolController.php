@@ -6,6 +6,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Http\Request;
 use App\Models\TSolicitud;
 use App\Models\TNumero;
+use App\Models\TFactibilidad;
 
 class SolController extends Controller
 {
@@ -188,6 +189,41 @@ class SolController extends Controller
             }
         }
     }
+    public function actGeFactibilidad(Request $req)
+    {
+        $serverName = 'informatica2-pc\sicem_bd';
+        $connectionInfo = array(
+            "Database"=>"SICEM_AB",
+            "UID"=>"es_esi",
+            "PWD"=>"@emusap1@",
+            "CharacterSet"=>"UTF-8"
+        );
+        $tf = TFactibilidad::find($req->solnro);
+        if($tf==null)
+        {
+            $req['estado'] = 1;
+            $tf=TFactibilidad::create($req->all());
+            $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
+            if($conn_sis)
+            {
+                $sql = "EXECUTE testEsi '$req->solnro', '2';";
+                if($stmt = sqlsrv_query($conn_sis, $sql))
+                {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+                else
+                {   return response()->json(["msg"=>"Paso algo al momento de ejecutar procedimiento.","estado"=>true]);}
+            }
+            else
+            {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
+            
+        }
+        else
+        {
+            $tf->fill($req->all());
+            if($tf->save())
+            {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+        }
+    }
+    
     public function actShow(Request $req)
     {
         $ts = TSolicitud::find($req->solnro);
@@ -196,5 +232,78 @@ class SolController extends Controller
         else
             return response()->json(["data"=>"","estado"=>false]);
     }
-    
+    public function actShowFactibilidad(Request $req)
+    {
+        // dd($req->all());
+        $tf = TFactibilidad::where('solnro',$req->solnro)->first();
+        // dd($tf);
+        if($tf!=null)
+            return response()->json(["data"=>$tf,"estado"=>true]);
+        else
+            return response()->json(["data"=>"","estado"=>false]);
+    }
+    public function actListar()
+    {
+        $serverName = 'informatica2-pc\sicem_bd';
+        $connectionInfo = array(
+            "Database"=>"SICEM_AB",
+            "UID"=>"comercial",
+            "PWD"=>"1",
+            "CharacterSet"=>"UTF-8"
+        );
+        $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
+
+        if($conn_sis)
+        {
+            $tsql = "select * from regsoli r
+                    where r.SolFec=CONVERT(varchar,GETDATE(),5) and r.SerCod='1005'";
+            $stmt = sqlsrv_query($conn_sis, $tsql); 
+            $arreglo = array(); 
+            $html='';
+            while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) 
+            {
+                $arreglo[] = $row;
+                if($row['estado']>='2')
+                {
+                    $banFactibilidad = '<button type="button" class="btn text-success" title="La fecha de Factibilidad ya fue programada"><i class="fa-solid fa-business-time"></i></button>';
+                }
+                else
+                {
+                    $banFactibilidad = '<button type="button" class="btn text-secondary" title="Programar factivilidad" onclick="regFactibilidad('.$row['SolNro'].')"><i class="fa-solid fa-business-time"></i></button>';
+                }
+                $fechaFormat = date("d/m/Y",$row['SolFex']->getTimestamp());
+                $html=$html.'<tr class="text-center">'.
+                    '<td class="font-weight-bold">'.$row['SolNro'].'</td>'.
+                    '<td class="font-weight-bold">'.$row['SolElect'].'</td>'.
+                    '<td>'.$row['SolNombre'].'</td>'.
+                    '<td>'.$row['SolTipCal'].$row['SolDirec'].$row['SolDirNro'].'</td>'.
+                    '<td>'.
+                        '<div class="btn-group btn-group-sm" role="group">'.
+                            $banFactibilidad.
+                            '<button type="button" class="btn text-info" title="Editar archivo" onclick="registrarAdicional('.$row['SolNro'].')"><i class="fa fa-edit" ></i></button>'.
+                            '<a class="btn text-info" title="Descargar documento" onclick="sendData('.$row['SolNro'].')" id="'.$row['SolNro'].'" 
+                            data-solnro="'.$row['SolNro'].'" data-solnombre="'.$row['SolNombre'].'" data-soltipcal="'.$row['SolTipCal'].'" data-soldirec="'.$row['SolDirec'].'" data-soldirnro="'.$row['SolDirNro'].'" data-soldircom="'.$row['SolDirCom'].'" data-solurban="'.$row['SolUrban'].'" data-solelect="'.$row['SolElect'].'" data-solfex="'.$fechaFormat.'" data-soltelef="'.$row['SolTelef'].'"><i class="fa fa-download"></i></a>'.
+                        '</div>'.
+                    '</td>'.
+                '</tr>';
+            }
+            // echo $html;
+            return response()->json([
+                "data"=>$arreglo,
+            ]);
+        }
+        else
+        {
+            echo("fallo");
+            die(print_r(sqlsrv_errors(),true));
+        }
+        // $registros = TPersona::select('persona.*','cargo.nombre as nombreCargo')
+        //     ->leftjoin('cargo','cargo.idCargo','=','persona.idCargo')
+        //     ->where('persona.estado','!=','-')
+        //     ->orderBy('persona.idPersona', 'DESC')
+        //     ->get();
+        // return response()->json([
+        //         "data"=>$registros,
+        //     ]);
+    }
 }

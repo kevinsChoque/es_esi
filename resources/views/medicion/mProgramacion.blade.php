@@ -1,14 +1,14 @@
-<div class="modal fade" id="modRegFactibilidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modRegMedicion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header py-1 border-transparent" style="background-color: rgba(0, 0, 0, 0.03);">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa-solid fa-business-time"></i> Factibilidad</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa-solid fa-ruler"></i> Programar Medicion</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formValRegFac">
+                <form id="formValRegMed">
                     <input type="hidden" name="solnro" id="solnro">
                     <div class="row contFormRegFac">
                         <div class="form-group col-lg-12">
@@ -16,7 +16,7 @@
                             <select class="form-control form-control-sm" name="personal" id="personal" style="width: 100%;"></select>
                         </div>
                         <div class="form-group col-lg-12">
-                            <label for="" class="m-0">Fecha de factibilidad:</label>
+                            <label for="" class="m-0">Fecha de Medicion:</label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -24,19 +24,29 @@
                                 <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
                             </div>
                         </div>
+                        <div class="form-group col-lg-12">
+                            <label for="" class="m-0">Motivo:</label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
+                                </div>
+                                <!-- <input type="date" class="form-control form-control-sm" id="fecha" name="fecha"> -->
+                                <textarea class="form-control" name="motivoProgramacion" id="motivoProgramacion" cols="30" rows="5"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer py-1 border-transparent">
                 <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-sm btn-success geFactibilidad"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-sm btn-success saveMedicion"><i class="fa fa-save"></i> Guardar</button>
             </div>
         </div>
     </div>
 </div>
 <script>
-$('.geFactibilidad').on('click',function(){
-    geFactibilidad();
+$('.saveMedicion').on('click',function(){
+    saveMedicion();
 });
 function fillTecnicos()
 {
@@ -50,51 +60,56 @@ function fillTecnicos()
                 $('#personal').append("<option value='"+fila.idPersona+"'>"+fila.nombre+' '+fila.apellido+"</option>");
             });
             $('#personal').select2({
-                dropdownParent: $('#modRegFactibilidad'),
+                dropdownParent: $('#modRegMedicion'),
                 width:"resolve",
             });
         }
     });
 }
-function dataFactibilidad()
+function dataMedicion()
 {
     return {
-        solnro:$('#solnro').val(),
+        solnrom:$('#solnro').val(),
         idPersona:$('#personal').val(),
         fecha:$('#fecha').val(),
+        motivo:$('#motivoProgramacion').val(),
     }
 }
-function regFactibilidad(solnro)
+function proMedicion(solnro)
 {
     $('#solnro').val(solnro);
-    // $('#modRegFactibilidad').modal('show');
+    // $('#modRegMedicion').modal('show');
     jQuery.ajax(
     { 
-        url: "{{url('solicitud/showFactibilidad')}}",
+        url: "{{url('medicion/showLastMedicion')}}",
         data: {solnro:solnro},
         method: 'get',
         success: function(r){
-            limpiarFormFac();
+            // limpiarFormFac();
             if(r.estado)
             {
                 $('#personal').val(r.data.idPersona).trigger("change.select2");
                 $('#fecha').val(r.data.fecha);
+                $('#motivoProgramacion').val(r.data.motivo);
             }
-            $('#modRegFactibilidad').modal('show');
+            $('#modRegMedicion').modal('show');
         }
     });
 }
-function geFactibilidad()
+function saveMedicion()
 {
-    if($('#formValRegFac').valid()==false)
-        return;
+    if($('#formValRegMed').valid()==false)
+    {   return;}
     jQuery.ajax(
     { 
-        url: "{{url('solicitud/geFactibilidad')}}",
-        data: dataFactibilidad(),
+        url: "{{url('medicion/saveMedicion')}}",
+        data: dataMedicion(),
         method: 'get',
         success: function(r){
-            $('#modRegFactibilidad').modal('hide');
+            $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+            construirTabla();
+            fillRegistros();
+            $('#modRegMedicion').modal('hide');
             msjRee(r);
         }
     });
@@ -105,12 +120,13 @@ function limpiarFormFac()
     // $(".contFormRegFac select").val('0');
     $('#personal').val('0').trigger("change.select2");
 }
-$("#formValRegFac").validate({
+$("#formValRegMed").validate({
     errorClass: "text-danger font-italic font-weight-normal",
     ignore: ".ignore",
     rules: {
         personal: "required",
         fecha: "required",
+        motivo: "required",
     },
 });
 </script>
