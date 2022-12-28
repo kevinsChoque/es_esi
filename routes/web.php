@@ -44,7 +44,7 @@ Route::get('medicion/medicion',[MedicionController::class, 'actMedicion']);
 Route::get('medicion/listar',[MedicionController::class, 'actListar']);
 Route::get('medicion/saveMedicion',[MedicionController::class, 'actSaveMedicion']);
 Route::get('medicion/showLastMedicion',[MedicionController::class, 'actShowLastMedicion']);
-
+Route::get('medicion/saveDataMed',[MedicionController::class, 'actSaveDataMed']);
 
 
 // crud de persona
@@ -77,8 +77,9 @@ Route::get('presupuesto/editCp',[PresupuestoController::class, 'actEditCp']);
 Route::get('presupuesto/guardarCambios',[PresupuestoController::class, 'actGuardarCambios']);
 Route::post('presupuesto/imprimir',[PresupuestoController::class, 'actImprimir']);
 Route::get('presupuesto/print/{id}',[PresupuestoController::class, 'actPrint']);
-
-
+Route::get('presupuesto/listoPresupuesto',[PresupuestoController::class, 'actListoPresupuesto']);
+Route::get('presupuesto/listarListos',[PresupuestoController::class, 'actListarListos']);
+Route::get('presupuesto/getDatos',[PresupuestoController::class, 'actGetDatos']);
 //actividad o rendimiento
 Route::get('cp/listar',[CpController::class, 'actListar']);
 Route::get('cp/cp',[CpController::class, 'actCp']);

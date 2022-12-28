@@ -6,6 +6,8 @@ use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Http\Request;
 use App\Models\TPresupuesto;
 use App\Models\TDetalle;
+use App\Models\TDatamed;
+use App\Models\TSolicitud;
 
 class PresupuestoController extends Controller
 {
@@ -16,6 +18,10 @@ class PresupuestoController extends Controller
         // $this->fpdf = new Fpdf;
         $this->fpdf = new FPDF('P','mm','A4');
     }
+    public function actListoPresupuesto(Request $req)
+    {
+        return view('presupuesto.listoPresupuesto');
+    }
 	public function actCuadroPresupuestal(Request $req)
     {
     	return view('presupuesto.cuadroPresupuestal');
@@ -23,6 +29,18 @@ class PresupuestoController extends Controller
     public function actPresupuesto(Request $req)
     {
     	return view('presupuesto.presupuesto');
+    }
+    public function actListarListos()
+    {
+        $registros = TDatamed::select('data_med.*','solicitud.*')
+            ->leftjoin('solicitud','solicitud.solnro','=','data_med.solnromedicion')
+            // ->where('data_fac.resultado','=','1')
+            // ->where('factibilidad.estado','=','1')
+            ->orderBy('data_med.idDm', 'DESC')
+            ->get();
+        return response()->json([
+            "data"=>$registros,
+        ]);
     }
 	public function agregarCampAdi($model,$act,$req)
     {
@@ -437,6 +455,13 @@ $this->fpdf->Ln(0.5);
 
         exit;
         // dd($req->all());
+    }
+    public function actGetDatos(Request $req)
+    {
+        $ts = TSolicitud::where('solnro',$req->solnro)->first();
+        return response()->json([
+            "data"=>$ts,
+        ]);
     }
 
 }

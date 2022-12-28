@@ -3,10 +3,34 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-        <li class="nav-item border-right border-left ml-3 tcvPmsNavbar">
-            <a class="nav-link border-right border-left" href="{{url('presupuesto/cuadroPresupuestal')}}" title="Registrar Presupuesto">
+        <li class="nav-item border-right border-left ml-2 tcvPmsNavbar">
+            <a class="nav-link" href="{{url('solicitud/solicitud')}}" title="Listar Solicitudes">
+                <i class="fa fa-list d-none d-sm-inline-block"></i>
+                <span class="description-text">SOL</span>
+            </a>
+        </li>
+        <li class="nav-item border-right tcvPmsNavbar">
+            <a class="nav-link" href="{{url('factibilidad/factibilidad')}}" title="Listar Factibilidad">
+                <i class="fa fa-list d-none d-sm-inline-block"></i>
+                <span class="description-text">FAC</span>
+            </a>
+        </li>
+        <li class="nav-item border-right tcvPmsNavbar">
+            <a class="nav-link" href="{{url('medicion/medicion')}}" title="Listar Medicion">
+                <i class="fa fa-list d-none d-sm-inline-block"></i>
+                <span class="description-text">MED</span>
+            </a>
+        </li>
+        <li class="nav-item border-right tcvPmsNavbar">
+            <a class="nav-link" href="#" title="Registrar Presupuesto" onclick="showCuadroPresupuestal();">
                 <i class="fas fa-plus d-none d-sm-inline-block"></i>
                 <span class="description-text">PRE</span>
+            </a>
+        </li>
+        <li class="nav-item border-right tcvPmsNavbar">
+            <a class="nav-link" href="{{url('doc/doc')}}" title="Listar Contratos">
+                <i class="fa fa-list d-none d-sm-inline-block"></i>
+                <span class="description-text">CON</span>
             </a>
         </li>
         <!-- <li class="nav-item border-right infraccionPmsNavbar">

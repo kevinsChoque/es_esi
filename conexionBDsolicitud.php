@@ -11,7 +11,8 @@ if($conn_sis)
 	// echo("con exitosa");
 	// echo "<br>";
 
-	$tsql = "select top 10 * from regsoli r";
+	// $tsql = "select top 10 * from regsoli r where r.SolNro!=0 or r.SolNro=112694 order by r.SolNro desc";
+	$tsql = "select top 10 * from regsoli r where r.SolNro in ('112694','109825','105408') order by r.SolNro desc";
 	// $tsql = "select * from regsoli r
 	// 		where r.SolFec=CONVERT(varchar,GETDATE(),5) and r.SerCod='1005'";
 	$stmt = sqlsrv_query($conn_sis, $tsql); 

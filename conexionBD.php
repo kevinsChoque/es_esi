@@ -10,8 +10,13 @@ if($conn_sis)
 {
 	// echo("con exitosa");
 	// echo "<br>";
-	$tsql = "select top 10 * from CONEXION";  
-	$tsql = "select co.*, rz.CalDes, rz.CalTip, rl.UrbDes, rl.UrbTip  from CONEXION co inner join RZCALLE rz on co.PreCalle=rz.CalCod inner join RLURBA rl on co.PreUrba=rl.UrbCod where co.Confiax=CONVERT(varchar,GETDATE(),5)";
+	// $tsql = "select top 10 * from CONEXION";  
+	// $tsql = "select co.*, rz.CalDes, rz.CalTip, rl.UrbDes, rl.UrbTip  from CONEXION co inner join RZCALLE rz on co.PreCalle=rz.CalCod inner join RLURBA rl on co.PreUrba=rl.UrbCod where co.Confiax=CONVERT(varchar,GETDATE(),5)";
+	$tsql = "select co.*, rz.CalDes, rz.CalTip, rl.UrbDes, rl.UrbTip  
+	from CONEXION co 
+	inner join RZCALLE rz on co.PreCalle=rz.CalCod 
+	inner join RLURBA rl on co.PreUrba=rl.UrbCod 
+where co.Clilelx in ('31041142','31022852','46269224')";
 	$stmt = sqlsrv_query($conn_sis, $tsql); 
 	$arreglo = array(); 
 	$html='';

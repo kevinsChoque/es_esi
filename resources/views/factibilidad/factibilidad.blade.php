@@ -39,8 +39,7 @@
                                         <th class="text-center" data-priority="1"># Sol.</th>
                                         <th class="text-center" data-priority="4">Ubicacion del Predio</th>
                                         <th class="text-center" data-priority="2">Telefonos</th>
-                                        <th class="text-center" data-priority="3">Tecnico</th>
-                                        <th class="text-center" data-priority="3">F.Fac</th>
+                                        <th class="text-center" data-priority="3">Tecnico y Dia de Fac.</th>
                                         <th class="text-center" data-priority="1">Rep.</th>
                                     </tr>
                                 </thead>
@@ -51,8 +50,7 @@
                                         <th class="text-center" data-priority="1"># Sol.</th>
                                         <th class="text-center" data-priority="4">Ubicacion del Predio</th>
                                         <th class="text-center" data-priority="2">Telefonos</th>
-                                        <th class="text-center" data-priority="3">Tecnico</th>
-                                        <th class="text-center" data-priority="3">F.Fac</th>
+                                        <th class="text-center" data-priority="3">Tecnico y Dia de Fac.</th>
                                         <th class="text-center" data-priority="1">Rep.</th>
                                     </tr>
                                 </tfoot>
@@ -103,8 +101,10 @@
                             formatoGeneral('Telefono','fa fa-phone',result.data[i].telefono,'<br>') + 
                             formatoGeneral('Telefono alternativo','fa fa-phone',result.data[i].telefonoAlternativo) + 
                         '</td>' +
-                        '<td class="align-middle" style="font-size: 0.9rem;">' + novDato(result.data[i].nombre)+' '+ novDato(result.data[i].apellido) + '</td>' +
-                        '<td class="align-middle">' + formatoDate(result.data[i].fecha) + '</td>' +
+                        '<td class="align-middle" style="font-size: 0.9rem;">' + 
+                            novDato(result.data[i].nombre)+' '+ novDato(result.data[i].apellido) + '<br>' +
+                            formatoDate(result.data[i].fecha) +
+                        '</td>' +
                         '<td class="align-middle">'+
                             '<div class="btn-group btn-group-sm" role="group">'+
                                 '<button type="button" class="btn text-info" title="Lista de Reprogramaciones" onclick="fillRegistrosHistorial('+result.data[i].solnro+');"><i class="fa fa-list-ol"></i></button>'+

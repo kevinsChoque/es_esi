@@ -36,6 +36,19 @@
                 <div class="card-body">
                     <form id="formValidateReg">
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label for="" class="m-0">Usuarios: <span class="text-danger">*</span></label>
+                                        <select class="form-control form-control-sm" id="usuarios">
+                                            <option selected disabled value="0"> Seleccione...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                         <div class="form-group col-lg-3">
                             <label for="" class="m-0">Codigo: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
@@ -157,19 +170,63 @@
 
 @include('presupuesto.mDetalle')
 <script>
+    
     var flip=0;
     $(document).ready( function () {
         // tablaDeRegistros=$('.contenedorRegistros').html();
         $('.overlayPagina').css("display","none");
         fillPlantilla();
+        fillUsers();
         // initDatatable('registros');
+        if(localStorage.getItem("solnro")!=0)
+        {
+            $("#usuarios").val(localStorage.getItem("solnro")).change();
+            getDatos(localStorage.getItem("solnro"));
+        }
     } );
+    
+    $('#usuarios').on('change',function(){
+        // alert($(this).val());
+        getDatos($(this).val());
+    });
     $('.savePresupuesto').on('click',function(){
         savePresupuesto();
     });
     $('.loadItems').on('click',function(){
         loadItems();
     });
+    function getDatos(solnro)
+    {
+        jQuery.ajax(
+        { 
+            url: "{{url('presupuesto/getDatos')}}",
+            data: {solnro:solnro},
+            method: 'get',
+            success: function(r){
+                console.log(r);
+                $('#codigo').val(r.data.solnro);
+                $('#usuario').val(r.data.nombreRep);
+                $('#direccion').val(r.data.ubicacionPre);
+            }
+        });
+    }
+    function fillUsers()
+    {
+        jQuery.ajax(
+        { 
+            url: "{{url('presupuesto/listarListos')}}",
+            method: 'get',
+            success: function(r){
+                console.log(r.data);
+                $.each(r.data,function(indice,fila){
+                    $('#usuarios').append("<option value='"+fila.solnro+"'>"+novDato(fila.nombreRep)+ ' ' + novDato(fila.ubicacionPre)+"</option>");
+                });
+                $('#usuarios').select2({
+                    width:"resolve",
+                });
+            }
+        });
+    }
     
     function fillPlantilla()
     {
