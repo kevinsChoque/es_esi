@@ -77,14 +77,38 @@ class DocController extends Controller
         $tp->setValue('nomfircon',$req->nomfircon);
         $tp->setValue('urbdes',$req->urbdes);
         $tp->setValue('urbtip',$req->urbtip);
+        // ---------------------------------
+        $serverName = 'informatica2-pc\sicem_bd';
+        $connectionInfo = array(
+            "Database"=>"SICEM_AB",
+            "UID"=>"comercial",
+            "PWD"=>"1",
+            "CharacterSet"=>"UTF-8"
+        );
+        $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
+        if($conn_sis)
+        {
+            $ppp='00012628';
+            dd($req->inscrinro);
+            $tsql = "select * from CREDITOS where InscriNrc='$req->inscrinro'";
+            $stmt = sqlsrv_query($conn_sis, $tsql); 
+            $arreglo = array(); 
+            $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC);
+            dd($row);
+            
+            // while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) 
+            // {
+            //     $arreglo[] = $row;
+            //     dd($row["CredNro"]);
+            // }
+        }
+        // dd($arreglo[0]);
+        // ---------------------------------
             
 
-            
-            
-        // }
 
-        $fileName='contrato.docx';
-        $tp->saveAs($fileName);
-        return response()->download($fileName)->deleteFileAfterSend(true);
+        // $fileName='contrato.docx';
+        // $tp->saveAs($fileName);
+        // return response()->download($fileName)->deleteFileAfterSend(true);
     }
 }
