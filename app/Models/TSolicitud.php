@@ -14,6 +14,16 @@ class TSolicitud extends Model
 
     protected $fillable = [
     	'solnro',
+
+    	'nombreTit',
+		'dniTit',
+		'correoTit',
+		'domicilioTit',
+		'numeroTit',
+		'manzanaTit',
+		'loteTit',
+		'urbanizacionTit',
+
         'fechaVencimiento',
 		'nombreRep',
 		'dniRep',

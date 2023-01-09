@@ -39,13 +39,17 @@ Route::get('factibilidad/saveFacRep',[FactibilidadController::class, 'actSaveFac
 Route::get('factibilidad/listarHistorial',[FactibilidadController::class, 'actListarHistorial']);
 Route::get('factibilidad/saveDataFac',[FactibilidadController::class, 'actSaveDataFac']);
 Route::get('factibilidad/show',[FactibilidadController::class, 'actShow']);
+Route::get('factibilidad/guardarSegunSeaCaso',[FactibilidadController::class, 'actGuardarSegunSeaCaso']);
+Route::get('factibilidad/download/{solnro}',[FactibilidadController::class, 'actDownload']);
+
 // medicion
 Route::get('medicion/medicion',[MedicionController::class, 'actMedicion']);
 Route::get('medicion/listar',[MedicionController::class, 'actListar']);
-Route::get('medicion/saveMedicion',[MedicionController::class, 'actSaveMedicion']);
+Route::get('medicion/saveProMed',[MedicionController::class, 'actSaveProMed']);
 Route::get('medicion/showLastMedicion',[MedicionController::class, 'actShowLastMedicion']);
 Route::get('medicion/saveDataMed',[MedicionController::class, 'actSaveDataMed']);
-
+Route::get('medicion/show',[MedicionController::class, 'actShow']);
+Route::get('medicion/download/{solnro}',[MedicionController::class, 'actDownload']);
 
 // crud de persona
 Route::get('persona/persona',[PersonaController::class, 'actPersona']);

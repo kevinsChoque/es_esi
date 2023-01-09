@@ -36,6 +36,7 @@
                 <div class="card-body">
                     <form id="formValidateReg">
                     <div class="row">
+                        <input type="hidden" id="solnro" name="solnro">
                         <div class="col-lg-12">
                             <div class="row justify-content-center">
                                 <div class="col-lg-5">
@@ -197,6 +198,7 @@
     });
     function getDatos(solnro)
     {
+        $('#solnro').val(solnro);
         jQuery.ajax(
         { 
             url: "{{url('presupuesto/getDatos')}}",
@@ -204,8 +206,8 @@
             method: 'get',
             success: function(r){
                 console.log(r);
-                $('#codigo').val(r.data.solnro);
-                $('#usuario').val(r.data.nombreRep);
+                $('#codigo').val(r.codigo);
+                $('#usuario').val(r.data.nombreTit);
                 $('#direccion').val(r.data.ubicacionPre);
             }
         });
@@ -219,7 +221,7 @@
             success: function(r){
                 console.log(r.data);
                 $.each(r.data,function(indice,fila){
-                    $('#usuarios').append("<option value='"+fila.solnro+"'>"+novDato(fila.nombreRep)+ ' ' + novDato(fila.ubicacionPre)+"</option>");
+                    $('#usuarios').append("<option value='"+fila.solnro+"'>"+novDato(fila.dniTit)+ ' | ' +novDato(fila.nombreTit)+ ' | ' + novDato(fila.ubicacionPre)+"</option>");
                 });
                 $('#usuarios').select2({
                     width:"resolve",
@@ -245,6 +247,7 @@
     function data(tipo)
     {
         return {
+            solnro:$('#solnro').val(),
             codigo:$('#codigo').val(),
             usuario:$('#usuario').val(),
             direccion:$('#direccion').val(),

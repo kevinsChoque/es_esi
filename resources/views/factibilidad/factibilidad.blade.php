@@ -62,6 +62,7 @@
         </div>
     </div>
 </div>
+
 @include('factibilidad.mAddData')
 @include('factibilidad.mReprogramacion')
 @include('factibilidad.mHistorial')
@@ -109,6 +110,7 @@
                             '<div class="btn-group btn-group-sm" role="group">'+
                                 '<button type="button" class="btn text-info" title="Lista de Reprogramaciones" onclick="fillRegistrosHistorial('+result.data[i].solnro+');"><i class="fa fa-list-ol"></i></button>'+
                                 '<button type="button" class="btn text-info" title="Reprogramar Factibilidad" onclick="repFactibilidad('+result.data[i].solnro+');"><i class="fa-solid fa-business-time"></i></button>'+
+                                '<a href="{{url('factibilidad/download')}}/'+result.data[i].solnro+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
                                 '<button type="button" class="btn text-info" title="Agregar datos a factibilidad" onclick="registrarAdicional('+result.data[i].solnro+');"><i class="fa-solid fa-plus"></i></button>'+
                             '</div>'+
                         '</td>'+
@@ -120,6 +122,7 @@
             }
         });
     }
+    // '<a class="btn text-info" title="Descargar documento" onclick="sendData('.$row['InscriNro'].')" id="'.$row['InscriNro'].'" 
     function eliminar(id)
     {
         Swal.fire({

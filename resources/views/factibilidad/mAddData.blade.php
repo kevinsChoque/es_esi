@@ -15,6 +15,11 @@
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">II. DATOS DE REPRESENTANTE:</p></div>
                         </div> -->
                         <div class="col-lg-3">
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0">2. DATOS DEL USUARIO</p></div>
+                            <div class="form-group mb-1">
+                                <label class="m-0">Codigo:</label>
+                                <input type="text" class="form-control form-control-sm" id="codigo" name="codigo">
+                            </div>
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">3. DATOS DEL PREDIO</p></div>
                             <div class="form-group mb-1">
                                 <label class="m-0">Tipo de propiedad:</label>
@@ -83,7 +88,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <div class="alert alert-success py-1 mb-1"><p class="m-0">4. ACTIVIDA DE LA VIVIENDA Y UNIDADES DE USO</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0">4. ACTIVIDA DE LA VIVIENDA Y UNIDADES DE USO</p></div>
                             <div class="form-group mb-1">
                                 <label for="" class="m-0">Actividad:</label>
                                 <div class="input-group input-group-sm">
@@ -123,7 +128,7 @@
                                     <option value="Solo desague">Solo desague</option>
                                 </select>
                             </div>
-                            <div class="alert alert-success py-1 mb-1"><p class="m-0">6. FORMA DE PAGO DE LA CONEXION DOMICILIARIA SOLICITADA</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0">6. FORMA DE PAGO DE LA CONEXION DOMICILIARIA SOLICITADA</p></div>
                             <div class="form-group mb-1">
                                 <!-- <label class="m-0">Forma de pago de la conexion domiciliaria solicitada:</label> -->
                                 <select class="form-control form-control-sm" name="formaPago" id="formaPago">
@@ -166,7 +171,7 @@
                                     <input type="text" id="ca2" name="ca2" class="form-control">
                                 </div>
                             </div>  
-                            <div class="alert alert-success py-1 mb-1"><p class="m-0">8. CUENTA CON TANQUE DE ALMACENAMIENTO</p></div> 
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0">8. CUENTA CON TANQUE DE ALMACENAMIENTO</p></div> 
                             <div class="form-group mb-1">
                                 <!-- <label class="m-0">Cuenta con tanque de almacenamiento:</label> -->
                                 <select class="form-control form-control-sm" name="cuenta" id="cuenta">
@@ -197,7 +202,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <div class="alert alert-success py-1 mb-1"><p class="m-0">10. PUNTO DE AGUA</p></div> 
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0">10. PUNTO DE AGUA</p></div> 
                             <div class="form-group mb-1">
                                 <!-- <label class="m-0">Punto de agua:</label> -->
                                 <select class="form-control form-control-sm" name="cuentaPunto" id="cuentaPunto">
@@ -206,8 +211,8 @@
                                     <option value="No cuenta con punto de agua">No cuenta con punto de agua</option>
                                 </select>
                             </div>
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0">11. RESULTADO DEL ANALISIS DE FACTIBILIDAD</p></div> 
-                            <div class="form-group mb-1">
+                            <div class="alert alert-info py-1 mb-1 shadow-lg bg-warning font-weight-bold"><p class="m-0">11. RESULTADO DEL ANALISIS DE FACTIBILIDAD</p></div> 
+                            <div class="form-group mb-1 shadow-lg">
                                 <!-- <label class="m-0">Resultado de analisis de factibilidad:</label> -->
                                 <select class="form-control form-control-sm" name="resultado" id="resultado">
                                     <option selected disabled value="0">Seleccione</option>
@@ -224,7 +229,7 @@
                                     <input type="text" class="form-control form-control-sm" id="motivo1" name="motivo1">
                                 </div>
                             </div>
-                            <div class="alert alert-success py-1 mb-1"><p class="m-0">Observacion (del trabajador y/o el solicitante)</p></div> 
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0">Observacion (del trabajador y/o el solicitante)</p></div> 
                             <div class="form-group mb-1">
                                 <label class="m-0">Explicar motivo:</label>
                                 <div class="input-group input-group-sm">
@@ -273,6 +278,7 @@ function registrarAdicional(solnro)
             console.log(r);
             if(r.estado)
             {
+                $('#codigo').val(r.data.codigo);
                 $('#tipoPropiedad').val(r.data.tipoPropiedad===null?'0':r.data.tipoPropiedad);
                 $('#tipoConstruccion').val(r.data.tipoConstruccion===null?'0':r.data.tipoConstruccion);
                 $('#otros').val(r.data.otros);
@@ -320,7 +326,8 @@ function registrarAdicional(solnro)
 function dataAddFac()
 {
     return {
-        solnrof:$('#solnroDataAdd').val(),
+        solnro:$('#solnroDataAdd').val(),
+        codigo:$('#codigo').val(),
         tipoPropiedad:$('#tipoPropiedad').val(),
         tipoConstruccion:$('#tipoConstruccion').val(),
         otros:$('#otros').val(),

@@ -113,7 +113,7 @@
                 <i class="fa fa-circle-user fa-lg"></i>
                 
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;min-width: 20rem;">
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;min-width: 20rem; display: none;">
                 <a href="#" class="dropdown-item">
                     <div class="media mb-2">
                         <img src="https://yt3.ggpht.com/ytc/AMLnZu-CkHfe_d5oAVhWMfn4e8Ul-COm3yptlLyR1sFCNQ=s900-c-k-c0x00ffffff-no-rj" alt="User Avatar" class="img-size-50 img-circle m-auto">

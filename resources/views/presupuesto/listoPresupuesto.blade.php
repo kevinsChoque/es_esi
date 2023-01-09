@@ -37,8 +37,8 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th class="text-center" data-priority="1"># Sol.</th>
-                                        <th class="text-center" data-priority="4">DNI</th>
-                                        <th class="text-center" data-priority="2">Nombre del repre.</th>
+                                        <th class="text-center" data-priority="4">DNI del Titular</th>
+                                        <th class="text-center" data-priority="2">Nombre del Titular</th>
                                         <th class="text-center" data-priority="3">Direccion del predio</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
                                     </tr>
@@ -48,8 +48,8 @@
                                 <tfoot class="thead-light">
                                     <tr>
                                         <th class="text-center" data-priority="1"># Sol.</th>
-                                        <th class="text-center" data-priority="4">DNI</th>
-                                        <th class="text-center" data-priority="2">Nombre del repre.</th>
+                                        <th class="text-center" data-priority="4">DNI del Titular</th>
+                                        <th class="text-center" data-priority="2">Nombre del Titular</th>
                                         <th class="text-center" data-priority="3">Direccion del predio</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
                                     </tr>
@@ -85,8 +85,8 @@
                 {
                     html += '<tr class="text-center">' +
                         '<td class="align-middle font-weight-bold">' + novDato(result.data[i].solnro) + '</td>' +
-                        '<td class="align-middle">' + novDato(result.data[i].dniRep) +'</td>' +
-                        '<td class="align-middle">' + novDato(result.data[i].nombreRep) +'</td>' +
+                        '<td class="align-middle">' + novDato(result.data[i].dniTit) +'</td>' +
+                        '<td class="align-middle">' + novDato(result.data[i].nombreTit) +'</td>' +
                         '<td class="align-middle">' + novDato(result.data[i].ubicacionPre) +'</td>' +
                         '<td class="align-middle">'+
                             '<div class="btn-group btn-group-sm" role="group">'+

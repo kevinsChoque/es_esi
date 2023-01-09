@@ -36,8 +36,25 @@
 </div>
 <script>
 $('.geFactibilidad').on('click',function(){
-    geFactibilidad();
+    // geFactibilidad();
+    guardarSegunSeaCaso();
 });
+function guardarSegunSeaCaso()
+{
+    if($('#formValRegFac').valid()==false)
+        return;
+    jQuery.ajax(
+    { 
+        // url: "{{url('solicitud/geFactibilidad')}}",
+        url: "{{url('factibilidad/guardarSegunSeaCaso')}}",
+        data: datagGuardarSegunSeaCaso(),
+        method: 'get',
+        success: function(r){
+            $('#modRegFactibilidad').modal('hide');
+            msjRee(r);
+        }
+    });
+}
 function fillTecnicos()
 {
     jQuery.ajax(
@@ -55,6 +72,27 @@ function fillTecnicos()
             });
         }
     });
+}
+function datagGuardarSegunSeaCaso()
+{
+    let numeroSolicitud = $('#solnro').val();
+    return {
+        solnro:$('#solnro').val(),
+
+        nombreTit:$('#'+numeroSolicitud).attr('data-SolNombre'),
+        dniTit:$('#'+numeroSolicitud).attr('data-SolElect'),
+        // correoTit:$('#'+numeroSolicitud).attr('data-SolElect'),
+        domicilioTit:
+            $('#'+numeroSolicitud).attr('data-SolTipCal')+' '+
+            $('#'+numeroSolicitud).attr('data-SolDirec'),
+        numeroTit:$('#'+numeroSolicitud).attr('data-SolDirNro'),
+        // manzanaTit:$('#'+numeroSolicitud).attr('data-SolElect'),
+        // loteTit:$('#'+numeroSolicitud).attr('data-SolElect'),
+        urbanizacionTit:$('#'+numeroSolicitud).attr('data-SolUrban'),
+
+        idPersona:$('#personal').val(),
+        fecha:$('#fecha').val(),
+    }
 }
 function dataFactibilidad()
 {

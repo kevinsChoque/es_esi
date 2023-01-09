@@ -13,8 +13,11 @@ if($conn_sis)
 
 	// $tsql = "select top 10 * from regsoli r where r.SolNro!=0 or r.SolNro=112694 order by r.SolNro desc";
 	// $tsql = "select top 10 * from regsoli r where r.SolNro in ('112694','109825','105408') order by r.SolNro desc";
+	// $tsql = "select * from regsoli r
+	// 		where r.SolFec=CONVERT(varchar,GETDATE(),5) and r.SerCod='1005'";
 	$tsql = "select * from regsoli r
-			where r.SolFec=CONVERT(varchar,GETDATE(),5) and r.SerCod='1005'";
+			where r.SolNro='113866' or r.SolNro='113888'";
+			
 	$stmt = sqlsrv_query($conn_sis, $tsql); 
 	$arreglo = array(); 
 	$html='';
@@ -40,7 +43,7 @@ if($conn_sis)
             '<td>'.
                 '<div class="btn-group btn-group-sm" role="group">'.
                 	$banFactibilidad.
-                	'<button type="button" class="btn text-info" title="Editar archivo" onclick="registrarAdicional('.$row['SolNro'].')"><i class="fa fa-edit" ></i></button>'.
+                	'<button type="button" class="btn text-info" title="Editar archivo" onclick="registrarAdicional('.$row['SolNro'].')"><i class="fa fa-plus" ></i></button>'.
                     '<a class="btn text-info" title="Descargar documento" onclick="sendData('.$row['SolNro'].')" id="'.$row['SolNro'].'" 
                     data-solnro="'.$row['SolNro'].'" data-solnombre="'.$row['SolNombre'].'" data-soltipcal="'.$row['SolTipCal'].'" data-soldirec="'.$row['SolDirec'].'" data-soldirnro="'.$row['SolDirNro'].'" data-soldircom="'.$row['SolDirCom'].'" data-solurban="'.$row['SolUrban'].'" data-solelect="'.$row['SolElect'].'" data-solfex="'.$fechaFormat.'" data-soltelef="'.$row['SolTelef'].'"><i class="fa fa-download"></i></a>'.
                 '</div>'.

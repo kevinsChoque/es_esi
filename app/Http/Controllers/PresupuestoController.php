@@ -8,6 +8,8 @@ use App\Models\TPresupuesto;
 use App\Models\TDetalle;
 use App\Models\TDatamed;
 use App\Models\TSolicitud;
+use App\Models\TMedicion;
+use App\Models\TFactibilidad;
 
 class PresupuestoController extends Controller
 {
@@ -32,11 +34,11 @@ class PresupuestoController extends Controller
     }
     public function actListarListos()
     {
-        $registros = TDatamed::select('data_med.*','solicitud.*')
-            ->leftjoin('solicitud','solicitud.solnro','=','data_med.solnromedicion')
-            // ->where('data_fac.resultado','=','1')
+        $registros = TMedicion::select('medicion.*','solicitud.*')
+            ->leftjoin('solicitud','solicitud.solnro','=','medicion.solnro')
+            ->where('medicion.estado','=','1')
             // ->where('factibilidad.estado','=','1')
-            ->orderBy('data_med.idDm', 'DESC')
+            ->orderBy('medicion.idMed', 'DESC')
             ->get();
         return response()->json([
             "data"=>$registros,
@@ -88,15 +90,34 @@ class PresupuestoController extends Controller
     }
     public function actRegistrar(Request $req)
     {
+        // dd($req->all());
     	$tPre=TPresupuesto::create($req->all());
         if($this->agregarCampAdi($tPre,1,$req))
         {
             if($this->saveDetalle($req,$tPre->idPre))
             {
-                return response()->json([
-                    "msg"=>"Operacion exitosa.",
-                    "estado"=>true
-                ]);
+                $serverName = 'informatica2-pc\sicem_bd';
+                $connectionInfo = array(
+                    "Database"=>"SICEM_AB",
+                    "UID"=>"es_esi",
+                    "PWD"=>"@emusap1@",
+                    "CharacterSet"=>"UTF-8"
+                );
+                $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
+                if($conn_sis)
+                {
+                    $sql = "EXECUTE testEsi '$req->solnro', '5';";
+                    if($stmt = sqlsrv_query($conn_sis, $sql))
+                    {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+                    else
+                    {   return response()->json(["msg"=>"Paso algo al momento de ejecutar procedimiento.","estado"=>true]);}
+                }
+                else
+                {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
+                // return response()->json([
+                //     "msg"=>"Operacion exitosa.",
+                //     "estado"=>true
+                // ]);
             }
         }
         return response()->json([
@@ -459,8 +480,10 @@ $this->fpdf->Ln(0.5);
     public function actGetDatos(Request $req)
     {
         $ts = TSolicitud::where('solnro',$req->solnro)->first();
+        $codigo = TFactibilidad::where('solnro',$req->solnro)->first()->codigo;
         return response()->json([
             "data"=>$ts,
+            "codigo"=>$codigo,
         ]);
     }
 

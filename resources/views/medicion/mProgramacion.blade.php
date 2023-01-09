@@ -24,29 +24,28 @@
                                 <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
                             </div>
                         </div>
-                        <div class="form-group col-lg-12">
+                        <!-- <div class="form-group col-lg-12">
                             <label for="" class="m-0">Motivo:</label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <!-- <input type="date" class="form-control form-control-sm" id="fecha" name="fecha"> -->
                                 <textarea class="form-control" name="motivoProgramacion" id="motivoProgramacion" cols="30" rows="5"></textarea>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
             </div>
             <div class="modal-footer py-1 border-transparent">
                 <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-sm btn-success saveMedicion"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-sm btn-success saveProMed"><i class="fa fa-save"></i> Guardar</button>
             </div>
         </div>
     </div>
 </div>
 <script>
-$('.saveMedicion').on('click',function(){
-    saveMedicion();
+$('.saveProMed').on('click',function(){
+    saveProMed();
 });
 function fillTecnicos()
 {
@@ -69,40 +68,40 @@ function fillTecnicos()
 function dataMedicion()
 {
     return {
-        solnrom:$('#solnro').val(),
+        solnro:$('#solnro').val(),
         idPersona:$('#personal').val(),
         fecha:$('#fecha').val(),
-        motivo:$('#motivoProgramacion').val(),
+        // motivo:$('#motivoProgramacion').val(),
     }
 }
 function proMedicion(solnro)
 {
     $('#solnro').val(solnro);
-    // $('#modRegMedicion').modal('show');
-    jQuery.ajax(
-    { 
-        url: "{{url('medicion/showLastMedicion')}}",
-        data: {solnro:solnro},
-        method: 'get',
-        success: function(r){
-            // limpiarFormFac();
-            if(r.estado)
-            {
-                $('#personal').val(r.data.idPersona).trigger("change.select2");
-                $('#fecha').val(r.data.fecha);
-                $('#motivoProgramacion').val(r.data.motivo);
-            }
-            $('#modRegMedicion').modal('show');
-        }
-    });
+    $('#modRegMedicion').modal('show');
+    // jQuery.ajax(
+    // { 
+    //     url: "{{url('medicion/showLastMedicion')}}",
+    //     data: {solnro:solnro},
+    //     method: 'get',
+    //     success: function(r){
+    //         // limpiarFormFac();
+    //         if(r.estado)
+    //         {
+    //             $('#personal').val(r.data.idPersona).trigger("change.select2");
+    //             $('#fecha').val(r.data.fecha);
+    //             $('#motivoProgramacion').val(r.data.motivo);
+    //         }
+    //         $('#modRegMedicion').modal('show');
+    //     }
+    // });
 }
-function saveMedicion()
+function saveProMed()
 {
     if($('#formValRegMed').valid()==false)
     {   return;}
     jQuery.ajax(
     { 
-        url: "{{url('medicion/saveMedicion')}}",
+        url: "{{url('medicion/saveProMed')}}",
         data: dataMedicion(),
         method: 'get',
         success: function(r){

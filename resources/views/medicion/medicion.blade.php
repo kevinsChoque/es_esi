@@ -89,7 +89,7 @@
                     if(result.data[i].estadoMedicion!=1)
                     {
                         html += '<tr class="text-center">' +
-                            '<td class="align-middle font-weight-bold">' + novDato(result.data[i].solnrof) + '</td>' +
+                            '<td class="align-middle font-weight-bold">' + novDato(result.data[i].solnro) + '</td>' +
                             '<td class="align-middle">' + 
                                 formatoGeneral('Direccion','fa fa-home',result.data[i].ubicacionPre,'<br>') +
                                 formatoGeneral('numero','fa fa-hashtag',result.data[i].numeroPre,'<br>') +
@@ -106,8 +106,9 @@
                             '<td class="align-middle">'+
                                 '<div class="btn-group btn-group-sm" role="group">'+
                                     // '<button type="button" class="btn text-info" title="Lista de Reprogramaciones" onclick="fillRegistrosHistorial('+result.data[i].solnrof+');"><i class="fa fa-list-ol"></i></button>'+
-                                    // '<button type="button" class="btn text-info" title="Programar Medicion" onclick="proMedicion('+result.data[i].solnrof+');"><i class="fa-solid fa-ruler"></i></button>'+
-                                    '<button type="button" class="btn text-info" title="Agregar datos a la Medicion" onclick="registrarAdicional('+result.data[i].solnrof+');"><i class="fa-solid fa-plus"></i></button>'+
+                                    '<button type="button" class="btn text-info" title="Programar Medicion" onclick="proMedicion('+result.data[i].solnro+');"><i class="fa-solid fa-ruler"></i></button>'+
+                                    '<a href="{{url('medicion/download')}}/'+result.data[i].solnro+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
+                                    '<button type="button" class="btn text-info" title="Agregar datos a la Medicion" onclick="registrarAdicional('+result.data[i].solnro+');"><i class="fa-solid fa-plus"></i></button>'+
                                 '</div>'+
                             '</td>'+
                             '</tr>';

@@ -191,11 +191,12 @@ class SolController extends Controller
     }
     public function actGeFactibilidad(Request $req)
     {
+        dd('aki es');
         $serverName = 'informatica2-pc\sicem_bd';
         $connectionInfo = array(
             "Database"=>"SICEM_AB",
-            "UID"=>"es_esi",
-            "PWD"=>"@emusap1@",
+            "UID"=>"comercial",
+            "PWD"=>"1",
             "CharacterSet"=>"UTF-8"
         );
         $tf = TFactibilidad::find($req->solnro);

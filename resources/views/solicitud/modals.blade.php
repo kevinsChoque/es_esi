@@ -279,8 +279,22 @@ $('.guardarEdit').on('click',function(){
 });
 function data()
 {
+    let numeroSolicitud = $('#solnro').val();
+    // alert(numeroSolicitud);
+    // alert($('#'+numeroSolicitud).attr('SolNombre'));
 	return {
         solnro:$('#solnro').val(),
+
+        nombreTit:$('#'+numeroSolicitud).attr('data-SolNombre'),
+        dniTit:$('#'+numeroSolicitud).attr('data-SolElect'),
+        // correoTit:$('#'+numeroSolicitud).attr('data-SolElect'),
+        domicilioTit:
+            $('#'+numeroSolicitud).attr('data-SolTipCal')+' '+
+            $('#'+numeroSolicitud).attr('data-SolDirec'),
+        numeroTit:$('#'+numeroSolicitud).attr('data-SolDirNro'),
+        // manzanaTit:$('#'+numeroSolicitud).attr('data-SolElect'),
+        // loteTit:$('#'+numeroSolicitud).attr('data-SolElect'),
+        urbanizacionTit:$('#'+numeroSolicitud).attr('data-SolUrban'),
 
         fechaVencimiento:$('#fechaVencimiento').val(),
         nombreRep:$('#nombreRep').val(),
@@ -395,8 +409,10 @@ function registrarAdicional(solnro)
         }
     });
 }
-function guardarEdit(solnro)
+function guardarEdit()
 {
+    // alert($('#'+solnro).attr('SolNombre'));
+    // alert(solnro);
     jQuery.ajax(
     { 
         url: "{{url('solicitud/registrar')}}",
