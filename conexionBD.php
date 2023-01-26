@@ -11,7 +11,7 @@ if($conn_sis)
 	// echo("con exitosa");
 	// echo "<br>";
 	// $tsql = "select top 10 * from CONEXION";  
-	$tsql = "select co.*, rz.CalDes, rz.CalTip, rl.UrbDes, rl.UrbTip  from CONEXION co inner join RZCALLE rz on co.PreCalle=rz.CalCod inner join RLURBA rl on co.PreUrba=rl.UrbCod where co.Confiax=CONVERT(varchar,GETDATE(),5)";
+	$tsql = "select co.*, rz.CalDes, rz.CalTip, rl.UrbDes, rl.UrbTip  from CONEXION co inner join RZCALLE rz on co.PreCalle=rz.CalCod inner join RLURBA rl on co.PreUrba=rl.UrbCod where co.Confiax=CONVERT(varchar,GETDATE(),5) or InscriNro=000179139 or InscriNro=00130687";
 // 	$tsql = "select co.*, rz.CalDes, rz.CalTip, rl.UrbDes, rl.UrbTip  
 // 	from CONEXION co 
 // 	inner join RZCALLE rz on co.PreCalle=rz.CalCod 

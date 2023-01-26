@@ -50,6 +50,9 @@ function guardarSegunSeaCaso()
         data: datagGuardarSegunSeaCaso(),
         method: 'get',
         success: function(r){
+            $(".overlayRegDBL").toggle(flip++%2===0);
+            construirTablaDBL();
+            listarFromApp();
             $('#modRegFactibilidad').modal('hide');
             msjRee(r);
         }
@@ -63,11 +66,17 @@ function fillTecnicos()
         method: 'get',
         success: function(r){
             $('#personal').append('<option selected disabled value="0">Seleccione personal . . .</option>');
+            $('#personalFactibilidad').append('<option selected disabled value="0">Seleccione personal . . .</option>');
             $.each(r.data,function(indice,fila){
                 $('#personal').append("<option value='"+fila.idPersona+"'>"+fila.nombre+' '+fila.apellido+"</option>");
+                $('#personalFactibilidad').append("<option value='"+fila.idPersona+"'>"+fila.nombre+' '+fila.apellido+"</option>");
             });
             $('#personal').select2({
                 dropdownParent: $('#modRegFactibilidad'),
+                width:"resolve",
+            });
+            $('#personalFactibilidad').select2({
+                dropdownParent: $('#modRegFacSol'),
                 width:"resolve",
             });
         }
@@ -76,6 +85,11 @@ function fillTecnicos()
 function datagGuardarSegunSeaCaso()
 {
     let numeroSolicitud = $('#solnro').val();
+    let hoy = new Date();
+    let hora = hoy.getHours().toString().padStart(2, 0);
+    let minutos = hoy.getMinutes().toString().padStart(2, 0);
+    let segunHora = hora >= 12 ? 'PM' : 'AM';
+    let docHora = hora+':'+minutos+' '+segunHora;
     return {
         solnro:$('#solnro').val(),
 
@@ -92,6 +106,10 @@ function datagGuardarSegunSeaCaso()
 
         idPersona:$('#personal').val(),
         fecha:$('#fecha').val(),
+        lugar:'Abancay',
+        empresa:'EMUSAP ABANCAY',
+
+        hora:docHora,
     }
 }
 function dataFactibilidad()

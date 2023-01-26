@@ -51,10 +51,10 @@ class DocController extends Controller
     }
     public function actDownload(Request $req)
     {
-    	// dd($req->all());
+        // dd(NumberFormatter::create('en', NumberFormatter::SPELLOUT)->format(12309));
+        // $fmt = new NumberFormatter( 'en', NumberFormatter::SPELLOUT );
+        // dd($fmt->format(1142));exit();
     	$firmador = TPersona::where('firma','1')->first();
-    	// echo($tCliente);exit();
-
         setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
         $tp = new TemplateProcessor('plantillas/contrato.docx');
         // dd($tp);
@@ -88,27 +88,68 @@ class DocController extends Controller
         $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
         if($conn_sis)
         {
-            $ppp='00012628';
-            dd($req->inscrinro);
+            // $ppp='00130687';
+            // dd($req->inscrinro);
             $tsql = "select * from CREDITOS where InscriNrc='$req->inscrinro'";
+            // $tsql = "select * from CREDITOS where InscriNrc='$ppp'";
             $stmt = sqlsrv_query($conn_sis, $tsql); 
             $arreglo = array(); 
-            $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC);
-            dd($row);
-            
-            // while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) 
-            // {
-            //     $arreglo[] = $row;
-            //     dd($row["CredNro"]);
-            // }
+            while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) 
+            {   $arreglo[] = $row;}
+            if(count($arreglo)==0)
+            {
+                $tp->setValue('fp1','X');
+                $tp->setValue('fp2','');
+                $tp->setValue('nPlazo','');
+                $tp->setValue('cuoMen','');
+                $tp->setValue('cuotaIni','');
+                $tp->setValue('nCuotas','');
+                
+                $tsql3 = "select *  from INSCRIPC where InscriNro='$req->inscrinro'";
+                $stmt3 = sqlsrv_query($conn_sis, $tsql3); 
+                $arreglo3 = array(); 
+                while( $row3 = sqlsrv_fetch_array( $stmt3, SQLSRV_FETCH_ASSOC) ) 
+                {   $arreglo3[] = $row3;}
+
+                $tp->setValue('montoTotal',round($arreglo3[0]['CtaColSAn'],2));
+                $tp->setValue('interes','');
+            }
+            else
+            {
+                $tp->setValue('fp1','');
+                $tp->setValue('fp2','X');
+                // dd($arreglo[count($arreglo)-1]['CredNro']);//para sacar el ultimo credito
+                // dd($arreglo[0]['CredNro']);//para sacar el primer credito
+                $numeroCredito = $arreglo[0]['CredNro'];
+                
+                $tsql2 = "select * from LETRAS where CredNro='$numeroCredito' order by LtNum asc";
+                $stmt2 = sqlsrv_query($conn_sis, $tsql2); 
+                $arreglo2 = array(); 
+                while( $row2 = sqlsrv_fetch_array( $stmt2, SQLSRV_FETCH_ASSOC) ) 
+                {   $arreglo2[] = $row2;}
+                
+                $tp->setValue('montoTotal',number_format($arreglo2[0]['LtSaldo'],2,',',''));
+                $tp->setValue('nPlazo',count($arreglo2)-1);
+                $tp->setValue('cuoMen',number_format($arreglo2[1]['LtCuota'],2,',',''));
+                $tp->setValue('cuotaIni',number_format($arreglo2[0]['LtCuota'],2,',',''));
+                $tp->setValue('nCuotas',count($arreglo2));
+
+                $tsql4 = "select top 1 * from  TASASIN order by AnoFac desc";
+                $stmt4 = sqlsrv_query($conn_sis, $tsql4); 
+                $arreglo4 = array(); 
+                while( $row4 = sqlsrv_fetch_array( $stmt4, SQLSRV_FETCH_ASSOC) ) 
+                {   $arreglo4[] = $row4;}
+                $tp->setValue('interes',number_format($arreglo4[0]['TasaInt'],2,',','').'%');
+                
+            }
+            // --------------------------
         }
-        // dd($arreglo[0]);
+        // ***seteamos la forma de pago
+        
+        // dd($arreglo[0]['OfiCod']);
         // ---------------------------------
-            
-
-
-        // $fileName='contrato.docx';
-        // $tp->saveAs($fileName);
-        // return response()->download($fileName)->deleteFileAfterSend(true);
+        $fileName='contrato.docx';
+        $tp->saveAs($fileName);
+        return response()->download($fileName)->deleteFileAfterSend(true);
     }
 }

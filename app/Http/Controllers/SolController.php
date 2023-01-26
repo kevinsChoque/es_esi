@@ -10,6 +10,18 @@ use App\Models\TFactibilidad;
 
 class SolController extends Controller
 {
+    public function agregarCampAdi($model,$act)
+    {
+        if($act)
+        {
+            $model->fechaRegistro=now();
+        }
+        else
+        {
+            $model->fechaActualizacion=now();
+        }
+        return $model->save();
+    }
     public function actSol(Request $req)
     {
     	return view('solicitud.solicitud');
@@ -171,14 +183,34 @@ class SolController extends Controller
         $ts = TSolicitud::find($req->solnro);
         if($ts==null)
         {
+            $req['fechaRegistro']=now();
             $ts=TSolicitud::create($req->all());
-            return response()->json([
-                "msg"=>"Operacion exitosa.",
-                "estado"=>true
-            ]);
+            $tn=TNumero::where('documento','Solicitud')->first();
+            // ----
+            $tn->numeroActual=explode("-", $req->numSoli)[1];
+            if($tn->save())
+            {
+                return response()->json([
+                    "msg"=>"Operacion exitosa.",
+                    "estado"=>true
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    "msg"=>"Error al momento de guardar numero correlativo.",
+                    "estado"=>false
+                ]);
+            }
+            // ---
+            // return response()->json([
+            //     "msg"=>"Operacion exitosa.",
+            //     "estado"=>true
+            // ]);
         }
         else
         {
+            $req['fechaActualizacion']=now();
             $ts->fill($req->all());
             if($ts->save())
             {
@@ -227,11 +259,25 @@ class SolController extends Controller
     
     public function actShow(Request $req)
     {
+        $tn = TNumero::where('documento','Solicitud')->first();
+        if($tn->estado!=0)
+        {
+            if($tn->numeroActual!=0)
+                $numeroCorrelativo=(int)$tn->numeroActual+1;
+            else
+                $numeroCorrelativo=(int)$tn->numero+1;
+        }
+
         $ts = TSolicitud::find($req->solnro);
         if($ts!=null)
-            return response()->json(["data"=>$ts,"estado"=>true]);
+            return response()->json(["data"=>$ts,
+                "estado"=>true,
+            ]);
         else
-            return response()->json(["data"=>"","estado"=>false]);
+            return response()->json(["data"=>"",
+                "estado"=>false,
+                'numeroCorrelativo'=>$numeroCorrelativo
+            ]);
     }
     public function actShowFactibilidad(Request $req)
     {
@@ -306,5 +352,185 @@ class SolController extends Controller
         // return response()->json([
         //         "data"=>$registros,
         //     ]);
+    }
+    public function actSaveNewSoli(Request $req)
+    {
+        $req['fechaRegistro']=now();
+        $ts=TSolicitud::create($req->all());
+        if($ts->save())
+        {
+            $tn=TNumero::where('documento','Solicitud')->first();
+            $tn->numeroActual=explode("-", $req->numSoli)[1];
+            if($tn->save())
+            {
+                return response()->json([
+                    "msg"=>"Operacion exitosa.",
+                    "estado"=>true
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    "msg"=>"Error al momento de guardar numero correlativo.",
+                    "estado"=>false
+                ]);
+            }
+        }
+        else
+        {
+            return response()->json([
+                "msg"=>"Error en fecha de registro.",
+                "estado"=>false
+            ]);
+        }
+    }
+    public function actShowNumCorrelativo()
+    {
+        $tn = TNumero::where('documento','Solicitud')->first();
+        if($tn->estado!=0)
+        {
+            if($tn->numeroActual!=0)
+                return response()->json(["numeroCorrelativo"=>(int)$tn->numeroActual+1,"estado"=>true]);
+            else
+                return response()->json(["numeroCorrelativo"=>(int)$tn->numero+1,"estado"=>true]);
+
+        }
+    }
+    public function actListarFromApp()
+    {
+        // dd('cascsa');
+        // $listSoli = TSolicitud::where('solnro','like','app%')->get();
+        $listSoli = TSolicitud::whereNull('estadoProceso')->orderBy('fechaRegistro','desc')->get();
+        // dd($listSoli);
+        return response()->json(["data"=>$listSoli,"estado"=>true]);
+    }
+    public function actSolDownload(Request $req,$numSol=null)
+    {
+        setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+        $tp = new TemplateProcessor('plantillas/newSolicitud.docx');
+        $ts = TSolicitud::where('numSoli',$numSol)->first();
+        // dd($numSol);
+        if($ts!=null)
+        {
+            // 'solnro',
+            // $tp->setValue('dateVencimiento',$ts->fechaVencimiento);
+            $tp->setValue('hora',$ts->hora=='' || $ts->hora==null?'':$ts->hora);
+            $tp->setValue('numSoli',$ts->numSoli=='' || $ts->numSoli==null?'':$ts->numSoli);
+        $tp->setValue('fechaSoli',$ts->fechaSoli=='' || $ts->fechaSoli==null?'':$ts->fechaSoli);
+        $tp->setValue('fechaVencimiento',$ts->fechaVencimiento=='' || $ts->fechaVencimiento==null?'':$ts->fechaVencimiento);
+        $tp->setValue('lugar',$ts->lugar=='' || $ts->lugar==null?'':$ts->lugar);
+        $tp->setValue('fecha',$ts->fecha=='' || $ts->fecha==null?'':$ts->fecha);
+        $tp->setValue('empresa',$ts->empresa=='' || $ts->empresa==null?'':$ts->empresa);
+        $tp->setValue('numRecibo',$ts->numRecibo=='' || $ts->numRecibo==null?'':$ts->numRecibo);
+
+        $tp->setValue('nombreTit',$ts->nombreTit=='' || $ts->nombreTit==null?'':$ts->nombreTit);
+        $tp->setValue('dniTit',$ts->dniTit=='' || $ts->dniTit==null?'':$ts->dniTit);
+        $tp->setValue('correoTit',$ts->correoTit=='' || $ts->correoTit==null?'':$ts->correoTit);
+        $tp->setValue('domicilioTit',$ts->domicilioTit=='' || $ts->domicilioTit==null?'':$ts->domicilioTit);
+        $tp->setValue('numeroTit',$ts->numeroTit=='' || $ts->numeroTit==null?'':$ts->numeroTit);
+        $tp->setValue('manzanaTit',$ts->manzanaTit=='' || $ts->manzanaTit==null?'':$ts->manzanaTit);
+        $tp->setValue('loteTit',$ts->loteTit=='' || $ts->loteTit==null?'':$ts->loteTit);
+        $tp->setValue('urbanizacionTit',$ts->urbanizacionTit=='' || $ts->urbanizacionTit==null?'':$ts->urbanizacionTit);
+
+        $tp->setValue('nombreRep',$ts->nombreRep=='' || $ts->nombreRep==null?'':$ts->nombreRep);
+        $tp->setValue('dniRep',$ts->dniRep=='' || $ts->dniRep==null?'':$ts->dniRep);
+        $tp->setValue('correoRep',$ts->correoRep=='' || $ts->correoRep==null?'':$ts->correoRep);
+        $tp->setValue('domicilioRep',$ts->domicilioRep=='' || $ts->domicilioRep==null?'':$ts->domicilioRep);
+        $tp->setValue('numeroRep',$ts->numeroRep=='' || $ts->numeroRep==null?'':$ts->numeroRep);
+        $tp->setValue('manzanaRep',$ts->manzanaRep=='' || $ts->manzanaRep==null?'':$ts->manzanaRep);
+        $tp->setValue('loteRep',$ts->loteRep=='' || $ts->loteRep==null?'':$ts->loteRep);
+        $tp->setValue('urbanizacionRep',$ts->urbanizacionRep=='' || $ts->urbanizacionRep==null?'':$ts->urbanizacionRep);
+
+            // 'tipoPredio',
+            $tp->setValue('preo1',$ts->tipoPredio=='En construccion' ? 'X': '');
+            $tp->setValue('preo2',$ts->tipoPredio=='Habilitado' ? 'X': '');
+            $tp->setValue('preo3',$ts->tipoPredio=='Otros' ? 'X': '');
+
+            $tp->setValue('ubicacionPre',$ts->ubicacionPre=='' || $ts->ubicacionPre==null?'':$ts->ubicacionPre);
+            $tp->setValue('numeroPre',$ts->numeroPre=='' || $ts->numeroPre==null?'':$ts->numeroPre);
+            $tp->setValue('manzanaPre',$ts->manzanaPre=='' || $ts->manzanaPre==null?'':$ts->manzanaPre);
+            $tp->setValue('lotePre',$ts->lotePre=='' || $ts->lotePre==null?'':$ts->lotePre);
+            $tp->setValue('referenciaPre',$ts->referenciaPre=='' || $ts->referenciaPre==null?'':$ts->referenciaPre);
+
+            $tp->setValue('pban1',$ts->ts1=='true' ? 'X': '');
+            $tp->setValue('pban2',$ts->ts2=='true' ? 'X': '');
+            // 'categoria',
+            $tp->setValue('pcat1',$ts->categoria=='Domestico' ? 'X': '');
+            $tp->setValue('pcat2',$ts->categoria=='Social' ? 'X': '');
+            $tp->setValue('pcat3',$ts->categoria=='Comercial y Otros' ? 'X': '');
+            $tp->setValue('pcat4',$ts->categoria=='Industrial' ? 'X': '');
+            $tp->setValue('pcat5',$ts->categoria=='Estatal' ? 'X': '');
+            // 'usoServicio',
+            $tp->setValue('puso1',$ts->usoServicio=='Permanente' ? 'X': '');
+            $tp->setValue('puso2',$ts->usoServicio=='Temporal' ? 'X': '');
+            $tp->setValue('numeroMeses',$ts->numeroMeses=='' || $ts->numeroMeses==null?'':$ts->numeroMeses);
+            
+            $tp->setValue('item1',$ts->item1=='true' ? 'X': '');
+            $tp->setValue('item2',$ts->item2=='true' ? 'X': '');
+            $tp->setValue('item3',$ts->item3=='true' ? 'X': '');
+            $tp->setValue('item4',$ts->item4=='true' ? 'X': '');
+            $tp->setValue('item5',$ts->item5=='true' ? 'X': '');
+            $tp->setValue('item6',$ts->item6=='true' ? 'X': '');
+
+            $tp->setValue('otros',$ts->otros=='' || $ts->otros==null?'':$ts->otros);
+
+            $tp->setValue('telefono',$ts->telefono=='' || $ts->telefono==null?'':$ts->telefono);
+            $tp->setValue('telefonoAlternativo',$ts->telefonoAlternativo=='' || $ts->telefonoAlternativo==null?'':$ts->telefonoAlternativo);
+
+        }
+        else
+        {
+            // $tp->setValue('dateVencimiento',str_replace('-','/',date("d-m-Y",strtotime($dateActual."+ 1 month"))));
+            $tp->setValue('repnombre','');
+            $tp->setValue('repdni','');
+            $tp->setValue('repcorreo','');
+            $tp->setValue('repdireccion','');
+            $tp->setValue('repnumero','');
+            $tp->setValue('repmanzana','');
+            $tp->setValue('replote','');
+            $tp->setValue('repurban','');
+            // 'tipoPredio',
+            $tp->setValue('preo1','');
+            $tp->setValue('preo2','');
+            $tp->setValue('preo3','');
+
+            $tp->setValue('preubicacion','');
+            $tp->setValue('prenumero','');
+            $tp->setValue('premanzana','');
+            $tp->setValue('prelote','');
+            $tp->setValue('prereferencia','');
+
+            $tp->setValue('pban1','');
+            $tp->setValue('pban2','');
+            // 'categoria',
+            $tp->setValue('pcat1','');
+            $tp->setValue('pcat2','');
+            $tp->setValue('pcat3','');
+            $tp->setValue('pcat4','');
+            $tp->setValue('pcat5','');
+            // 'usoServicio',
+            $tp->setValue('puso1','');
+            $tp->setValue('puso2','');
+            $tp->setValue('pmeses','');
+
+            $tp->setValue('item1','');
+            $tp->setValue('item2','');
+            $tp->setValue('item3','');
+            $tp->setValue('item4','');
+            $tp->setValue('item5','');
+            $tp->setValue('item6','');
+
+            $tp->setValue('otros','');
+
+            $tp->setValue('soltelef','');
+            $tp->setValue('telefonoAlternativo','');
+        }
+        $tp->setValue('solfirmador',$ts!=null && $ts->nombreRep!='' && $ts->nombreRep!=null && $ts->dniRep!='' && $ts->dniRep!=null?$ts->nombreRep:$ts->nombreTit);
+        $tp->setValue('solfirmadni',$ts!=null && $ts->nombreRep!='' && $ts->nombreRep!=null && $ts->dniRep!='' && $ts->dniRep!=null?$ts->dniRep:$ts->dniTit);
+
+        $fileName='test.docx';
+        $tp->saveAs($fileName);
+        return response()->download($fileName)->deleteFileAfterSend(true);
+        dd('entro aki');
     }
 }

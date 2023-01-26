@@ -14,6 +14,14 @@ class TSolicitud extends Model
 
     protected $fillable = [
     	'solnro',
+    	'hora',
+    	'numSoli',
+        'fechaSoli',
+        'fechaVencimiento',
+        'lugar',
+        'fecha',
+        'empresa',
+        'numRecibo',
 
     	'nombreTit',
 		'dniTit',
@@ -24,7 +32,6 @@ class TSolicitud extends Model
 		'loteTit',
 		'urbanizacionTit',
 
-        'fechaVencimiento',
 		'nombreRep',
 		'dniRep',
 		'correoRep',
@@ -53,5 +60,8 @@ class TSolicitud extends Model
 		'otros',
 		'telefono',
 		'telefonoAlternativo',
+
+		'fechaRegistro',
+		'fechaActualizacion',
     ];
 }

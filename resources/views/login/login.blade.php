@@ -7,7 +7,8 @@
     <!-- <meta name="_token" content="{{csrf_token()}}" /> -->
     <title>EMUSAP</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('plugins/adminlte/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/fontawesome/all/all.min.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('plugins/adminlte/fontawesome-free/css/all.min.css')}}"> -->
     <!-- Theme style ADMIN LTE CSS -->
     <!-- <link rel="stylesheet" href="{{asset('plugins/adminlte/dist/css/adminlte.min.css')}}"> -->
     <link rel="stylesheet" href="{{asset('adminlte/dist/css/adminlte.min.css')}}">

@@ -12,12 +12,17 @@ use App\Http\Controllers\NumeroController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\FactibilidadController;
 use App\Http\Controllers\MedicionController;
+use App\Http\Controllers\DashController;
 
 Route::get('/', function () {
     return view('login.login');
 });
 
 Route::post('dashboard',[HomeController::class, 'actHome']);
+Route::get('home/home',[HomeController::class, 'actHome']);
+// dashboard
+
+Route::get('dash/listarSegunEstado',[DashController::class, 'actListarSegunEstado']);
 // genera contratos
 Route::get('doc/doc',[DocController::class, 'actDoc']);
 Route::get('doc/listar',[DocController::class, 'actListar']);
@@ -31,6 +36,11 @@ Route::get('solicitud/show',[SolController::class, 'actShow']);
 Route::get('solicitud/geFactibilidad',[SolController::class, 'actGeFactibilidad']);
 Route::get('solicitud/showFactibilidad',[SolController::class, 'actShowFactibilidad']);
 Route::get('solicitud/listar',[SolController::class, 'actListar']);
+Route::get('solicitud/saveNewSoli',[SolController::class, 'actSaveNewSoli']);
+Route::get('solicitud/showNumCorrelativo',[SolController::class, 'actShowNumCorrelativo']);
+Route::get('solicitud/listarFromApp',[SolController::class, 'actListarFromApp']);
+Route::get('solicitud/solDownload/{numsol}',[SolController::class, 'actSolDownload']);
+// solDownload
 // geFactibilidad
 Route::get('factibilidad/factibilidad',[FactibilidadController::class, 'actFactibilidad']);
 Route::get('factibilidad/listar',[FactibilidadController::class, 'actListar']);
@@ -41,6 +51,8 @@ Route::get('factibilidad/saveDataFac',[FactibilidadController::class, 'actSaveDa
 Route::get('factibilidad/show',[FactibilidadController::class, 'actShow']);
 Route::get('factibilidad/guardarSegunSeaCaso',[FactibilidadController::class, 'actGuardarSegunSeaCaso']);
 Route::get('factibilidad/download/{solnro}',[FactibilidadController::class, 'actDownload']);
+Route::get('factibilidad/geFacSol',[FactibilidadController::class, 'actGeFacSol']);
+
 
 // medicion
 Route::get('medicion/medicion',[MedicionController::class, 'actMedicion']);

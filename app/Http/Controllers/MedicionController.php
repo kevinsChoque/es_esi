@@ -22,7 +22,7 @@ class MedicionController extends Controller
             ->leftjoin('solicitud','solicitud.solnro','=','factibilidad.solnro')
             ->leftjoin('historial_fac','historial_fac.idFac','=','factibilidad.idFac')
             ->leftjoin('medicion','medicion.solnro','=','factibilidad.solnro')
-            ->join('persona','persona.idPersona','=','historial_fac.idPersona')
+            ->leftjoin('persona','persona.idPersona','=','historial_fac.idPersona')
             // ->leftjoin('data_med','data_med.solnromedicion','=','data_fac.solnrof')
             ->where('medicion.estado','=','0')
             ->orWhereNull('medicion.estado')
@@ -30,6 +30,7 @@ class MedicionController extends Controller
             ->where('historial_fac.estado','=','1')
             // ->where('data_med.estado','=','1')
             ->orderBy('factibilidad.idFac', 'DESC')
+            // ->groupby('factibilidad.idFac')
             ->get();
         return response()->json([
             "data"=>$registros,

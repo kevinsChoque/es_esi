@@ -8,6 +8,7 @@ use App\Models\TFactibilidad;
 use App\Models\TDatafac;
 use App\Models\THistorialfac;
 use App\Models\TSolicitud;
+use App\Models\TNumero;
 
 class FactibilidadController extends Controller
 {
@@ -148,7 +149,23 @@ class FactibilidadController extends Controller
         if($ts==null)
         {
             // creamos solicitud
+            $tn = TNumero::where('documento','Solicitud')->first();
+            if($tn->estado!=0)
+            {
+                if($tn->numeroActual!=0)
+                {
+                    $tn->numeroActual=(int)$tn->numeroActual+1;
+                    $req['numSoli']='2023-'.((int)$tn->numeroActual+1);
+                }
+                else
+                {
+                    $tn->numeroActual=(int)$tn->numero+1;
+                    $req['numSoli']='2023-'.((int)$tn->numero+1);
+                }
+            }
+            $req['fechaRegistro']=now();
             $ts=TSolicitud::create($req->all());
+            $tn->save();
         }
 
         // primero creamos factibilidad 
@@ -279,5 +296,54 @@ class FactibilidadController extends Controller
         return response()->download($fileName)->deleteFileAfterSend(true);
 
         dd('llego');
+    }
+    public function actGeFacSol(Request $req)
+    {
+        // dd($req->all());
+        $tf = new TFactibilidad();
+        $tf->solnro = $req->solnro;
+
+        if($tf->save())
+        {
+            $tf = TFactibilidad::where('solnro',$req->solnro)->first();
+
+            $th = new THistorialfac();
+            $th->idFac = $tf->idFac;
+            $th->idPersona = $req->idPersona;
+            $th->fecha = $req->fecha;
+            $th->estado = 1;
+
+            if($th->save())
+            {   
+                $ts = TSolicitud::where('solnro',$req->solnro)->first();
+                $ts->estadoProceso = '2';
+                if($ts->save())
+                {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+                else
+                {   return response()->json(["msg"=>"Error al actualizar estado de Solicitud.","estado"=>false]);}
+                // $serverName = 'informatica2-pc\sicem_bd';
+                // $connectionInfo = array(
+                //     "Database"=>"SICEM_AB",
+                //     "UID"=>"es_esi",
+                //     "PWD"=>"@emusap1@",
+                //     "CharacterSet"=>"UTF-8"
+                // );
+                // $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
+                // if($conn_sis)
+                // {
+                //     $sql = "EXECUTE testEsi '$req->solnro', '2';";
+                //     if($stmt = sqlsrv_query($conn_sis, $sql))
+                //     {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+                //     else
+                //     {   return response()->json(["msg"=>"Paso algo al momento de ejecutar procedimiento.","estado"=>true]);}
+                // }
+                // else
+                // {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
+            }
+            else
+            {   return response()->json(["msg"=>"No se guardo fecha de factibilidad correctamente.","estado"=>true]);}
+        }
+        else
+        {   return response()->json(["msg"=>"No se pudo registrar factibilidad.","estado"=>true]);}
     }
 }

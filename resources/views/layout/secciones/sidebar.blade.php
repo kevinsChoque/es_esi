@@ -55,7 +55,7 @@
                         <li class="nav-item">
                             <a href="{{url('doc/doc')}}" class="nav-link sba2">
                                 <i class="fa fa-file-word nav-icon"></i>
-                                <p data-npms="persona">Contrato</p>
+                                <p data-npms="persona">Anexo N.2</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -133,10 +133,10 @@
             // console.log('nombre de los submenu->'+$(this).find('p').html());
 
             $(this).find('p').each(function(){
-                console.log($(this).html());
+                // console.log($(this).html());
                 if(localStorage.getItem("pms").includes($(this).attr('data-npms')))
                 {
-                    console.log('si incluye-------------------');
+                    // console.log('si incluye-------------------');
                     $(this).parent().parent().css('display','block');
                     content=true;
                 }
