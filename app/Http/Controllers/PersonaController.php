@@ -72,7 +72,7 @@ class PersonaController extends Controller
             ]);
         }
         return response()->json([
-            "msg"=>"No fue posible registrar al conductor",
+            "msg"=>"No fue posible registrar los datos.",
             "estado"=>false
         ]);
     }
@@ -155,5 +155,32 @@ class PersonaController extends Controller
             "estado"=>false
         ]);
     }
-
+    public function actListarNewUser(Request $req)
+    {
+        // $registros = TUnidadVehicular::select('unidadvehicular.*')
+        //     ->leftjoin('soat', 'soat.idUv', '=', 'unidadvehicular.idUv')
+        //     ->whereNull('soat.idSoat')
+        //     ->orWhere('soat.estado','0')
+        //     ->orderBy('unidadvehicular.idUv', 'DESC')
+        //     ->get();
+        $registros = TPersona::select('persona.*','cargo.nombre as nombreCargo')
+            ->leftjoin('user', 'user.idPersona', '=', 'persona.idPersona')
+            ->leftjoin('cargo', 'cargo.idCargo', '=', 'persona.idCargo')
+            ->whereNull('user.idUser')
+            // ->orWhere('soat.estado','0')
+            ->orderBy('persona.idPersona', 'DESC')
+            ->get();
+        return response()->json(["data"=>$registros]);
+    }
+    // public function actListarEditUser(Request $req)
+    // {
+    //     $registros = TPersona::select('persona.*','cargo.nombre as nombreCargo')
+    //         ->leftjoin('user', 'user.idPersona', '=', 'persona.idPersona')
+    //         ->leftjoin('cargo', 'cargo.idCargo', '=', 'persona.idCargo')
+    //         ->whereNull('user.idUser')
+    //         ->orWhere('user.idUser', $req->idUser)
+    //         ->orderBy('persona.idPersona', 'DESC')
+    //         ->get();
+    //     return response()->json(["data"=>$registros]);
+    // }
 }

@@ -66,11 +66,13 @@
 @include('factibilidad.mAddData')
 @include('factibilidad.mReprogramacion')
 @include('factibilidad.mHistorial')
+@include('factibilidad.mLoadFile')
 <script>
-    var tablaDeRegistros;
+    var tablaDeRegistros,tablaDeRegistrosArchivos;
     var flip=0;
     $(document).ready( function () {
         tablaDeRegistros=$('.contenedorRegistros').html();
+        tablaDeRegistrosArchivos=$('.contRegFilesFact').html();
         fillRegistros();
         fillTecnicos();
         // fillCargo();
@@ -83,35 +85,37 @@
         { 
             url: "{{url('factibilidad/listar')}}",
             method: 'get',
-            success: function(result){
-                console.log(result.data);
+            success: function(r){
+                console.log(r.data);
                 var html = '';
-                for (var i = 0; i < result.data.length; i++) 
+                for (var i = 0; i < r.data.length; i++) 
                 {
-                    console.log(result.data[i].resultado);
-                    if(result.data[i].resultado!='1')
+                    console.log(r.data[i].rado);
+                    if(r.data[i].rado!='1')
                     html += '<tr class="text-center">' +
-                        '<td class="align-middle font-weight-bold">' + novDato(result.data[i].solnro) + '</td>' +
+                        '<td class="align-middle font-weight-bold">' + novDato(r.data[i].numSoli) + '</td>' +
                         '<td class="align-middle">' + 
-                            formatoGeneral('Direccion','fa fa-home',result.data[i].ubicacionPre,'<br>') +
-                            formatoGeneral('numero','fa fa-hashtag',result.data[i].numeroPre,'<br>') +
-                            formatoGeneral('manzana','fa fa-hashtag',result.data[i].manzanaPre,'<br>') +
-                            formatoGeneral('lote','fa fa-hashtag',result.data[i].lotePre,'<br>') + 
+                            formatoGeneral('Direccion','fa fa-home',r.data[i].ubicacionPre,'<br>') +
+                            formatoGeneral('numero','fa fa-hashtag',r.data[i].numeroPre,'<br>') +
+                            formatoGeneral('manzana','fa fa-hashtag',r.data[i].manzanaPre,'<br>') +
+                            formatoGeneral('lote','fa fa-hashtag',r.data[i].lotePre,'<br>') + 
                         '</td>' +
                         '<td class="align-middle font-weight-bold">' + 
-                            formatoGeneral('Telefono','fa fa-phone',result.data[i].telefono,'<br>') + 
-                            formatoGeneral('Telefono alternativo','fa fa-phone',result.data[i].telefonoAlternativo) + 
+                            formatoGeneral('Telefono','fa fa-phone',r.data[i].telefono,'<br>') + 
+                            formatoGeneral('Telefono alternativo','fa fa-phone',r.data[i].telefonoAlternativo) + 
                         '</td>' +
                         '<td class="align-middle" style="font-size: 0.9rem;">' + 
-                            novDato(result.data[i].nombre)+' '+ novDato(result.data[i].apellido) + '<br>' +
-                            formatoDate(result.data[i].fecha) +
+                            novDato(r.data[i].nombre)+' '+ novDato(r.data[i].apellido) + '<br>' +
+                            formatoDate(r.data[i].fecha) +
                         '</td>' +
                         '<td class="align-middle">'+
                             '<div class="btn-group btn-group-sm" role="group">'+
-                                '<button type="button" class="btn text-info" title="Lista de Reprogramaciones" onclick="fillRegistrosHistorial('+result.data[i].solnro+');"><i class="fa fa-list-ol"></i></button>'+
-                                '<button type="button" class="btn text-info" title="Reprogramar Factibilidad" onclick="repFactibilidad('+result.data[i].solnro+');"><i class="fa-solid fa-business-time"></i></button>'+
-                                '<a href="{{url('factibilidad/download')}}/'+result.data[i].solnro+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
-                                '<button type="button" class="btn text-info" title="Agregar datos a factibilidad" onclick="registrarAdicional('+result.data[i].solnro+');"><i class="fa-solid fa-plus"></i></button>'+
+                                '<button type="button" class="btn text-info" title="Lista de Reprogramaciones" onclick="fillRegistrosHistorial(this);" data-solnro="'+r.data[i].solnro1+'"><i class="fa fa-list-ol"></i></button>'+
+                                '<button type="button" class="btn text-info" title="Reprogramar Factibilidad" onclick="repFactibilidad(this);" data-solnro="'+r.data[i].solnro1+'"><i class="fa-solid fa-business-time"></i></button>'+
+                                '<button type="button" class="btn text-info" title="Subir archivo" onclick="loadFile(this)" data-solnro="'+r.data[i].solnro1+'" data-idFac="'+r.data[i].idFac+'"><i class="fa fa-upload" ></i></button>'+
+                                '<a href="{{url('factibilidad/download')}}/'+r.data[i].solnro+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
+                                '<button type="button" class="btn text-info" title="Agregar datos a factibilidad" onclick="registrarAdicional(this);" data-solnro="'+r.data[i].solnro1+'"><i class="fa-solid fa-plus"></i></button>'+
+                                '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar(this);" data-solnro="'+r.data[i].solnro1+'"><i class="fa fa-trash"></i></button>'+
                             '</div>'+
                         '</td>'+
                         '</tr>';
@@ -122,31 +126,32 @@
             }
         });
     }
-    // '<a class="btn text-info" title="Descargar documento" onclick="sendData('.$row['InscriNro'].')" id="'.$row['InscriNro'].'" 
-    function eliminar(id)
+    function eliminar(element)
     {
+        let solnro = $(element).attr('data-solnro');
+        // alert(solnro);
         Swal.fire({
             title: 'Esta seguro de eliminar el registro?',
             text: "¡No podrás revertir esto!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '',
             confirmButtonText: 'Si, eliminar!'
         }).then((result) => {
             if(result.isConfirmed)
             {
-                $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+                // $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
                 jQuery.ajax(
                 { 
-                    url: "{{url('persona/eliminar')}}",
-                    data: {id:id},
+                    url: "{{url('factibilidad/eliminar')}}",
+                    data: {solnro:solnro},
                     method: 'get',
-                    success: function(result){
-                        console.log(result);
+                    success: function(r){
+                        $(".overlayRegDBL").toggle(flip++%2===0);
                         construirTabla();
                         fillRegistros();
-                        msjRee(result);
+                        msjRee(r);
                     }
                 });
             }

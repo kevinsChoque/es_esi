@@ -9,6 +9,8 @@ use App\Models\THistorialfac;
 use App\Models\TDatafac;
 use App\Models\TMedicion;
 use App\Models\TDatamed;
+use App\Models\TSolicitud;
+
 
 class MedicionController extends Controller
 {
@@ -18,7 +20,7 @@ class MedicionController extends Controller
     }
     public function actListar()
     {
-        $registros = TFactibilidad::select('factibilidad.*','solicitud.*','historial_fac.*','persona.*')
+        $registros = TFactibilidad::select('factibilidad.*','solicitud.*','historial_fac.*','persona.*','medicion.idMed')
             ->leftjoin('solicitud','solicitud.solnro','=','factibilidad.solnro')
             ->leftjoin('historial_fac','historial_fac.idFac','=','factibilidad.idFac')
             ->leftjoin('medicion','medicion.solnro','=','factibilidad.solnro')
@@ -28,6 +30,7 @@ class MedicionController extends Controller
             ->orWhereNull('medicion.estado')
             ->where('factibilidad.resultado','=','1')
             ->where('historial_fac.estado','=','1')
+            ->where('medicion.estadoEli','=','1')
             // ->where('data_med.estado','=','1')
             ->orderBy('factibilidad.idFac', 'DESC')
             // ->groupby('factibilidad.idFac')
@@ -94,7 +97,7 @@ class MedicionController extends Controller
     {
         // dd($req->all());
         $tm = TMedicion::where('solnro',$req->solnro)->first();
-        $ban='';
+        $ban=false;
         if($tm==null)
         {
             $tm = TMedicion::create($req->all());
@@ -105,7 +108,22 @@ class MedicionController extends Controller
         {
             $tm->fill($req->all());
             if($tm->save())
-            {   $ban = true;}
+            {   
+                if($tm->estado=='1')
+                {
+                    $ts = TSolicitud::where('solnro',$req->solnro)->first();
+                    $ts->estadoProceso='4';
+
+                    // $tm = new TMedicion();
+                    // $tm->solnro = $req->solnro;
+                    // $tm->estadoEli = '1';
+                    if($ts->save())
+                    {
+                        $ban = true;
+                    }
+                }
+                // $ban = true;
+            }
             else
             {   $ban = false;}
         }
@@ -145,6 +163,7 @@ class MedicionController extends Controller
     }
     public function actDownload(Request $req,$solnro=null)
     {
+        // dd($solnro);
         // $tf = TFactibilidad::where('solnro',$solnro)->first();
         $tm = TMedicion::where('solnro','=',$solnro)->first();
 
@@ -275,5 +294,15 @@ class MedicionController extends Controller
         $fileName='medicion.docx';
         $tp->saveAs($fileName);
         return response()->download($fileName)->deleteFileAfterSend(true);
+    }
+    public function actEliminar(Request $req)
+    {
+        // dd(Str::uuid()->toString());
+        $tm = TMedicion::where('solnro',$req->solnro)->first();
+        $tm->estadoEli = '0';
+        if($tm->save())
+            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        else
+            return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);
     }
 }

@@ -84,7 +84,7 @@
                 for (var i = 0; i < result.data.length; i++) 
                 {
                     html += '<tr class="text-center">' +
-                        '<td class="align-middle font-weight-bold">' + novDato(result.data[i].solnro) + '</td>' +
+                        '<td class="align-middle font-weight-bold">' + novDato(result.data[i].numSoli) + '</td>' +
                         '<td class="align-middle">' + novDato(result.data[i].dniTit) +'</td>' +
                         '<td class="align-middle">' + novDato(result.data[i].nombreTit) +'</td>' +
                         '<td class="align-middle">' + novDato(result.data[i].ubicacionPre) +'</td>' +

@@ -75,14 +75,15 @@ function dataFactibilidad()
         motivo:$('#motivoReprogramacion').val(),
     }
 }
-function repFactibilidad(solnro)
+function repFactibilidad(element)
 {
-    $('#solnro').val(solnro);
+    // alert($(element).attr('data-solnro'));
+    $('#solnro').val($(element).attr('data-solnro'));
     // $('#modRegFactibilidad').modal('show');
     jQuery.ajax(
     { 
         url: "{{url('factibilidad/showLastFactibilidad')}}",
-        data: {solnro:solnro},
+        data: {solnro:$(element).attr('data-solnro')},
         method: 'get',
         success: function(r){
             limpiarFormFac();

@@ -32,7 +32,7 @@ if($conn_sis)
 	    }
 	    else
 	    {
-	    	$banFactibilidad = '<button type="button" class="btn text-secondary" title="Programar factivilidad" onclick="regFactibilidad('.$row['SolNro'].')"><i class="fa-solid fa-business-time"></i></button>';
+	    	$banFactibilidad = '<button type="button" class="btn text-secondary" title="Programar factivilidad" onclick="regFactibilidad('.$row['SolNro'].')" style="display:none;"><i class="fa-solid fa-business-time"></i></button>';
 	    }
 	    $fechaFormat = date("d/m/Y",$row['SolFex']->getTimestamp());
 	    $html=$html.'<tr class="text-center">'.
@@ -44,7 +44,7 @@ if($conn_sis)
                 '<div class="btn-group btn-group-sm" role="group">'.
                 	$banFactibilidad.
                 	'<button type="button" class="btn text-info" title="Registrar Solicitud" onclick="registrarAdicional('.$row['SolNro'].')"><i class="fa fa-plus" ></i></button>'.
-                    '<a class="btn text-info" title="Descargar documento" onclick="sendData('.$row['SolNro'].')" id="'.$row['SolNro'].'" 
+                    '<a class="btn text-info" title="Descargar documento" style="display:none;" onclick="sendData('.$row['SolNro'].')" id="'.$row['SolNro'].'" 
                     data-solnro="'.$row['SolNro'].'" data-solnombre="'.$row['SolNombre'].'" data-soltipcal="'.$row['SolTipCal'].'" data-soldirec="'.$row['SolDirec'].'" data-soldirnro="'.$row['SolDirNro'].'" data-soldircom="'.$row['SolDirCom'].'" data-solurban="'.$row['SolUrban'].'" data-solelect="'.$row['SolElect'].'" data-solfex="'.$fechaFormat.'" data-soltelef="'.$row['SolTelef'].'"><i class="fa fa-download"></i></a>'.
                 '</div>'.
             '</td>'.

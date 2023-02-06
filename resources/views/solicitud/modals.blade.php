@@ -23,7 +23,7 @@
                             <div class="alert alert-info py-1 mb-1"><p class="m-0 text-center font-weight-bold">DATOS DE LA SOLICITUD:</p></div>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label for="" class="m-0">Numero de Solicitud:</label>
+                            <label for="" class="m-0">Numero de Solicitud: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label for="" class="m-0">Fecha de Solicitud:</label>
+                            <label for="" class="m-0">Fecha de Solicitud: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label for="" class="m-0">Fecha de Vencimiento:</label>
+                            <label for="" class="m-0">Fecha de Vencimiento: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-2">
-                            <label for="" class="m-0">Lugar:</label>
+                            <label for="" class="m-0">Lugar: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label for="" class="m-0">Fecha:</label>
+                            <label for="" class="m-0">Fecha: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-2">
-                            <label for="" class="m-0">Empresa Prestadora:</label>
+                            <label for="" class="m-0">Empresa Prestadora: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -89,7 +89,7 @@
                             <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold">I. DATOS DEL SOLICITANTE:</p></div>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label for="" class="m-0">Nombre:</label>
+                            <label for="" class="m-0">Nombre: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label for="" class="m-0">Dni:</label>
+                            <label for="" class="m-0">Dni: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label for="" class="m-0">Domicilio (Calle, Jirón, Avenida):</label>
+                            <label for="" class="m-0">Domicilio (Calle, Jirón, Avenida): <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -448,6 +448,7 @@ function data()
     // alert($('#'+numeroSolicitud).attr('SolNombre'));
 	return {
         solnro:$('#solnro').val(),
+        solnro1:$('#solnro').val(),
 
         numSoli:$('#numSoli').val(),
         fechaSoli:$('#fechaSoli').val(),

@@ -9,6 +9,8 @@ use App\Models\TDatafac;
 use App\Models\THistorialfac;
 use App\Models\TSolicitud;
 use App\Models\TNumero;
+use App\Models\TMedicion;
+
 
 class FactibilidadController extends Controller
 {
@@ -30,6 +32,8 @@ class FactibilidadController extends Controller
             ->leftjoin('historial_fac','historial_fac.idFac','=','factibilidad.idFac')
             ->join('persona','persona.idPersona','=','historial_fac.idPersona')
             ->where('historial_fac.estado','=','1')
+            ->where('factibilidad.estado','!=','0')
+            ->where('solicitud.estadoProceso','=','2')
             ->orderBy('factibilidad.idFac', 'DESC')
             ->get();
         return response()->json([
@@ -90,26 +94,41 @@ class FactibilidadController extends Controller
             "data"=>$registros,
         ]);
     }
-    // actSaveDataFac
     public function actSaveDataFac(Request $req)
     {
-        $td = TFactibilidad::where('solnro',$req->solnro)->first();
-        $ban='';
-        if($td==null)
+        // dd('llego aki--');
+        $tf = TFactibilidad::where('solnro',$req->solnro)->first();
+        $ban=false;
+        if($tf==null)
         {
-            $td = TDatafac::create($req->all());
+            $tf = TDatafac::create($req->all());
             $ban = true;
         }
         else
         {
-            $td->fill($req->all());
-            if($td->save())
-            {   $ban = true;}
+            $tf->fill($req->all());
+            if($tf->save())
+            {   
+                if($tf->resultado=='1')
+                {
+                    $ts = TSolicitud::where('solnro',$req->solnro)->first();
+                    $ts->estadoProceso='3';
+
+                    $tm = new TMedicion();
+                    $tm->solnro = $req->solnro;
+                    $tm->estadoEli = '1';
+                    if($ts->save() && $tm->save())
+                    {
+                        $ban = true;
+                    }
+                }
+                // $ban = true;
+            }
             else
             {   $ban = false;}
         }
 
-        if($td->resultado=='1' && $ban==true)
+        if($tf->resultado=='1' && $ban==true)
         {
             $serverName = 'informatica2-pc\sicem_bd';
             $connectionInfo = array(
@@ -302,6 +321,7 @@ class FactibilidadController extends Controller
         // dd($req->all());
         $tf = new TFactibilidad();
         $tf->solnro = $req->solnro;
+        $tf->estado = '1';
 
         if($tf->save())
         {
@@ -345,5 +365,15 @@ class FactibilidadController extends Controller
         }
         else
         {   return response()->json(["msg"=>"No se pudo registrar factibilidad.","estado"=>true]);}
+    }
+    public function actEliminar(Request $req)
+    {
+        // dd(Str::uuid()->toString());
+        $tf = TFactibilidad::where('solnro',$req->solnro)->first();
+        $tf->estado = '0';
+        if($tf->save())
+            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        else
+            return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);
     }
 }

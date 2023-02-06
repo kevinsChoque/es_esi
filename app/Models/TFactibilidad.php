@@ -38,5 +38,6 @@ class TFactibilidad extends Model
         'motivo1',
         'obs',
         'atendido',
+        'estado',
     ];
 }

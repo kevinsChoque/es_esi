@@ -16,6 +16,76 @@
 </div>
 @endsection
 @section('contenido')
+<button class="btn btn-warning pruebawa1">csacas</button>
+<button class="btn btn-danger pruebawa2">otro</button>
+<script>
+    $('.pruebawa2').on('click',function(){
+        let numeros = ["51986854628", "51958863655"];
+        for (var i = 0; i < numeros.length; i++) 
+        {
+            alert(numeros[i]);
+        }
+    });
+    var numeros =["51986854628", "51900585558",
+    "51986854628", "51900585558",
+    "51986854628", "51900585558",
+    "51986854628", "51900585558",
+    "51986854628", "51900585558",
+
+    ];
+    var enviarNumero='';
+    function datappp()
+    {
+        return { 
+            "messaging_product": "whatsapp", 
+            "to": enviarNumero, 
+            "type": "template", 
+            "template": 
+            { 
+              "name": "enviar_recibo", 
+              "language": 
+              { 
+                  "code": "es" 
+              },
+              "components": 
+              [
+                {
+                    "type": "header",
+                    "parameters": [{
+                    "type": "document",
+                        "document":{
+                            "link": "https://rua.ua.es/dspace/bitstream/10045/96130/1/Optica-teorias-sobre-la-luz-en-el-IYL2015-06-01-2015.pdf"
+                        }
+                    }]
+                }
+              ]
+            } 
+        }
+    }
+    $('.pruebawa1').on('click',function(){
+        for (var i = 0; i < numeros.length; i++) 
+        {
+            enviarNumero=numeros[i];
+            ppp();
+        }
+        
+    });
+    // EAALrwdMNvzwBAGtelaxr4XjdKZCiun3MM5naavS41qxx7cZBC6mnr8K6JxHQJ4cQxLZCTpTvUicwoUaumPqEpXd9SqOZB1b4hCfMLSU7eRFZAp6UyQpWtvrYHWQWxpeoFtpTDVQ8DbZCevnw5nbEwDICyh0blvUn5r502ZC1j4cpOv8oamtJLs9AnMX45zU0viUsl8lstOiKwZDZD
+    function ppp()
+    {
+        jQuery.ajax(
+        { 
+            url: "https://graph.facebook.com/v15.0/103259702672983/messages",
+            contentType : 'application/json',
+            headers: {'Authorization': 'Bearer EAALrwdMNvzwBANtaaTMUjrNTUZC9R8yBgJD7LJZAUrrIAoQb9xaZApzayWTLTU5JPhXb674Y6M0sp45cZAZAafEl0iWg8T389bPwGsmzUXEfodlc0e2uE8ZBZCwbu2ygwT36y7WjMfeU9sTz3ZAZAvOhG7efz1deY4CT65OfzuZA1XgQufEUQZA4I3vLBS8fXHWrjBIfy1IYKaTRQZDZD'},
+            data: datappp(),
+            method: 'post',
+            success: function(r){
+                console.log(r);
+            }
+        });
+    }
+</script>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 contenedorFormulario">
@@ -119,10 +189,11 @@
         </div>
     </div>
 </div>
-<!-- <a href=""></a> -->
 @include('solicitud.modals')
 @include('solicitud.mFactibilidad')
 @include('solicitud.mFactibilidadSol')
+@include('solicitud.mEditarSolicitud')
+@include('solicitud.mLoadFile')
 @include('solicitud.newSolicitud')
 <form method="post" action="{{url('solicitud/download')}}" id="formSol">
     <input type="hidden" name="solnroSend" id="solnroSend">
@@ -139,11 +210,13 @@
     @csrf
 </form>
 <script>
-    var tablaDeRegistrosDBL;
+    var tablaDeRegistrosDBL,tablaDeRegistrosArchivos;
     var flip=0;
     var pathPublic="{{url('/')}}/solicitud/solDownload"+'/';
     $(document).ready( function () {
         tablaDeRegistrosDBL=$('.contRegSolDBL').html();
+        tablaDeRegistrosArchivos=$('.contRegFilesSoli').html();
+        
         takeRegistros();
         listarFromApp();
         // fillRegistros();
@@ -181,12 +254,13 @@
                 for (var i = 0; i < r.data.length; i++) 
                 {
                     console.log(r.data[i].solnro);
-                    dataFrom = r.data[i].solnro.toString().includes('6662023')?'<span class="badge badge-info shadow px-2">ESI</span>':'<span class="badge badge-primary shadow px-2">SICEM</span>';
+
+                    dataFrom = r.data[i].solnro.toString().length!=6?'<span class="badge badge-info shadow px-2">ESI</span>':'<span class="badge badge-primary shadow px-2">SICEM</span>';
                     // helpForNumSoli = r.data[i].numSoli.toString().replace('-','CUT');
                     if(r.data[i].estado>='2')
                     {   $banFactibilidad = '<button type="button" class="btn text-success" title="La fecha de Factibilidad ya fue programada"><i class="fa-solid fa-business-time"></i></button>';}
                     else
-                    {   $banFactibilidad = '<button type="button" class="btn text-secondary" title="Programar factivilidad" onclick="regFacSol(this)" data-numsoli="'+r.data[i].solnro+'"><i class="fa-solid fa-business-time"></i></button>';}
+                    {   $banFactibilidad = '<button type="button" class="btn text-secondary" title="Programar factivilidad" onclick="regFacSol(this)" data-numsoli="'+r.data[i].solnro1+'"><i class="fa-solid fa-business-time"></i></button>';}
                     // console.log(r.data[i].SolNombre);
                     html += '<tr class="text-center">' +
                         '<td class="font-weight-bold">' + dataFrom + '</td>' +
@@ -197,9 +271,10 @@
                         '<td>'+
                             '<div class="btn-group btn-group-sm" role="group">'+
                                 $banFactibilidad+
-                                '<button type="button" class="btn text-info" title="Editar archivo" onclick="registrarAdicional(' + r.data[i].numSoli + ')"><i class="fa fa-edit" ></i></button>'+
-                                '<a href="'+pathPublic+r.data[i].numSoli+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
-                                '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+r.data[i].numSoli+');"><i class="fa fa-trash"></i></button>'+
+                                '<button type="button" class="btn text-info" title="Subir archivo" onclick="loadFile(this)" data-solnro="'+r.data[i].solnro1+'"><i class="fa fa-upload" ></i></button>'+
+                                '<a href="'+pathPublic+r.data[i].solnro1+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
+                                '<button type="button" class="btn text-info" title="Editar archivo" onclick="editarSolicitud(this)" data-solnro="'+r.data[i].solnro1+'"><i class="fa fa-edit" ></i></button>'+
+                                '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar(this);" data-numsoli="'+r.data[i].solnro1+'"><i class="fa fa-trash"></i></button>'+
                             '</div>'+
                         '</td>'+
                         '</tr>';
@@ -207,6 +282,37 @@
                 $('#dataDBL').append(html);
                 initDatatable('registrosDBL');
                 $('.overlayRegDBL').css('display','none');
+            }
+        });
+    }
+    function eliminar(element)
+    {
+        let solnro = $(element).attr('data-numsoli');
+        // alert(solnro);
+        Swal.fire({
+            title: 'Esta seguro de eliminar el registro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '',
+            confirmButtonText: 'Si, eliminar!'
+        }).then((result) => {
+            if(result.isConfirmed)
+            {
+                // $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+                jQuery.ajax(
+                { 
+                    url: "{{url('solicitud/eliminar')}}",
+                    data: {solnro:solnro},
+                    method: 'get',
+                    success: function(r){
+                        $(".overlayRegDBL").toggle(flip++%2===0);
+                        construirTablaDBL();
+                        listarFromApp();
+                        msjRee(r);
+                    }
+                });
             }
         });
     }
@@ -254,6 +360,7 @@
             }
         });
     }
+
     function sendData(numero)
     {
         let hoy = new Date();

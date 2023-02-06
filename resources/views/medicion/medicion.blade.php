@@ -64,11 +64,13 @@
 </div>
 @include('medicion.mProgramacion')
 @include('medicion.mAddData')
+@include('medicion.mLoadFile')
 <script>
-    var tablaDeRegistros;
+    var tablaDeRegistros,tablaDeRegistrosArchivos;
     var flip=0;
     $(document).ready( function () {
         tablaDeRegistros=$('.contenedorRegistros').html();
+        tablaDeRegistrosArchivos=$('.contRegFilesFact').html();
         fillRegistros();
         fillTecnicos();
     } );
@@ -89,7 +91,7 @@
                     if(result.data[i].estadoMedicion!=1)
                     {
                         html += '<tr class="text-center">' +
-                            '<td class="align-middle font-weight-bold">' + novDato(result.data[i].solnro) + '</td>' +
+                            '<td class="align-middle font-weight-bold">' + novDato(result.data[i].numSoli) + '</td>' +
                             '<td class="align-middle">' + 
                                 formatoGeneral('Direccion','fa fa-home',result.data[i].ubicacionPre,'<br>') +
                                 formatoGeneral('numero','fa fa-hashtag',result.data[i].numeroPre,'<br>') +
@@ -105,10 +107,11 @@
                                 formatoDate(result.data[i].fecha) +'</td>' +
                             '<td class="align-middle">'+
                                 '<div class="btn-group btn-group-sm" role="group">'+
-                                    // '<button type="button" class="btn text-info" title="Lista de Reprogramaciones" onclick="fillRegistrosHistorial('+result.data[i].solnrof+');"><i class="fa fa-list-ol"></i></button>'+
-                                    '<button type="button" class="btn text-info" title="Programar Medicion" onclick="proMedicion('+result.data[i].solnro+');"><i class="fa-solid fa-ruler"></i></button>'+
+                                    '<button type="button" class="btn text-info" title="Programar Medicion" onclick="proMedicion(this);" data-solnro="'+result.data[i].solnro+'"><i class="fa-solid fa-ruler"></i></button>'+
+                                    '<button type="button" class="btn text-info" title="Subir archivo" onclick="loadFile(this)" data-solnro="'+result.data[i].solnro+'" data-idMed="'+result.data[i].idMed+'"><i class="fa fa-upload" ></i></button>'+
                                     '<a href="{{url('medicion/download')}}/'+result.data[i].solnro+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
-                                    '<button type="button" class="btn text-info" title="Agregar datos a la Medicion" onclick="registrarAdicional('+result.data[i].solnro+');"><i class="fa-solid fa-plus"></i></button>'+
+                                    '<button type="button" class="btn text-info" title="Agregar datos a la Medicion" onclick="registrarAdicional(this);" data-solnro="'+result.data[i].solnro+'"><i class="fa-solid fa-plus"></i></button>'+
+                                    '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar(this);" data-solnro="'+result.data[i].solnro+'"><i class="fa fa-trash"></i></button>'+
                                 '</div>'+
                             '</td>'+
                             '</tr>';
@@ -140,6 +143,37 @@
                 $('#data').html(html);
                 initDatatable('registros');
                 $('.overlayRegistros').css('display','none');
+            }
+        });
+    }
+    function eliminar(element)
+    {
+        let solnro = $(element).attr('data-solnro');
+        // alert(solnro);
+        Swal.fire({
+            title: 'Esta seguro de eliminar el registro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '',
+            confirmButtonText: 'Si, eliminar!'
+        }).then((result) => {
+            if(result.isConfirmed)
+            {
+                // $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+                jQuery.ajax(
+                { 
+                    url: "{{url('medicion/eliminar')}}",
+                    data: {solnro:solnro},
+                    method: 'get',
+                    success: function(r){
+                        $(".overlayRegDBL").toggle(flip++%2===0);
+                        construirTabla();
+                        fillRegistros();
+                        msjRee(r);
+                    }
+                });
             }
         });
     }

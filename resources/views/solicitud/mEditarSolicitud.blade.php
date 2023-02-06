@@ -6,28 +6,29 @@
         }
     }
 </style>
-<div class="modal fade" id="modalRegNewSol" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalEditarSol" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header py-1 border-transparent" style="background-color: rgba(0, 0, 0, 0.03);">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-file"></i> Registrar Nueva Solicitud</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-file"></i> Editar Solicitud</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formValidateRegNewSol">
+                <form id="formValidateRegEditarSol">
                     <div class="row contenedorFormNewSol">
                         <div class="col-lg-12">
                             <div class="alert alert-info py-1 mb-1"><p class="m-0 text-center font-weight-bold">DATOS DE LA SOLICITUD:</p></div>
                         </div>
+                        <input type="hidden" id="esolnro">
                         <div class="form-group col-lg-4">
                             <label for="" class="m-0">Numero de Solicitud: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="snumSoli" name="snumSoli">
+                                <input type="text" class="form-control form-control-sm clean" id="enumSoli" name="enumSoli">
                             </div>
                         </div>
                         <div class="form-group col-lg-4">
@@ -36,7 +37,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="date" class="form-control form-control-sm clean" id="sfechaSoli" name="sfechaSoli">
+                                <input type="date" class="form-control form-control-sm clean" id="efechaSoli" name="efechaSoli">
                             </div>
                         </div>
                         <div class="form-group col-lg-4">
@@ -45,7 +46,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="date" class="form-control form-control-sm clean" id="sfechaVencimiento" name="sfechaVencimiento">
+                                <input type="date" class="form-control form-control-sm clean" id="efechaVencimiento" name="efechaVencimiento">
                             </div>
                         </div>
                         <div class="form-group col-lg-2">
@@ -54,7 +55,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" id="slugar" name="slugar" value="Abancay">
+                                <input type="text" class="form-control form-control-sm" id="elugar" name="elugar" value="Abancay">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -63,7 +64,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="date" class="form-control form-control-sm clean" id="sfecha" name="sfecha">
+                                <input type="date" class="form-control form-control-sm clean" id="efecha" name="efecha">
                             </div>
                         </div>
                         <div class="form-group col-lg-2">
@@ -72,7 +73,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" id="sempresa" name="sempresa" value="EMUSAP ABANCAY">
+                                <input type="text" class="form-control form-control-sm" id="eempresa" name="eempresa" value="EMUSAP ABANCAY">
                             </div>
                         </div>
                         <div class="form-group col-lg-5">
@@ -81,7 +82,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="snumRecibo" name="snumRecibo">
+                                <input type="text" class="form-control form-control-sm clean" id="enumRecibo" name="enumRecibo">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -93,7 +94,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="snombreTit" name="snombreTit">
+                                <input type="text" class="form-control form-control-sm clean" id="enombreTit" name="enombreTit">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -102,7 +103,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="sdniTit" name="sdniTit" maxlength="8">
+                                <input type="text" class="form-control form-control-sm clean" id="edniTit" name="edniTit" maxlength="8">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -111,7 +112,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="scorreoTit" name="scorreoTit">
+                                <input type="text" class="form-control form-control-sm clean" id="ecorreoTit" name="ecorreoTit">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -120,7 +121,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="sdomicilioTit" name="sdomicilioTit">
+                                <input type="text" class="form-control form-control-sm clean" id="edomicilioTit" name="edomicilioTit">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -129,7 +130,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="snumeroTit" name="snumeroTit">
+                                <input type="text" class="form-control form-control-sm clean" id="enumeroTit" name="enumeroTit">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -138,7 +139,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="smanzanaTit" name="smanzanaTit">
+                                <input type="text" class="form-control form-control-sm clean" id="emanzanaTit" name="emanzanaTit">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -147,7 +148,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="sloteTit" name="sloteTit">
+                                <input type="text" class="form-control form-control-sm clean" id="eloteTit" name="eloteTit">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -156,7 +157,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="surbanizacionTit" name="surbanizacionTit">
+                                <input type="text" class="form-control form-control-sm clean" id="eurbanizacionTit" name="eurbanizacionTit">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -168,7 +169,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="snombreRep" name="snombreRep">
+                                <input type="text" class="form-control form-control-sm clean" id="enombreRep" name="enombreRep">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -177,7 +178,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="sdniRep" name="sdniRep" maxlength="8">
+                                <input type="text" class="form-control form-control-sm clean" id="edniRep" name="edniRep" maxlength="8">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -186,7 +187,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="scorreoRep" name="scorreoRep">
+                                <input type="text" class="form-control form-control-sm clean" id="ecorreoRep" name="ecorreoRep">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -195,7 +196,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="sdomicilioRep" name="sdomicilioRep">
+                                <input type="text" class="form-control form-control-sm clean" id="edomicilioRep" name="edomicilioRep">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -204,7 +205,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="snumeroRep" name="snumeroRep">
+                                <input type="text" class="form-control form-control-sm clean" id="enumeroRep" name="enumeroRep">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -213,7 +214,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="smanzanaRep" name="smanzanaRep">
+                                <input type="text" class="form-control form-control-sm clean" id="emanzanaRep" name="emanzanaRep">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -222,7 +223,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="sloteRep" name="sloteRep">
+                                <input type="text" class="form-control form-control-sm clean" id="eloteRep" name="eloteRep">
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -231,7 +232,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="surbanizacionRep" name="surbanizacionRep">
+                                <input type="text" class="form-control form-control-sm clean" id="eurbanizacionRep" name="eurbanizacionRep">
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -243,7 +244,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <select class="form-control form-control-sm" name="stipoPredio" id="stipoPredio">
+                                <select class="form-control form-control-sm" name="etipoPredio" id="etipoPredio">
                                     <option disabled value="0">Seleccione...</option>
                                     <option value="En construccion">En construccion</option>
                                     <option value="Habilitado" selected>Habilitado</option>
@@ -257,7 +258,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="subicacionPre" name="subicacionPre">
+                                <input type="text" class="form-control form-control-sm clean" id="eubicacionPre" name="eubicacionPre">
                             </div>
                         </div>
                         <div class="form-group col-lg-2">
@@ -266,7 +267,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="snumeroPre" name="snumeroPre">
+                                <input type="text" class="form-control form-control-sm clean" id="enumeroPre" name="enumeroPre">
                             </div>
                         </div>
                         <div class="form-group col-lg-2">
@@ -275,7 +276,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="smanzanaPre" name="smanzanaPre">
+                                <input type="text" class="form-control form-control-sm clean" id="emanzanaPre" name="emanzanaPre">
                             </div>
                         </div>
                         <div class="form-group col-lg-2">
@@ -284,7 +285,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="slotePre" name="slotePre">
+                                <input type="text" class="form-control form-control-sm clean" id="elotePre" name="elotePre">
                             </div>
                         </div>
                         <div class="form-group col-lg-6">
@@ -293,17 +294,17 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="sreferenciaPre" name="sreferenciaPre">
+                                <input type="text" class="form-control form-control-sm clean" id="ereferenciaPre" name="ereferenciaPre">
                             </div>
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="" class="m-0">Tipo de servicio:</label>
                             <div class="form-control form-control-sm text-center">
-                                <input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="sts1">
-                                <label class="form-check-label mr-5" for="sts1">Servicio de Agua Potable</label>
+                                <input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="ets1">
+                                <label class="form-check-label mr-5" for="ets1">Servicio de Agua Potable</label>
 
-                                <input class="form-check-input" type="checkbox" value="Servicio de Alcantarillado Sanitario" id="sts2">
-                                <label class="form-check-label" for="sts2">Servicio de Alcantarillado Sanitario</label>
+                                <input class="form-check-input" type="checkbox" value="Servicio de Alcantarillado Sanitario" id="ets2">
+                                <label class="form-check-label" for="ets2">Servicio de Alcantarillado Sanitario</label>
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
@@ -312,7 +313,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <select class="form-control form-control-sm" name="scategoria" id="scategoria">
+                                <select class="form-control form-control-sm" name="ecategoria" id="ecategoria">
                                     <option disabled value="0">Seleccione...</option>
                                     <option value="Domestico" selected>Domestico</option>
                                     <option value="Social">Social</option>
@@ -328,7 +329,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <select class="form-control form-control-sm" name="susoServicio" id="susoServicio">
+                                <select class="form-control form-control-sm" name="eusoServicio" id="eusoServicio">
                                     <option disabled value="0">Seleccione...</option>
                                     <option value="Permanente" selected>Permanente</option>
                                     <option value="Temporal">Temporal</option>
@@ -341,31 +342,31 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="snumeroMeses" name="snumeroMeses">
+                                <input type="text" class="form-control form-control-sm clean" id="enumeroMeses" name="enumeroMeses">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <p class="m-0 mb-2 font-weight-bold text-center">La conexión se solicita para ser instalada en el predio ubicado en el numeral III. Por lo cual adjunto copia de los documentos siguientes:</p>
                         </div>
                         <div class="col-lg-6 pl-5">
-                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="sitem1" checked>
-                            <label class="form-check-label mr-5" for="sitem1">Documento que acredita la propiedad, titulo posesorio o certificado de posesión del predio, según corresponda</label></p>
+                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="eitem1" checked>
+                            <label class="form-check-label mr-5" for="eitem1">Documento que acredita la propiedad, titulo posesorio o certificado de posesión del predio, según corresponda</label></p>
 
-                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="sitem2" checked>
-                            <label class="form-check-label mr-5" for="sitem2">Plano de Ubicación del predio, el cual deberá detallar la ubicación de la conexión de agua y/o alcantarillado</label></p>
+                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="eitem2" checked>
+                            <label class="form-check-label mr-5" for="eitem2">Plano de Ubicación del predio, el cual deberá detallar la ubicación de la conexión de agua y/o alcantarillado</label></p>
 
-                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="sitem3">
-                            <label class="form-check-label mr-5" for="sitem3">Documento que acredite la representación, de ser el caso</label></p>
+                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="eitem3">
+                            <label class="form-check-label mr-5" for="eitem3">Documento que acredite la representación, de ser el caso</label></p>
 
-                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="sitem4">
-                            <label class="form-check-label mr-5" for="sitem4">Certificado de vigencia de poder, para el caso de personas jurídicas</label></p>
+                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="eitem4">
+                            <label class="form-check-label mr-5" for="eitem4">Certificado de vigencia de poder, para el caso de personas jurídicas</label></p>
                         </div>
                         <div class="col-lg-6 pl-5">
-                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="sitem5">
-                            <label class="form-check-label mr-5" for="sitem5">Memoria descriptiva de instalaciones sanitarias internas de agua y desagüe firmada ingeniero sanitario colegiado y habilitado (Conexión domiciliaria de Agua Potable de un diámetro mayor a 15mm)</label></p>
+                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="eitem5">
+                            <label class="form-check-label mr-5" for="eitem5">Memoria descriptiva de instalaciones sanitarias internas de agua y desagüe firmada ingeniero sanitario colegiado y habilitado (Conexión domiciliaria de Agua Potable de un diámetro mayor a 15mm)</label></p>
 
-                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="sitem6">
-                            <label class="form-check-label mr-5" for="sitem6">Plano de instalaciones sanitarias internas de agua y desagüe, firmado ingeniero sanitario colegiado y habilitado (Conexión domiciliaria de Agua Potable de un diámetro a 15mm)</label></p>
+                            <p class="m-0 text-justify"><input class="form-check-input" type="checkbox" value="Servicio de Agua Potable" id="eitem6">
+                            <label class="form-check-label mr-5" for="eitem6">Plano de instalaciones sanitarias internas de agua y desagüe, firmado ingeniero sanitario colegiado y habilitado (Conexión domiciliaria de Agua Potable de un diámetro a 15mm)</label></p>
                         </div>
                         <div class="form-group col-lg-12">
                             <label for="" class="m-0">Otros:</label>
@@ -373,7 +374,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm clean" id="sotros" name="sotros">
+                                <input type="text" class="form-control form-control-sm clean" id="eotros" name="eotros">
                             </div>
                         </div>
                         <div class="form-group col-lg-6">
@@ -382,7 +383,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-phone"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm soloNumeros clean" id="stelefono" name="stelefono" maxlength="9">
+                                <input type="text" class="form-control form-control-sm soloNumeros clean" id="etelefono" name="etelefono" maxlength="9">
                             </div>
                         </div>
                         <div class="form-group col-lg-6">
@@ -391,7 +392,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-phone"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-sm soloNumeros clean" id="stelefonoAlternativo" name="stelefonoAlternativo" maxlength="9">
+                                <input type="text" class="form-control form-control-sm soloNumeros clean" id="etelefonoAlternativo" name="etelefonoAlternativo" maxlength="9">
                             </div>
                         </div>
                     </div>
@@ -399,30 +400,29 @@
             </div>
             <div class="modal-footer py-1 border-transparent">
                 <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-sm btn-success saveNewSoli"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-sm btn-success saveEditarSoli"><i class="fa fa-save"></i> Guardar</button>
             </div>
         </div>
     </div>
 </div>
 <script>
-$('.saveNewSoli').on('click',function(){
-    saveNewSoli();
+$('.saveEditarSoli').on('click',function(){
+    saveEditarSoli();
 });
-// botonNewSoli
-$('.botonNewSoli').on('click',function(){
-    jQuery.ajax(
-    { 
-        url: "{{url('solicitud/showNumCorrelativo')}}",
-        method: 'get',
-        success: function(r){
-            console.log(r);
-            let anio = new Date();
-            $('#snumSoli').val(anio.getFullYear()+'-'+r.numeroCorrelativo);
-            $('#modalRegNewSol').modal('show');
-        }
-    });
-});
-$('#sfechaSoli').on('change',function(){
+// $('.botonNewSoli').on('click',function(){
+//     jQuery.ajax(
+//     { 
+//         url: "{{url('solicitud/showNumCorrelativo')}}",
+//         method: 'get',
+//         success: function(r){
+//             console.log(r);
+//             let anio = new Date();
+//             $('#enumSoli').val(anio.getFullYear()+'-'+r.numeroCorrelativo);
+//             $('#modalEditarSol').modal('show');
+//         }
+//     });
+// });
+$('#efechaSoli').on('change',function(){
     let fecha = $(this).val().split('-');
     let fechaActual = new Date(fecha[0], fecha[1], fecha[2]);
     let fechaVencimiento  = new Date(fechaActual.setMonth(fechaActual.getMonth()+1));
@@ -437,122 +437,180 @@ $('#sfechaSoli').on('change',function(){
     }
     let fechitaVen = fechaVencimiento.getFullYear().toString()+'-'+mes+'-'+dia;
 
-    $('#sfechaVencimiento').val(fechitaVen);
-    $('#sfecha').val($(this).val());
+    $('#efechaVencimiento').val(fechitaVen);
+    $('#efecha').val($(this).val());
 });
 
-
-function dataNewSoli()
+function editarSolicitud(element)
 {
-    let hoy = new Date();
-    let hora = hoy.getHours().toString().padStart(2, 0);
-    let minutos = hoy.getMinutes().toString().padStart(2, 0);
-    let segunHora = hora >= 12 ? 'PM' : 'AM';
-    let docHora = hora+':'+minutos+' '+segunHora;
+    // alert($(element).attr('data-solnro'));
+    jQuery.ajax(
+    { 
+        url: "{{url('solicitud/show')}}",
+        data: {solnro:$(element).attr('data-solnro')},
+        method: 'get',
+        success: function(r){
+            // limpiarForm();
+            console.log(r);
+            if(r.estado)
+            {
+                $('#esolnro').val(r.data.solnro1);
+                $('#enumSoli').val(r.data.numSoli);
+                $('#efechaSoli').val(r.data.fechaSoli);
+                $('#efechaVencimiento').val(r.data.fechaVencimiento);
+                $('#elugar').val(r.data.lugar);
+                $('#efecha').val(r.data.fecha);
+                $('#eempresa').val(r.data.empresa);
+                $('#enumRecibo').val(r.data.numRecibo);
+
+                $('#enombreTit').val(r.data.nombreTit);
+                $('#edniTit').val(r.data.dniTit);
+                $('#ecorreoTit').val(r.data.correoTit);
+                $('#edomicilioTit').val(r.data.domicilioTit);
+                $('#enumeroTit').val(r.data.numeroTit);
+                $('#emanzanaTit').val(r.data.manzanaTit);
+                $('#eloteTit').val(r.data.loteTit);
+                $('#eurbanizacionTit').val(r.data.urbanizacionTit);
+
+                $('#enombreRep').val(r.data.nombreRep);
+                $('#edniRep').val(r.data.dniRep);
+                $('#ecorreoRep').val(r.data.correoRep);
+                $('#edomicilioRep').val(r.data.domicilioRep);
+                $('#enumeroRep').val(r.data.numeroRep);
+                $('#emanzanaRep').val(r.data.manzanaRep);
+                $('#eloteRep').val(r.data.loteRep);
+                $('#eurbanizacionRep').val(r.data.urbanizacionRep);
+
+                $('#etipoPredio').val(r.data.tipoPredio);
+                $('#eubicacionPre').val(r.data.ubicacionPre);
+                $('#enumeroPre').val(r.data.numeroPre);
+                $('#emanzanaPre').val(r.data.manzanaPre);
+                $('#elotePre').val(r.data.lotePre);
+                $('#ereferenciaPre').val(r.data.referenciaPre);
+
+                if(r.data.ts1=='true') $('#ets1').prop('checked',true); else $('#ets1').prop('checked',false);
+                if(r.data.ts2=='true') $('#ets2').prop('checked',true); else $('#ets2').prop('checked',false);
+
+                $('#ecategoria').val(r.data.categoria);
+                $('#eusoServicio').val(r.data.usoServicio);
+                $('#enumeroMeses').val(r.data.numeroMeses);
+
+                if(r.data.item1=='true') $('#eitem1').prop('checked',true); else $('#eitem1').prop('checked',false);
+                if(r.data.item2=='true') $('#eitem2').prop('checked',true); else $('#eitem2').prop('checked',false);
+                if(r.data.item3=='true') $('#eitem3').prop('checked',true); else $('#eitem3').prop('checked',false);
+                if(r.data.item4=='true') $('#eitem4').prop('checked',true); else $('#eitem4').prop('checked',false);
+                if(r.data.item5=='true') $('#eitem5').prop('checked',true); else $('#eitem5').prop('checked',false);
+                if(r.data.item6=='true') $('#eitem6').prop('checked',true); else $('#eitem6').prop('checked',false);
+
+                $('#eotros').val(r.data.otros);
+
+                $('#etelefono').val(r.data.telefono);
+                $('#etelefonoAlternativo').val(r.data.telefonoAlternativo);
+            }
+            $('#modalEditarSol').modal('show');
+        }
+    });
+}
+function dataEditarSoli()
+{
 	return {
-        // solnro:'666'+$('#snumSoli').val().split('-')[0]+$('#snumSoli').val().split('-')[1],
-        numSoli:$('#snumSoli').val(),
-        fechaSoli:$('#sfechaSoli').val(),
-        fechaVencimiento:$('#sfechaVencimiento').val(),
-        lugar:$('#slugar').val(),
-        fecha:$('#sfecha').val(),
-        empresa:$('#sempresa').val(),
-        numRecibo:$('#snumRecibo').val(),
+        solnro:$('#esolnro').val(),
+        numSoli:$('#enumSoli').val(),
+        fechaSoli:$('#efechaSoli').val(),
+        fechaVencimiento:$('#efechaVencimiento').val(),
+        lugar:$('#elugar').val(),
+        fecha:$('#efecha').val(),
+        empresa:$('#eempresa').val(),
+        numRecibo:$('#enumRecibo').val(),
 
-        nombreTit:$('#snombreTit').val(),
-        dniTit:$('#sdniTit').val(),
-        domicilioTit:$('#sdomicilioTit').val(),
-        correoTit:$('#scorreoTit').val(),
-        numeroTit:$('#snumeroTit').val(),
-        manzanaTit:$('#smanzanaTit').val(),
-        loteTit:$('#sloteTit').val(),
-        urbanizacionTit:$('#surbanizacionTit').val(),
+        nombreTit:$('#enombreTit').val(),
+        dniTit:$('#edniTit').val(),
+        correoTit:$('#ecorreoTit').val(),
+        domicilioTit:$('#edomicilioTit').val(),
+        numeroTit:$('#enumeroTit').val(),
+        manzanaTit:$('#emanzanaTit').val(),
+        loteTit:$('#eloteTit').val(),
+        urbanizacionTit:$('#eurbanizacionTit').val(),
 
-        nombreRep:$('#snombreRep').val(),
-        dniRep:$('#sdniRep').val(),
-        correoRep:$('#scorreoRep').val(),
-        domicilioRep:$('#sdomicilioRep').val(),
-        numeroRep:$('#snumeroRep').val(),
-        manzanaRep:$('#smanzanaRep').val(),
-        loteRep:$('#sloteRep').val(),
-        urbanizacionRep:$('#surbanizacionRep').val(),
+        nombreRep:$('#enombreRep').val(),
+        dniRep:$('#edniRep').val(),
+        correoRep:$('#ecorreoRep').val(),
+        domicilioRep:$('#edomicilioRep').val(),
+        numeroRep:$('#enumeroRep').val(),
+        manzanaRep:$('#emanzanaRep').val(),
+        loteRep:$('#eloteRep').val(),
+        urbanizacionRep:$('#eurbanizacionRep').val(),
 
-        tipoPredio:$('#stipoPredio').val(),
-        ubicacionPre:$('#subicacionPre').val(),
-        numeroPre:$('#snumeroPre').val(),
-        manzanaPre:$('#smanzanaPre').val(),
-        lotePre:$('#slotePre').val(),
-        referenciaPre:$('#sreferenciaPre').val(),
+        tipoPredio:$('#etipoPredio').val(),
+        ubicacionPre:$('#eubicacionPre').val(),
+        numeroPre:$('#enumeroPre').val(),
+        manzanaPre:$('#emanzanaPre').val(),
+        lotePre:$('#elotePre').val(),
+        referenciaPre:$('#ereferenciaPre').val(),
 
-        ts1:$('#sts1').prop('checked'),
-        ts2:$('#sts2').prop('checked'),
+        ts1:$('#ets1').prop('checked'),
+        ts2:$('#ets2').prop('checked'),
 
-        categoria:$('#scategoria').val(),
-        usoServicio:$('#susoServicio').val(),
-        numeroMeses:$('#snumeroMeses').val(),
+        categoria:$('#ecategoria').val(),
+        usoServicio:$('#eusoServicio').val(),
+        numeroMeses:$('#enumeroMeses').val(),
 
-        item1:$('#sitem1').prop('checked'),
-        item2:$('#sitem2').prop('checked'),
-        item3:$('#sitem3').prop('checked'),
-        item4:$('#sitem4').prop('checked'),
-        item5:$('#sitem5').prop('checked'),
-        item6:$('#sitem6').prop('checked'),
+        item1:$('#eitem1').prop('checked'),
+        item2:$('#eitem2').prop('checked'),
+        item3:$('#eitem3').prop('checked'),
+        item4:$('#eitem4').prop('checked'),
+        item5:$('#eitem5').prop('checked'),
+        item6:$('#eitem6').prop('checked'),
 
-        otros:$('#sotros').val(),
+        otros:$('#eotros').val(),
 
-        telefono:$('#stelefono').val(),
-        telefonoAlternativo:$('#stelefonoAlternativo').val(),
-
-        hora:docHora,
+        telefono:$('#etelefono').val(),
+        telefonoAlternativo:$('#etelefonoAlternativo').val(),
 	}
 }
-function saveNewSoli()
+function saveEditarSoli()
 {
-    if($('#formValidateRegNewSol').valid()==false)
+    if($('#formValidateRegEditarSol').valid()==false)
         return;
     jQuery.ajax(
     { 
-        url: "{{url('solicitud/saveNewSoli')}}",
-        data: dataNewSoli(),
+        url: "{{url('solicitud/saveEditarSoli')}}",
+        data: dataEditarSoli(),
         method: 'get',
         success: function(r){
             console.log(r);
-            cleanFormNewSoli();
+            // cleanFormNewSoli();
             $(".overlayRegDBL").toggle(flip++%2===0);
             construirTablaDBL();
             listarFromApp();
-            $('#modalRegNewSol').modal('hide');
+            $('#modalEditarSol').modal('hide');
             msjRee(r);
         }
     });
 }
-function cleanFormNewSoli()
-{
-    // $(".contenedorFormularioRegistrar input[type=text]").val('');
-    // $(".contenedorFormularioRegistrar input[type=date]").val('');
-    // $(".contenedorFormularioRegistrar select").val('0');
-    // $(".contenedorFormularioRegistrar input[type=checkbox]").prop('checked',false);
-    $('.clean').val('')
-    $('#sts1').prop('checked',false);
-    $('#sts2').prop('checked',false);
-    $('#sitem3').prop('checked',false);
-    $('#sitem4').prop('checked',false);
-    $('#sitem5').prop('checked',false);
-    $('#sitem6').prop('checked',false);
-}
-$("#formValidateRegNewSol").validate({
-    errorClass: "text-danger font-italic font-weight-normal",
-    ignore: ".ignore",
-    rules: {
-        snumSoli: "required",
-        sfechaSoli: "required",
-        sfechaVencimiento: "required",
-        slugar: "required",
-        sfecha: "required",
-        sempresa: "required",
-        snombreTit: "required",
-        sdniTit: "required",
-        sdomicilioTit: "required",
-    },
-});
+// function cleanFormNewSoli()
+// {
+//     $('.clean').val('')
+//     $('#ets1').prop('checked',false);
+//     $('#ets2').prop('checked',false);
+//     $('#eitem3').prop('checked',false);
+//     $('#eitem4').prop('checked',false);
+//     $('#eitem5').prop('checked',false);
+//     $('#eitem6').prop('checked',false);
+// }
+// $("#formValidateRegEditarSol").validate({
+//     errorClass: "text-danger font-italic font-weight-normal",
+//     ignore: ".ignore",
+//     rules: {
+//         enumSoli: "required",
+//         efechaSoli: "required",
+//         efechaVencimiento: "required",
+//         elugar: "required",
+//         efecha: "required",
+//         eempresa: "required",
+//         enombreTit: "required",
+//         edniTit: "required",
+//         edomicilioTit: "required",
+//     },
+// });
 </script>

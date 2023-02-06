@@ -74,8 +74,9 @@ function dataMedicion()
         // motivo:$('#motivoProgramacion').val(),
     }
 }
-function proMedicion(solnro)
+function proMedicion(element)
 {
+    let solnro = $(element).attr('data-solnro');
     $('#solnro').val(solnro);
     $('#modRegMedicion').modal('show');
     // jQuery.ajax(

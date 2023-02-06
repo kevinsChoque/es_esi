@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 use App\Models\TSolicitud;
 use App\Models\TNumero;
 use App\Models\TFactibilidad;
@@ -356,6 +358,9 @@ class SolController extends Controller
     public function actSaveNewSoli(Request $req)
     {
         $req['fechaRegistro']=now();
+        $id = Str::uuid()->toString();
+        $req['solnro']=$id;
+        $req['solnro1']=$id;
         $ts=TSolicitud::create($req->all());
         if($ts->save())
         {
@@ -398,48 +403,45 @@ class SolController extends Controller
     }
     public function actListarFromApp()
     {
-        // dd('cascsa');
-        // $listSoli = TSolicitud::where('solnro','like','app%')->get();
-        $listSoli = TSolicitud::whereNull('estadoProceso')->orderBy('fechaRegistro','desc')->get();
-        // dd($listSoli);
+        $listSoli = TSolicitud::whereNull('estadoProceso')->whereNull('estado')->orderBy('fechaRegistro','desc')->get();
         return response()->json(["data"=>$listSoli,"estado"=>true]);
     }
-    public function actSolDownload(Request $req,$numSol=null)
+    public function actSolDownload(Request $req,$solnro=null)
     {
         setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
         $tp = new TemplateProcessor('plantillas/newSolicitud.docx');
-        $ts = TSolicitud::where('numSoli',$numSol)->first();
-        // dd($numSol);
+        $ts = TSolicitud::where('solnro',$solnro)->first();
+        
         if($ts!=null)
         {
             // 'solnro',
             // $tp->setValue('dateVencimiento',$ts->fechaVencimiento);
             $tp->setValue('hora',$ts->hora=='' || $ts->hora==null?'':$ts->hora);
             $tp->setValue('numSoli',$ts->numSoli=='' || $ts->numSoli==null?'':$ts->numSoli);
-        $tp->setValue('fechaSoli',$ts->fechaSoli=='' || $ts->fechaSoli==null?'':$ts->fechaSoli);
-        $tp->setValue('fechaVencimiento',$ts->fechaVencimiento=='' || $ts->fechaVencimiento==null?'':$ts->fechaVencimiento);
-        $tp->setValue('lugar',$ts->lugar=='' || $ts->lugar==null?'':$ts->lugar);
-        $tp->setValue('fecha',$ts->fecha=='' || $ts->fecha==null?'':$ts->fecha);
-        $tp->setValue('empresa',$ts->empresa=='' || $ts->empresa==null?'':$ts->empresa);
-        $tp->setValue('numRecibo',$ts->numRecibo=='' || $ts->numRecibo==null?'':$ts->numRecibo);
+            $tp->setValue('fechaSoli',$ts->fechaSoli=='' || $ts->fechaSoli==null?'':$ts->fechaSoli);
+            $tp->setValue('fechaVencimiento',$ts->fechaVencimiento=='' || $ts->fechaVencimiento==null?'':$ts->fechaVencimiento);
+            $tp->setValue('lugar',$ts->lugar=='' || $ts->lugar==null?'':$ts->lugar);
+            $tp->setValue('fecha',$ts->fecha=='' || $ts->fecha==null?'':$ts->fecha);
+            $tp->setValue('empresa',$ts->empresa=='' || $ts->empresa==null?'':$ts->empresa);
+            $tp->setValue('numRecibo',$ts->numRecibo=='' || $ts->numRecibo==null?'':$ts->numRecibo);
 
-        $tp->setValue('nombreTit',$ts->nombreTit=='' || $ts->nombreTit==null?'':$ts->nombreTit);
-        $tp->setValue('dniTit',$ts->dniTit=='' || $ts->dniTit==null?'':$ts->dniTit);
-        $tp->setValue('correoTit',$ts->correoTit=='' || $ts->correoTit==null?'':$ts->correoTit);
-        $tp->setValue('domicilioTit',$ts->domicilioTit=='' || $ts->domicilioTit==null?'':$ts->domicilioTit);
-        $tp->setValue('numeroTit',$ts->numeroTit=='' || $ts->numeroTit==null?'':$ts->numeroTit);
-        $tp->setValue('manzanaTit',$ts->manzanaTit=='' || $ts->manzanaTit==null?'':$ts->manzanaTit);
-        $tp->setValue('loteTit',$ts->loteTit=='' || $ts->loteTit==null?'':$ts->loteTit);
-        $tp->setValue('urbanizacionTit',$ts->urbanizacionTit=='' || $ts->urbanizacionTit==null?'':$ts->urbanizacionTit);
+            $tp->setValue('nombreTit',$ts->nombreTit=='' || $ts->nombreTit==null?'':$ts->nombreTit);
+            $tp->setValue('dniTit',$ts->dniTit=='' || $ts->dniTit==null?'':$ts->dniTit);
+            $tp->setValue('correoTit',$ts->correoTit=='' || $ts->correoTit==null?'':$ts->correoTit);
+            $tp->setValue('domicilioTit',$ts->domicilioTit=='' || $ts->domicilioTit==null?'':$ts->domicilioTit);
+            $tp->setValue('numeroTit',$ts->numeroTit=='' || $ts->numeroTit==null?'':$ts->numeroTit);
+            $tp->setValue('manzanaTit',$ts->manzanaTit=='' || $ts->manzanaTit==null?'':$ts->manzanaTit);
+            $tp->setValue('loteTit',$ts->loteTit=='' || $ts->loteTit==null?'':$ts->loteTit);
+            $tp->setValue('urbanizacionTit',$ts->urbanizacionTit=='' || $ts->urbanizacionTit==null?'':$ts->urbanizacionTit);
 
-        $tp->setValue('nombreRep',$ts->nombreRep=='' || $ts->nombreRep==null?'':$ts->nombreRep);
-        $tp->setValue('dniRep',$ts->dniRep=='' || $ts->dniRep==null?'':$ts->dniRep);
-        $tp->setValue('correoRep',$ts->correoRep=='' || $ts->correoRep==null?'':$ts->correoRep);
-        $tp->setValue('domicilioRep',$ts->domicilioRep=='' || $ts->domicilioRep==null?'':$ts->domicilioRep);
-        $tp->setValue('numeroRep',$ts->numeroRep=='' || $ts->numeroRep==null?'':$ts->numeroRep);
-        $tp->setValue('manzanaRep',$ts->manzanaRep=='' || $ts->manzanaRep==null?'':$ts->manzanaRep);
-        $tp->setValue('loteRep',$ts->loteRep=='' || $ts->loteRep==null?'':$ts->loteRep);
-        $tp->setValue('urbanizacionRep',$ts->urbanizacionRep=='' || $ts->urbanizacionRep==null?'':$ts->urbanizacionRep);
+            $tp->setValue('nombreRep',$ts->nombreRep=='' || $ts->nombreRep==null?'':$ts->nombreRep);
+            $tp->setValue('dniRep',$ts->dniRep=='' || $ts->dniRep==null?'':$ts->dniRep);
+            $tp->setValue('correoRep',$ts->correoRep=='' || $ts->correoRep==null?'':$ts->correoRep);
+            $tp->setValue('domicilioRep',$ts->domicilioRep=='' || $ts->domicilioRep==null?'':$ts->domicilioRep);
+            $tp->setValue('numeroRep',$ts->numeroRep=='' || $ts->numeroRep==null?'':$ts->numeroRep);
+            $tp->setValue('manzanaRep',$ts->manzanaRep=='' || $ts->manzanaRep==null?'':$ts->manzanaRep);
+            $tp->setValue('loteRep',$ts->loteRep=='' || $ts->loteRep==null?'':$ts->loteRep);
+            $tp->setValue('urbanizacionRep',$ts->urbanizacionRep=='' || $ts->urbanizacionRep==null?'':$ts->urbanizacionRep);
 
             // 'tipoPredio',
             $tp->setValue('preo1',$ts->tipoPredio=='En construccion' ? 'X': '');
@@ -525,12 +527,45 @@ class SolController extends Controller
             $tp->setValue('soltelef','');
             $tp->setValue('telefonoAlternativo','');
         }
-        $tp->setValue('solfirmador',$ts!=null && $ts->nombreRep!='' && $ts->nombreRep!=null && $ts->dniRep!='' && $ts->dniRep!=null?$ts->nombreRep:$ts->nombreTit);
-        $tp->setValue('solfirmadni',$ts!=null && $ts->nombreRep!='' && $ts->nombreRep!=null && $ts->dniRep!='' && $ts->dniRep!=null?$ts->dniRep:$ts->dniTit);
+        if($ts!=null && 
+            $ts->nombreTit!='' && 
+            $ts->nombreTit!=null && 
+            $ts->dniTit!='' && 
+            $ts->dniTit!=null)
+        {
+            $tp->setValue('solfirmador',$ts->nombreTit);
+            $tp->setValue('solfirmadni',$ts->dniTit);
+        }
+        else
+        {
+            $tp->setValue('solfirmador',$ts!=null && $ts->nombreRep!='' && $ts->nombreRep!=null && $ts->dniRep!='' && $ts->dniRep!=null?$ts->nombreRep:'');
+            $tp->setValue('solfirmadni',$ts!=null && $ts->nombreRep!='' && $ts->nombreRep!=null && $ts->dniRep!='' && $ts->dniRep!=null?$ts->dniRep:'');
+        }
 
         $fileName='test.docx';
         $tp->saveAs($fileName);
-        return response()->download($fileName)->deleteFileAfterSend(true);
-        dd('entro aki');
+        // $tp->save($fileName,'PDF');  
+        return response()->download($fileName)->deleteFileAfterSend(false);
+    }
+    public function actEliminar(Request $req)
+    {
+        // dd(Str::uuid()->toString());
+        $ts = TSolicitud::find($req->solnro);
+        $ts->estado = '0';
+        if($ts->save())
+            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        else
+            return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);
+    }
+    public function actSaveEditarSoli(Request $req)
+    {
+        // dd($req->all());
+        $ts = TSolicitud::find($req->solnro);
+        $req['fechaActualizacion']=now();
+        $ts->fill($req->all());
+        if($ts->save())
+            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        else
+            return response()->json(["msg"=>"Ocurrio un error inesperado.","estado"=>false]);
     }
 }

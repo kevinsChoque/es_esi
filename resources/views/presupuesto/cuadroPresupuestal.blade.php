@@ -48,7 +48,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
                         <div class="form-group col-lg-3">
                             <label for="" class="m-0">Codigo: <span class="text-danger">*</span></label>

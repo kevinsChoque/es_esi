@@ -14,6 +14,7 @@ class TSolicitud extends Model
 
     protected $fillable = [
     	'solnro',
+    	'solnro1',
     	'hora',
     	'numSoli',
         'fechaSoli',

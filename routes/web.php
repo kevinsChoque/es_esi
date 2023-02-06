@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DocController;
 use App\Http\Controllers\SolController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\PlantillaController;
 use App\Http\Controllers\PresupuestoController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\CargoController;
 use App\Http\Controllers\FactibilidadController;
 use App\Http\Controllers\MedicionController;
 use App\Http\Controllers\DashController;
+use App\Http\Controllers\ArchivoController;
 
 Route::get('/', function () {
     return view('login.login');
@@ -39,7 +41,10 @@ Route::get('solicitud/listar',[SolController::class, 'actListar']);
 Route::get('solicitud/saveNewSoli',[SolController::class, 'actSaveNewSoli']);
 Route::get('solicitud/showNumCorrelativo',[SolController::class, 'actShowNumCorrelativo']);
 Route::get('solicitud/listarFromApp',[SolController::class, 'actListarFromApp']);
-Route::get('solicitud/solDownload/{numsol}',[SolController::class, 'actSolDownload']);
+Route::get('solicitud/solDownload/{solnro}',[SolController::class, 'actSolDownload']);
+Route::get('solicitud/eliminar',[SolController::class, 'actEliminar']);
+Route::get('solicitud/saveEditarSoli',[SolController::class, 'actSaveEditarSoli']);
+
 // solDownload
 // geFactibilidad
 Route::get('factibilidad/factibilidad',[FactibilidadController::class, 'actFactibilidad']);
@@ -52,6 +57,7 @@ Route::get('factibilidad/show',[FactibilidadController::class, 'actShow']);
 Route::get('factibilidad/guardarSegunSeaCaso',[FactibilidadController::class, 'actGuardarSegunSeaCaso']);
 Route::get('factibilidad/download/{solnro}',[FactibilidadController::class, 'actDownload']);
 Route::get('factibilidad/geFacSol',[FactibilidadController::class, 'actGeFacSol']);
+Route::get('factibilidad/eliminar',[FactibilidadController::class, 'actEliminar']);
 
 
 // medicion
@@ -62,6 +68,17 @@ Route::get('medicion/showLastMedicion',[MedicionController::class, 'actShowLastM
 Route::get('medicion/saveDataMed',[MedicionController::class, 'actSaveDataMed']);
 Route::get('medicion/show',[MedicionController::class, 'actShow']);
 Route::get('medicion/download/{solnro}',[MedicionController::class, 'actDownload']);
+Route::get('medicion/eliminar',[MedicionController::class, 'actEliminar']);
+
+// crud de usuarios
+
+Route::get('user/user',[UserController::class, 'actUser']);
+Route::get('user/listar',[UserController::class, 'actListar']);
+Route::get('user/registrar',[UserController::class, 'actRegistrar']);
+Route::get('user/eliminar',[UserController::class, 'actEliminar']);
+Route::get('user/editar',[UserController::class, 'actEditar']);
+Route::get('user/guardarCambios',[UserController::class, 'actGuardarCambios']);
+Route::get('user/changeState',[UserController::class, 'actChangeState']);
 
 // crud de persona
 Route::get('persona/persona',[PersonaController::class, 'actPersona']);
@@ -72,6 +89,8 @@ Route::get('persona/editar',[PersonaController::class, 'actEditar']);
 Route::get('persona/guardarCambios',[PersonaController::class, 'actGuardarCambios']);
 Route::get('persona/cambiarFirmador',[PersonaController::class, 'actCambiarFirmador']);
 Route::get('persona/listarTecnicos',[PersonaController::class, 'actListarTecnicos']);
+Route::get('persona/listarNewUser',[PersonaController::class, 'actListarNewUser']);
+// Route::get('persona/listarEditUser',[PersonaController::class, 'actListarEditUser']);
 
 // plantilla : agrupacion de items
 Route::get('plantilla/plantilla',[PlantillaController::class, 'actPlantilla']);
@@ -108,7 +127,17 @@ Route::get('numero/registrar',[NumeroController::class, 'actRegistrar']);
 // cargos de personas
 Route::get('cargo/listar',[CargoController::class, 'actListar']);
 
+// archivos de los diferentes pasos
+Route::post('archivo/registrarSoli',[ArchivoController::class, 'actRegistrarSoli']);
+Route::get('archivo/listarSoli',[ArchivoController::class, 'actListarSoli']);
 
+Route::get('archivo/eliminar',[ArchivoController::class, 'actEliminar']);
+Route::get('archivo/editar',[ArchivoController::class, 'actEditar']);
+Route::post('archivo/guardarCambios',[ArchivoController::class, 'actGuardarCambios']);
 
+Route::post('archivo/registrarFact',[ArchivoController::class, 'actRegistrarFact']);
+Route::get('archivo/listarFact',[ArchivoController::class, 'actListarFact']);
 
+Route::post('archivo/registrarMedi',[ArchivoController::class, 'actRegistrarMedi']);
+Route::get('archivo/listarMedi',[ArchivoController::class, 'actListarMedi']);
 

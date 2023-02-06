@@ -231,7 +231,7 @@
                             </div>
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">Observacion (del trabajador y/o el solicitante)</p></div> 
                             <div class="form-group mb-1">
-                                <label class="m-0">Explicar motivo:</label>
+                                <!-- <label class="m-0">Explicar motivo:</label> -->
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -264,14 +264,15 @@
 $('.saveDataFac').on('click',function(){
     saveDataFac();
 });
-function registrarAdicional(solnro)
+function registrarAdicional(element)
 {
     // $('#modDataFactibilidad').modal('show');
-    $('#solnroDataAdd').val(solnro);
+    alert($(element).attr('data-solnro'));
+    $('#solnroDataAdd').val($(element).attr('data-solnro'));
     jQuery.ajax(
     { 
         url: "{{url('factibilidad/show')}}",
-        data: {solnro:solnro},
+        data: {solnro:$(element).attr('data-solnro')},
         method: 'get',
         success: function(r){
             limpiarFormAddData();

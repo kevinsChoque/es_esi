@@ -379,9 +379,10 @@
 $('.saveDataMed').on('click',function(){
     saveDataMed();
 });
-function registrarAdicional(solnro)
+function registrarAdicional(element)
 {
     // $('#modDataMedicion').modal('show');
+    var solnro = $(element).attr('data-solnro');
     $('#solnroDataAdd').val(solnro);
     jQuery.ajax(
     { 

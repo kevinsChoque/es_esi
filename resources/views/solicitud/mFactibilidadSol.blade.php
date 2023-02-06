@@ -78,35 +78,14 @@ function dataFacSol()
         // hora:docHora,
     }
 }
-// function dataFactibilidad()
-// {
-//     return {
-//         solnro:$('#solnro').val(),
-//         idPersona:$('#personal').val(),
-//         fecha:$('#fecha').val(),
-//     }
-// }
+
 function regFacSol(element)
 {
     // alert($(element).attr('data-numsoli'));
     $('#solnro').val($(element).attr('data-numsoli'));
     $('#modRegFacSol').modal('show');
 }
-// function geFactibilidad()
-// {
-//     if($('#formValRegFacSol').valid()==false)
-//         return;
-//     jQuery.ajax(
-//     { 
-//         url: "{{url('solicitud/geFactibilidad')}}",
-//         data: dataFactibilidad(),
-//         method: 'get',
-//         success: function(r){
-//             $('#modRegFacSol').modal('hide');
-//             msjRee(r);
-//         }
-//     });
-// }
+
 function limpiarFormFac()
 {
     $(".contFormRegFacSol input[type=date]").val('');

@@ -14,10 +14,17 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-compact" data-widget="treeview" role="menu">
                 <!-- <li class="nav-item smPms"> submenu publico de solo lectura-->
+                
                 <li class="nav-item">
                     <a href="{{url('home/home')}}" class="sba1 nav-link bg-light">
                         <i class="fas fa-tachometer-alt nav-icon"></i>
                         <p data-npms="dashboard">Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('user/user')}}" class="sba1 nav-link bg-secondary">
+                        <i class="fas fa-users nav-icon"></i>
+                        <p data-npms="dashboard">GESTION DE USUARIOS</p>
                     </a>
                 </li>
                 <li class="nav-item has-treeview smPms">
