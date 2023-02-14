@@ -170,7 +170,9 @@
 
 @include('presupuesto.mDetalle')
 <script>
-    
+localStorage.setItem("nb",4);
+localStorage.setItem("sbd",3);
+localStorage.setItem("sba",12);
     var flip=0;
     $(document).ready( function () {
         // tablaDeRegistros=$('.contenedorRegistros').html();
@@ -251,6 +253,7 @@
             usuario:$('#usuario').val(),
             direccion:$('#direccion').val(),
             total:$('#totalPresupuesto').html(),
+            estado:'1',
         }
     }
     // var ppp=0;

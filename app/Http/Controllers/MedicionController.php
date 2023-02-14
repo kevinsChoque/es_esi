@@ -20,20 +20,30 @@ class MedicionController extends Controller
     }
     public function actListar()
     {
-        $registros = TFactibilidad::select('factibilidad.*','solicitud.*','historial_fac.*','persona.*','medicion.idMed')
-            ->leftjoin('solicitud','solicitud.solnro','=','factibilidad.solnro')
+        // $registros = TFactibilidad::select('factibilidad.*','solicitud.*','historial_fac.*','persona.*','medicion.idMed')
+        //     ->leftjoin('solicitud','solicitud.solnro','=','factibilidad.solnro')
+        //     ->leftjoin('historial_fac','historial_fac.idFac','=','factibilidad.idFac')
+        //     ->leftjoin('medicion','medicion.solnro','=','factibilidad.solnro')
+        //     ->leftjoin('persona','persona.idPersona','=','historial_fac.idPersona')
+        //     // ->leftjoin('data_med','data_med.solnromedicion','=','data_fac.solnrof')
+        //     ->where('medicion.estado','=','0')
+        //     ->orWhereNull('medicion.estado')
+        //     ->where('factibilidad.resultado','=','1')
+        //     ->where('historial_fac.estado','=','1')
+        //     ->where('medicion.estadoEli','=','1')
+        //     // ->where('data_med.estado','=','1')
+        //     ->orderBy('factibilidad.idFac', 'DESC')
+        //     // ->groupby('factibilidad.idFac')
+        //     ->get();
+
+        $registros = TSolicitud::select('solicitud.*','historial_fac.*','persona.*','medicion.idMed')
+            ->leftjoin('factibilidad','factibilidad.solnro','=','solicitud.solnro')
             ->leftjoin('historial_fac','historial_fac.idFac','=','factibilidad.idFac')
-            ->leftjoin('medicion','medicion.solnro','=','factibilidad.solnro')
             ->leftjoin('persona','persona.idPersona','=','historial_fac.idPersona')
-            // ->leftjoin('data_med','data_med.solnromedicion','=','data_fac.solnrof')
-            ->where('medicion.estado','=','0')
-            ->orWhereNull('medicion.estado')
-            ->where('factibilidad.resultado','=','1')
+            ->leftjoin('medicion','medicion.solnro','=','factibilidad.solnro')
+            ->where('solicitud.estadoProceso','=','3')
             ->where('historial_fac.estado','=','1')
-            ->where('medicion.estadoEli','=','1')
-            // ->where('data_med.estado','=','1')
             ->orderBy('factibilidad.idFac', 'DESC')
-            // ->groupby('factibilidad.idFac')
             ->get();
         return response()->json([
             "data"=>$registros,
@@ -112,17 +122,16 @@ class MedicionController extends Controller
                 if($tm->estado=='1')
                 {
                     $ts = TSolicitud::where('solnro',$req->solnro)->first();
+                    // dd($req->solnro);
                     $ts->estadoProceso='4';
-
-                    // $tm = new TMedicion();
-                    // $tm->solnro = $req->solnro;
-                    // $tm->estadoEli = '1';
                     if($ts->save())
                     {
                         $ban = true;
+                        return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
                     }
                 }
-                // $ban = true;
+                $ban = true;
+                return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
             }
             else
             {   $ban = false;}
@@ -301,7 +310,18 @@ class MedicionController extends Controller
         $tm = TMedicion::where('solnro',$req->solnro)->first();
         $tm->estadoEli = '0';
         if($tm->save())
-            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        {
+            $ts = TSolicitud::where('solnro',$req->solnro)->first();
+            $ts->estadoProceso = '2';
+            $tf = TFactibilidad::where('solnro',$req->solnro)->first();
+            $tf->resultado = '0';
+            if($ts->save() && $tf->save())
+            {
+                return response()->json(["msg"=>"Operacion exitosa, se revirtio el estado del registro a FACTIBILIDAD.","estado"=>true]);
+            }
+            return response()->json(["msg"=>"No fue posible revertir el estado del registro a FACTIBILIDAD.","estado"=>false]);
+            // return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        }
         else
             return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);
     }

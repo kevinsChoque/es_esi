@@ -90,6 +90,9 @@
     </div>
 </div>
 <script>
+localStorage.setItem("nb",0);
+localStorage.setItem("sbd",0);
+localStorage.setItem("sba",1);
 var tablaDeRegistros;
 var flip=0;
 $(document).ready( function () {

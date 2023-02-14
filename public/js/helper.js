@@ -69,6 +69,15 @@ function sideBarActive()
     if(localStorage.getItem("sba")==22)$('.sba22').addClass('bg-info');
     if(localStorage.getItem("sba")==23)$('.sba23').addClass('bg-info');
 }
+function navBarActive()
+{
+    if(localStorage.getItem("nb")==1)$('.nb1').addClass('bg-info');
+    if(localStorage.getItem("nb")==2)$('.nb2').addClass('bg-info');
+    if(localStorage.getItem("nb")==3)$('.nb3').addClass('bg-info');
+    if(localStorage.getItem("nb")==4)$('.nb4').addClass('bg-info');
+    if(localStorage.getItem("nb")==5)$('.nb5').addClass('bg-info');
+}
+// nb5
 // id de la tabla para inicializar con dattable INIT
 function initDatatable(idTabla)
 {
@@ -200,6 +209,7 @@ function formatoDate(fecha)
     var date = new Date(fecha);
     const months = ["ENE", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     const formatDate = (date)=>{
+        date.setDate(date.getDate()+1);
         let formatted_date = '<span class="badge badge-secondary"><i class="fa fa-calendar-days"></i> '+date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear()+'</span> ';
         return formatted_date;
     }

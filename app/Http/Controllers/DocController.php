@@ -51,6 +51,7 @@ class DocController extends Controller
     }
     public function actDownload(Request $req)
     {
+        
         // dd(NumberFormatter::create('en', NumberFormatter::SPELLOUT)->format(12309));
         // $fmt = new NumberFormatter( 'en', NumberFormatter::SPELLOUT );
         // dd($fmt->format(1142));exit();

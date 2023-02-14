@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- <form id="formValRegFac"> -->
+                <form id="formValRegMed">
                     <input type="hidden" name="solnroDataAdd" id="solnroDataAdd">
                     <div class="row contFormAddData">
                         <div class="col-lg-12">
@@ -366,7 +366,7 @@
                         </div>
 
                     </div>
-                <!-- </form> -->
+                </form>
             </div>
             <div class="modal-footer py-1 border-transparent">
                 <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancelar</button>
@@ -382,6 +382,7 @@ $('.saveDataMed').on('click',function(){
 function registrarAdicional(element)
 {
     // $('#modDataMedicion').modal('show');
+    // marcador(element);
     var solnro = $(element).attr('data-solnro');
     $('#solnroDataAdd').val(solnro);
     jQuery.ajax(
@@ -390,10 +391,12 @@ function registrarAdicional(element)
         data: {solnro:solnro},
         method: 'get',
         success: function(r){
+            marcador(element);
             limpiarFormAddData();
             console.log(r);
             if(r.estado)
             {
+                // $('#estado').attr('selected',r.data.estado);
                 $('#estado').val(r.data.estado);
                 $('#diametroTuberiaA').val(r.data.diametroTuberiaA);
                 $('#otros1').val(r.data.otros1);
@@ -499,7 +502,7 @@ function dataAddMed()
 }
 function saveDataMed()
 {
-    // if($('#formValRegFac').valid()==false)
+    // if($('#formValRegMed').valid()==false)
     //     return;
     jQuery.ajax(
     { 
@@ -520,4 +523,11 @@ function limpiarFormAddData()
     $('.contFormAddData select').val('0');
     $('.checkedMed').prop('checked',false);
 }
+// $("#formValRegMed").validate({
+//     errorClass: "text-danger font-italic font-weight-normal",
+//     ignore: ".ignore",
+//     rules: {
+//         estado: "required",
+//     },
+// });
 </script>

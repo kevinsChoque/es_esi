@@ -79,6 +79,7 @@ function proMedicion(element)
     let solnro = $(element).attr('data-solnro');
     $('#solnro').val(solnro);
     $('#modRegMedicion').modal('show');
+    marcador(element);
     // jQuery.ajax(
     // { 
     //     url: "{{url('medicion/showLastMedicion')}}",
@@ -110,6 +111,7 @@ function saveProMed()
             construirTabla();
             fillRegistros();
             $('#modRegMedicion').modal('hide');
+            limpiarFormFac();
             msjRee(r);
         }
     });

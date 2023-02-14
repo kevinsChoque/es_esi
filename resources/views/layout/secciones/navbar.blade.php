@@ -4,31 +4,31 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item border-right border-left ml-2 tcvPmsNavbar">
-            <a class="nav-link" href="{{url('solicitud/solicitud')}}" title="Listar Solicitudes">
+            <a class="nav-link nb1" href="{{url('solicitud/solicitud')}}" title="Listar Solicitudes">
                 <i class="fa fa-list d-none d-sm-inline-block"></i>
                 <span class="description-text">SOL</span>
             </a>
         </li>
         <li class="nav-item border-right tcvPmsNavbar">
-            <a class="nav-link" href="{{url('factibilidad/factibilidad')}}" title="Listar Factibilidad">
+            <a class="nav-link nb2" href="{{url('factibilidad/factibilidad')}}" title="Listar Factibilidad">
                 <i class="fa fa-list d-none d-sm-inline-block"></i>
                 <span class="description-text">FAC</span>
             </a>
         </li>
         <li class="nav-item border-right tcvPmsNavbar">
-            <a class="nav-link" href="{{url('medicion/medicion')}}" title="Listar Medicion">
+            <a class="nav-link nb3" href="{{url('medicion/medicion')}}" title="Listar Medicion">
                 <i class="fa fa-list d-none d-sm-inline-block"></i>
                 <span class="description-text">MED</span>
             </a>
         </li>
         <li class="nav-item border-right tcvPmsNavbar">
-            <a class="nav-link" href="#" title="Registrar Presupuesto" onclick="showCuadroPresupuestal();">
+            <a class="nav-link nb4" href="#" title="Registrar Presupuesto" onclick="showCuadroPresupuestal();">
                 <i class="fas fa-plus d-none d-sm-inline-block"></i>
                 <span class="description-text">PRE</span>
             </a>
         </li>
         <li class="nav-item border-right tcvPmsNavbar">
-            <a class="nav-link" href="{{url('doc/doc')}}" title="Listar Contratos">
+            <a class="nav-link nb5" href="{{url('doc/doc')}}" title="Listar Contratos">
                 <i class="fa fa-list d-none d-sm-inline-block"></i>
                 <span class="description-text">CON</span>
             </a>

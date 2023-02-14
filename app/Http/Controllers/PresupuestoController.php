@@ -37,7 +37,7 @@ class PresupuestoController extends Controller
         $registros = TMedicion::select('medicion.*','solicitud.*')
             ->leftjoin('solicitud','solicitud.solnro','=','medicion.solnro')
             ->where('medicion.estado','=','1')
-            // ->where('factibilidad.estado','=','1')
+            ->where('solicitud.estadoProceso','=','4')
             ->orderBy('medicion.idMed', 'DESC')
             ->get();
         return response()->json([
@@ -96,38 +96,46 @@ class PresupuestoController extends Controller
         {
             if($this->saveDetalle($req,$tPre->idPre))
             {
-                $serverName = 'informatica2-pc\sicem_bd';
-                $connectionInfo = array(
-                    "Database"=>"SICEM_AB",
-                    "UID"=>"es_esi",
-                    "PWD"=>"@emusap1@",
-                    "CharacterSet"=>"UTF-8"
-                );
-                $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
-                if($conn_sis)
+                $ts = TSolicitud::where('solnro',$tPre->solnro)->first();
+                $ts->estadoProceso='5';
+                if($ts->save())
                 {
-                    $sql = "EXECUTE testEsi '$req->solnro', '5';";
-                    if($stmt = sqlsrv_query($conn_sis, $sql))
-                    {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
-                    else
-                    {   return response()->json(["msg"=>"Paso algo al momento de ejecutar procedimiento.","estado"=>true]);}
+                    $ban = true;
+                    return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
                 }
-                else
-                {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
-                // return response()->json([
-                //     "msg"=>"Operacion exitosa.",
-                //     "estado"=>true
-                // ]);
+                return response()->json(["msg"=>"Ocurrio un error.","estado"=>false]);
+                // $serverName = 'informatica2-pc\sicem_bd';
+                // $connectionInfo = array(
+                //     "Database"=>"SICEM_AB",
+                //     "UID"=>"es_esi",
+                //     "PWD"=>"@emusap1@",
+                //     "CharacterSet"=>"UTF-8"
+                // );
+                // $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
+                // if($conn_sis)
+                // {
+                //     $sql = "EXECUTE testEsi '$req->solnro', '5';";
+                //     if($stmt = sqlsrv_query($conn_sis, $sql))
+                //     {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+                //     else
+                //     {   return response()->json(["msg"=>"Paso algo al momento de ejecutar procedimiento.","estado"=>true]);}
+                // }
+                // else
+                // {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
             }
         }
         return response()->json([
-            "msg"=>"No fue posible registrar la empresa.",
+            "msg"=>"Ocurrio un error.",
             "estado"=>false
         ]);
     }
     public function actListar()
     {
-    	$list=TPresupuesto::select('presupuesto.*')->orderby('presupuesto.idPre','desc')->get();
+    	$list=TPresupuesto::select('presupuesto.*','solicitud.numSoli')
+            ->leftjoin('solicitud','solicitud.solnro','=','presupuesto.solnro')
+            ->where('presupuesto.estado','!=','0')
+            ->orderby('presupuesto.idPre','desc')
+            ->get();
         // $list=TPresupuesto::
     	return response()->json([
             "data"=>$list,
@@ -135,11 +143,18 @@ class PresupuestoController extends Controller
     }
     public function actEliminar(Request $req)
     {
-        $tPre = TPresupuesto::find($req->id);
-        if($tPre->delete())
-        {return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+        // $tPre = TPresupuesto::find($req->id);
+        // if($tPre->delete())
+        // {return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+        // else
+        // {return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);}
+
+        $tp = TPresupuesto::find($req->id);
+        $tp->estado = '0';
+        if($tp->save())
+            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
         else
-        {return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);}
+            return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);
     }
     public function actEditCuadroPresupuestal(Request $req)
     {
@@ -485,6 +500,18 @@ $this->fpdf->Ln(0.5);
             "data"=>$ts,
             "codigo"=>$codigo,
         ]);
+    }
+    public function actFinalizarProceso(Request $req)
+    {
+        $tp = TPresupuesto::find($req->idPre);
+        $tp->culminacionProceso='1';
+        $ts = TSolicitud::where('solnro',$tp->solnro)->first();
+        $ts->estadoProceso='6';
+        if($tp->save() && $ts->save())
+        {
+            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        }
+        return response()->json(["msg"=>"No se pudo cambiar de personal.","estado"=>false]);
     }
 
 }

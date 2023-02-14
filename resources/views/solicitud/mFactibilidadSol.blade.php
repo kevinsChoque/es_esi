@@ -12,11 +12,11 @@
                     <input type="hidden" name="solnro" id="solnro">
                     <div class="row contFormRegFacSol">
                         <div class="form-group col-lg-12">
-                            <label class="m-0">Tecnico:</label>
+                            <label class="m-0">Tecnico: <span class="text-danger">*</span></label>
                             <select class="form-control form-control-sm" name="personalFactibilidad" id="personalFactibilidad" style="width: 100%;"></select>
                         </div>
                         <div class="form-group col-lg-12">
-                            <label for="" class="m-0">Fecha de factibilidad:</label>
+                            <label for="" class="m-0">Fecha de factibilidad: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
@@ -53,6 +53,7 @@ function geFacSol()
             construirTablaDBL();
             listarFromApp();
             $('#modRegFacSol').modal('hide');
+            limpiarFormFac();
             msjRee(r);
         }
     });
@@ -62,34 +63,20 @@ function dataFacSol()
     let numeroSolicitud = $('#solnro').val();
     return {
         solnro:$('#solnro').val(),
-        // nombreTit:$('#'+numeroSolicitud).attr('data-SolNombre'),
-        // dniTit:$('#'+numeroSolicitud).attr('data-SolElect'),
-        // domicilioTit:
-        //     $('#'+numeroSolicitud).attr('data-SolTipCal')+' '+
-        //     $('#'+numeroSolicitud).attr('data-SolDirec'),
-        // numeroTit:$('#'+numeroSolicitud).attr('data-SolDirNro'),
-        // urbanizacionTit:$('#'+numeroSolicitud).attr('data-SolUrban'),
-
         idPersona:$('#personalFactibilidad').val(),
         fecha:$('#fechaFactibilidad').val(),
-        // lugar:'Abancay',
-        // empresa:'EMUSAP ABANCAY',
-
-        // hora:docHora,
     }
 }
-
 function regFacSol(element)
 {
-    // alert($(element).attr('data-numsoli'));
     $('#solnro').val($(element).attr('data-numsoli'));
     $('#modRegFacSol').modal('show');
+    marcador(element);
 }
 
 function limpiarFormFac()
 {
     $(".contFormRegFacSol input[type=date]").val('');
-    // $(".contFormRegFacSol select").val('0');
     $('#personalFactibilidad').val('0').trigger("change.select2");
 }
 $("#formValRegFacSol").validate({

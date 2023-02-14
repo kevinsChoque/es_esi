@@ -66,6 +66,9 @@
 @include('medicion.mAddData')
 @include('medicion.mLoadFile')
 <script>
+localStorage.setItem("nb",3);
+localStorage.setItem("sbd",0);
+localStorage.setItem("sba",9);
     var tablaDeRegistros,tablaDeRegistrosArchivos;
     var flip=0;
     $(document).ready( function () {
@@ -107,11 +110,11 @@
                                 formatoDate(result.data[i].fecha) +'</td>' +
                             '<td class="align-middle">'+
                                 '<div class="btn-group btn-group-sm" role="group">'+
-                                    '<button type="button" class="btn text-info" title="Programar Medicion" onclick="proMedicion(this);" data-solnro="'+result.data[i].solnro+'"><i class="fa-solid fa-ruler"></i></button>'+
-                                    '<button type="button" class="btn text-info" title="Subir archivo" onclick="loadFile(this)" data-solnro="'+result.data[i].solnro+'" data-idMed="'+result.data[i].idMed+'"><i class="fa fa-upload" ></i></button>'+
-                                    '<a href="{{url('medicion/download')}}/'+result.data[i].solnro+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
-                                    '<button type="button" class="btn text-info" title="Agregar datos a la Medicion" onclick="registrarAdicional(this);" data-solnro="'+result.data[i].solnro+'"><i class="fa-solid fa-plus"></i></button>'+
-                                    '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar(this);" data-solnro="'+result.data[i].solnro+'"><i class="fa fa-trash"></i></button>'+
+                                    '<button type="button" class="btn text-info" title="Programar Medicion" onclick="proMedicion(this);" data-solnro="'+result.data[i].solnro1+'"><i class="fa-solid fa-ruler"></i></button>'+
+                                    '<button type="button" class="btn text-info" title="Subir archivo" onclick="loadFile(this)" data-solnro="'+result.data[i].solnro1+'" data-idMed="'+result.data[i].idMed+'"><i class="fa fa-upload" ></i></button>'+
+                                    '<a href="{{url('medicion/download')}}/'+result.data[i].solnro1+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
+                                    '<button type="button" class="btn text-info" title="Agregar datos a la Medicion" onclick="registrarAdicional(this);" data-solnro="'+result.data[i].solnro1+'"><i class="fa-solid fa-plus"></i></button>'+
+                                    '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar(this);" data-solnro="'+result.data[i].solnro1+'"><i class="fa fa-trash"></i></button>'+
                                 '</div>'+
                             '</td>'+
                             '</tr>';
@@ -182,5 +185,13 @@
         $('.contenedorRegistros>div').remove();
         $('.contenedorRegistros').html(tablaDeRegistros);
     }
+    function marcador(element)
+    {
+        $(element).parent().parent().parent().addClass('marcador');
+    }
+    $("#modRegMedicion,#modalLoadFile,#modDataMedicion").on("hidden.bs.modal", function () 
+    {
+        $('.marcador').removeClass('marcador');
+    });
 </script>
 @endsection

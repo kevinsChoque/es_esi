@@ -16,8 +16,11 @@
 </div>
 @endsection
 @section('contenido')
-<button class="btn btn-warning pruebawa1">csacas</button>
-<button class="btn btn-danger pruebawa2">otro</button>
+    
+<a href="{{ url('/document/convert-word-to-pdf') }}" style="display: none;">Convert Word To PDF</a>
+
+<button class="btn btn-warning pruebawa1" style="display: none;">csacas</button>
+<button class="btn btn-danger pruebawa2" style="display: none;">otro</button>
 <script>
     $('.pruebawa2').on('click',function(){
         let numeros = ["51986854628", "51958863655"];
@@ -86,6 +89,13 @@
         });
     }
 </script>
+<div class="overlayPagina">
+    <div class="loadingio-spinner-spin-i3d1hxbhik m-auto">
+        <div class="ldio-onxyanc9oyh">
+            <div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 contenedorFormulario">
@@ -164,8 +174,10 @@
                                         <th class="text-center" data-priority="2">Origen</th>
                                         <th class="text-center" data-priority="2">Num.Sol.</th>
                                         <th class="text-center" data-priority="2">Dni</th>
-                                        <th class="text-center" data-priority="2">Nombre</th>
-                                        <th class="text-center" data-priority="1">Direccion</th>
+                                        <th class="text-center" data-priority="2">Nombre del Tit.</th>
+                                        <th class="text-center" data-priority="1">Direccion del Predio</th>
+                                        <th class="text-center" data-priority="2">Fecha de registro</th>
+                                        <th class="text-center" data-priority="2">Fecha de actualizacion</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
                                     </tr>
                                 </thead>
@@ -176,8 +188,10 @@
                                         <th class="text-center" data-priority="2">Origen</th>
                                         <th class="text-center" data-priority="2">Num.Sol.</th>
                                         <th class="text-center" data-priority="2">Dni</th>
-                                        <th class="text-center" data-priority="2">Nombre</th>
-                                        <th class="text-center" data-priority="1">Direccion</th>
+                                        <th class="text-center" data-priority="2">Nombre del Tit.</th>
+                                        <th class="text-center" data-priority="1">Direccion del Predio</th>
+                                        <th class="text-center" data-priority="2">Fecha de registro</th>
+                                        <th class="text-center" data-priority="2">Fecha de actualizacion</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
                                     </tr>
                                 </tfoot>
@@ -210,6 +224,9 @@
     @csrf
 </form>
 <script>
+localStorage.setItem("nb",1);
+localStorage.setItem("sbd",2);
+localStorage.setItem("sba",7);
     var tablaDeRegistrosDBL,tablaDeRegistrosArchivos;
     var flip=0;
     var pathPublic="{{url('/')}}/solicitud/solDownload"+'/';
@@ -267,7 +284,9 @@
                         '<td class="font-weight-bold">' + novDato(r.data[i].numSoli) + '</td>' +
                         '<td class="font-weight-bold">' + novDato(r.data[i].dniTit) + '</td>' +
                         '<td>' + novDato(r.data[i].nombreTit) + '</td>' +
-                        '<td>' + r.data[i].domicilioTit + '</td>' +
+                        '<td>' + novDato(r.data[i].ubicacionPre) + '</td>' +
+                        '<td>' + formatoDateHours(r.data[i].fechaRegistro) + '</td>' +
+                        '<td>' + verificarFecha(novDato(r.data[i].fechaActualizacion)) + '</td>' +
                         '<td>'+
                             '<div class="btn-group btn-group-sm" role="group">'+
                                 $banFactibilidad+
@@ -391,5 +410,13 @@
         $('.contRegSolDBL>div').remove();
         $('.contRegSolDBL').html(tablaDeRegistrosDBL);
     }
+    function marcador(element)
+    {
+        $(element).parent().parent().parent().addClass('marcador');
+    }
+    $("#modRegFacSol,#modalLoadFile,#modalEditarSol").on("hidden.bs.modal", function () 
+    {
+        $('.marcador').removeClass('marcador');
+    });
 </script>
 @endsection

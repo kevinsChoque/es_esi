@@ -68,6 +68,9 @@
 @include('factibilidad.mHistorial')
 @include('factibilidad.mLoadFile')
 <script>
+localStorage.setItem("nb",2);
+localStorage.setItem("sbd",0);
+localStorage.setItem("sba",8);
     var tablaDeRegistros,tablaDeRegistrosArchivos;
     var flip=0;
     $(document).ready( function () {
@@ -167,5 +170,13 @@
     //     $(".select2").val("0").trigger("change.select2");
     //     $('.contenedorFormularioRegistrar :input').val('');
     // }
+    function marcador(element)
+    {
+        $(element).parent().parent().parent().addClass('marcador');
+    }
+    $("#modDataFactibilidad,#modHistorial,#modRegFactibilidad").on("hidden.bs.modal", function () 
+    {
+        $('.marcador').removeClass('marcador');
+    });
 </script>
 @endsection

@@ -15,9 +15,15 @@ use App\Http\Controllers\FactibilidadController;
 use App\Http\Controllers\MedicionController;
 use App\Http\Controllers\DashController;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ContratoController;
+use App\Http\Controllers\ReporteController;
 
 Route::get('/', function () {
     return view('login.login');
+});
+Route::get('/ttt', function () {
+    return view('ttt');
 });
 
 Route::post('dashboard',[HomeController::class, 'actHome']);
@@ -46,6 +52,12 @@ Route::get('solicitud/eliminar',[SolController::class, 'actEliminar']);
 Route::get('solicitud/saveEditarSoli',[SolController::class, 'actSaveEditarSoli']);
 
 // solDownload
+// contratos
+Route::get('contrato/listarFromApp',[ContratoController::class, 'actListarFromApp']);
+Route::get('contrato/download/{id}',[ContratoController::class, 'actDownload']);
+Route::get('contrato/saveDataCon',[ContratoController::class, 'actSaveDataCon']);
+Route::get('contrato/show',[ContratoController::class, 'actShow']);
+
 // geFactibilidad
 Route::get('factibilidad/factibilidad',[FactibilidadController::class, 'actFactibilidad']);
 Route::get('factibilidad/listar',[FactibilidadController::class, 'actListar']);
@@ -115,6 +127,8 @@ Route::get('presupuesto/print/{id}',[PresupuestoController::class, 'actPrint']);
 Route::get('presupuesto/listoPresupuesto',[PresupuestoController::class, 'actListoPresupuesto']);
 Route::get('presupuesto/listarListos',[PresupuestoController::class, 'actListarListos']);
 Route::get('presupuesto/getDatos',[PresupuestoController::class, 'actGetDatos']);
+Route::get('presupuesto/finalizarProceso',[PresupuestoController::class, 'actFinalizarProceso']);
+
 //actividad o rendimiento
 Route::get('cp/listar',[CpController::class, 'actListar']);
 Route::get('cp/cp',[CpController::class, 'actCp']);
@@ -140,4 +154,17 @@ Route::get('archivo/listarFact',[ArchivoController::class, 'actListarFact']);
 
 Route::post('archivo/registrarMedi',[ArchivoController::class, 'actRegistrarMedi']);
 Route::get('archivo/listarMedi',[ArchivoController::class, 'actListarMedi']);
+
+
+Route::post('archivo/registrarPres',[ArchivoController::class, 'actRegistrarPres']);
+Route::get('archivo/listarPres',[ArchivoController::class, 'actListarPres']);
+// ---------------------
+Route::get('reporte/reporte',[ReporteController::class, 'actReporte']);
+Route::get('reporte/rep1',[ReporteController::class, 'actRep1']);
+Route::get('reporte/listarRep1',[ReporteController::class, 'actListarRep1']);
+
+
+// Route::get('/document/convert-word-to-pdf', 'DocumentController@convertWordToPDF')->name('document.wordtopdf');
+
+Route::get('/document/convert-word-to-pdf', [DocumentController::class, 'convertWordToPDF']);
 

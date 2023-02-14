@@ -79,6 +79,8 @@
     //   content: 'unsafeUserData',
     //   allowHTML: false
     // });
+localStorage.setItem("sbd",1);
+localStorage.setItem("sba",3);
     var tablaDeRegistros;
     var flip=0;
     $(document).ready( function () {

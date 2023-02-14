@@ -86,6 +86,7 @@ function repFactibilidad(element)
         data: {solnro:$(element).attr('data-solnro')},
         method: 'get',
         success: function(r){
+            marcador(element);
             limpiarFormFac();
             if(r.estado)
             {
@@ -107,9 +108,9 @@ function saveFacRep()
         data: dataFactibilidad(),
         method: 'get',
         success: function(r){
-            $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
-            construirTabla();
-            fillRegistros();
+            // $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+            // construirTabla();
+            // fillRegistros();
             $('#modRegFactibilidad').modal('hide');
             msjRee(r);
         }

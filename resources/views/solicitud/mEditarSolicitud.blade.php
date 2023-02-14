@@ -451,6 +451,7 @@ function editarSolicitud(element)
         method: 'get',
         success: function(r){
             // limpiarForm();
+            marcador(element);
             console.log(r);
             if(r.estado)
             {

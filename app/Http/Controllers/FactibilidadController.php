@@ -114,43 +114,56 @@ class FactibilidadController extends Controller
                     $ts = TSolicitud::where('solnro',$req->solnro)->first();
                     $ts->estadoProceso='3';
 
-                    $tm = new TMedicion();
-                    $tm->solnro = $req->solnro;
-                    $tm->estadoEli = '1';
+                    $tm = TMedicion::where('solnro',$req->solnro)->first();
+                    if($tm==null)
+                    {
+                        $tm = new TMedicion();
+                        $tm->solnro = $req->solnro;
+                        $tm->estadoEli = '1';
+                        $tm->estado = '0';
+                    }
+                    else
+                    {
+                        $tm->estadoEli='1';
+                    }
                     if($ts->save() && $tm->save())
                     {
                         $ban = true;
+                        return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
                     }
                 }
-                // $ban = true;
+                return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
             }
             else
-            {   $ban = false;}
+            {   
+                $ban = false;
+                return response()->json(["msg"=>"Ocurrio un error almomento de actualizar datos.","estado"=>false]);
+            }
         }
 
-        if($tf->resultado=='1' && $ban==true)
-        {
-            $serverName = 'informatica2-pc\sicem_bd';
-            $connectionInfo = array(
-                "Database"=>"SICEM_AB",
-                "UID"=>"es_esi",
-                "PWD"=>"@emusap1@",
-                "CharacterSet"=>"UTF-8"
-            );
-            $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
-            if($conn_sis)
-            {
-                $sql = "EXECUTE testEsi '$req->solnro', '3';";
-                if($stmt = sqlsrv_query($conn_sis, $sql))
-                {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
-                else
-                {   return response()->json(["msg"=>"Paso algo al momento de ejecutar procedimiento.","estado"=>true]);}
-            }
-            else
-            {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
-        }
-        if($ban)
-        {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+        // if($tf->resultado=='1' && $ban==true)
+        // {
+        //     $serverName = 'informatica2-pc\sicem_bd';
+        //     $connectionInfo = array(
+        //         "Database"=>"SICEM_AB",
+        //         "UID"=>"es_esi",
+        //         "PWD"=>"@emusap1@",
+        //         "CharacterSet"=>"UTF-8"
+        //     );
+        //     $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
+        //     if($conn_sis)
+        //     {
+        //         $sql = "EXECUTE testEsi '$req->solnro', '3';";
+        //         if($stmt = sqlsrv_query($conn_sis, $sql))
+        //         {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+        //         else
+        //         {   return response()->json(["msg"=>"Paso algo al momento de ejecutar procedimiento.","estado"=>true]);}
+        //     }
+        //     else
+        //     {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
+        // }
+        // if($ban)
+        // {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
     }
     public function actShow(Request $req)
     {
@@ -319,52 +332,67 @@ class FactibilidadController extends Controller
     public function actGeFacSol(Request $req)
     {
         // dd($req->all());
-        $tf = new TFactibilidad();
-        $tf->solnro = $req->solnro;
-        $tf->estado = '1';
-
-        if($tf->save())
+        $tfb = TFactibilidad::where('solnro',$req->solnro)->first();
+        if($tfb==null)
         {
-            $tf = TFactibilidad::where('solnro',$req->solnro)->first();
+            $tf = new TFactibilidad();
+            $tf->solnro = $req->solnro;
+            $tf->estado = '1';
 
-            $th = new THistorialfac();
-            $th->idFac = $tf->idFac;
-            $th->idPersona = $req->idPersona;
-            $th->fecha = $req->fecha;
-            $th->estado = 1;
+            if($tf->save())
+            {
+                $tf = TFactibilidad::where('solnro',$req->solnro)->first();
 
-            if($th->save())
-            {   
-                $ts = TSolicitud::where('solnro',$req->solnro)->first();
-                $ts->estadoProceso = '2';
-                if($ts->save())
-                {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+                $th = new THistorialfac();
+                $th->idFac = $tf->idFac;
+                $th->idPersona = $req->idPersona;
+                $th->fecha = $req->fecha;
+                $th->estado = 1;
+
+                if($th->save())
+                {   
+                    $ts = TSolicitud::where('solnro',$req->solnro)->first();
+                    $ts->estadoProceso = '2';
+                    if($ts->save())
+                    {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+                    else
+                    {   return response()->json(["msg"=>"Error al actualizar estado de Solicitud.","estado"=>false]);}
+                }
                 else
-                {   return response()->json(["msg"=>"Error al actualizar estado de Solicitud.","estado"=>false]);}
-                // $serverName = 'informatica2-pc\sicem_bd';
-                // $connectionInfo = array(
-                //     "Database"=>"SICEM_AB",
-                //     "UID"=>"es_esi",
-                //     "PWD"=>"@emusap1@",
-                //     "CharacterSet"=>"UTF-8"
-                // );
-                // $conn_sis = sqlsrv_connect($serverName,$connectionInfo);
-                // if($conn_sis)
-                // {
-                //     $sql = "EXECUTE testEsi '$req->solnro', '2';";
-                //     if($stmt = sqlsrv_query($conn_sis, $sql))
-                //     {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
-                //     else
-                //     {   return response()->json(["msg"=>"Paso algo al momento de ejecutar procedimiento.","estado"=>true]);}
-                // }
-                // else
-                // {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
+                {   return response()->json(["msg"=>"No se guardo fecha de factibilidad correctamente.","estado"=>true]);}
             }
             else
-            {   return response()->json(["msg"=>"No se guardo fecha de factibilidad correctamente.","estado"=>true]);}
+            {   return response()->json(["msg"=>"No se pudo registrar factibilidad.","estado"=>true]);}
         }
         else
-        {   return response()->json(["msg"=>"No se pudo registrar factibilidad.","estado"=>true]);}
+        {
+            $tfb->estado = '1';
+            $ts = TSolicitud::where('solnro',$req->solnro)->first();
+            $ts->estadoProceso = '2';
+            if($tfb->save() && $ts->save())
+            {
+                $tfOld = THistorialfac::select('historial_fac.*')
+                    ->leftjoin('factibilidad','factibilidad.idFac','=','historial_fac.idFac')
+                    ->where('factibilidad.solnro','=',$req->solnro)
+                    ->where('historial_fac.estado','=','1')
+                    ->first();
+                $tfOld->estado = '0';
+                if($tfOld->save())
+                {
+                    $th = new THistorialfac();
+                    $th->idFac = $tfOld->idFac;
+                    $th->idPersona = $req->idPersona;
+                    $th->fecha = $req->fecha;
+                    $th->estado = 1;
+                    if($th->save())
+                    {   return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);}
+                    else
+                    {   return response()->json(["msg"=>"Ocurrio un problema.","estado"=>false]);}
+                }
+            }
+        }
+
+        
     }
     public function actEliminar(Request $req)
     {
@@ -372,7 +400,15 @@ class FactibilidadController extends Controller
         $tf = TFactibilidad::where('solnro',$req->solnro)->first();
         $tf->estado = '0';
         if($tf->save())
-            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        {
+            $ts = TSolicitud::where('solnro',$req->solnro)->first();
+            $ts->estadoProceso = '1';
+            if($ts->save())
+            {
+                return response()->json(["msg"=>"Operacion exitosa, se revirtio el estado del registro a SOLICITUD.","estado"=>true]);
+            }
+            return response()->json(["msg"=>"No fue posible revertir el estado del registro a SOLICITUD.","estado"=>false]);
+        }
         else
             return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);
     }

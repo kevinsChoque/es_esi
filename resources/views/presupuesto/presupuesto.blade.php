@@ -42,10 +42,12 @@
                             <table id="registros" class="table table-hover table-striped table-bordered dt-responsive nowrap">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th class="text-center" data-priority="1">Codigo</th>
+                                        <th class="text-center" data-priority="1"># Sol.</th>
+                                        <th class="text-center" data-priority="1">Cod. catastral</th>
                                         <th class="text-center" data-priority="3">Usuario</th>
                                         <th class="text-center" data-priority="2">Direccion</th>
                                         <th class="text-center" data-priority="2">Total</th>
+                                        <th class="text-center" data-priority="2">Estado</th>
                                         <th class="text-center" data-priority="4">F.Reg.</th>
                                         <th class="text-center" data-priority="4">F.Act.</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
@@ -55,10 +57,12 @@
                                 </tbody>
                                 <tfoot class="thead-light">
                                     <tr>
-                                        <th class="text-center" data-priority="1">Codigo</th>
+                                        <th class="text-center" data-priority="1"># Sol.</th>
+                                        <th class="text-center" data-priority="1">Cod. catastral</th>
                                         <th class="text-center" data-priority="3">Usuario</th>
                                         <th class="text-center" data-priority="2">Direccion</th>
                                         <th class="text-center" data-priority="2">Total</th>
+                                        <th class="text-center" data-priority="2">Estado</th>
                                         <th class="text-center" data-priority="4">F.Reg.</th>
                                         <th class="text-center" data-priority="4">F.Act.</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
@@ -73,16 +77,52 @@
     </div>
 </div>
 
+@include('presupuesto.mLoadFile')
 <script>
-var tablaDeRegistros;
+localStorage.setItem("sbd",3);
+localStorage.setItem("sba",13);
+var tablaDeRegistros,tablaDeRegistrosArchivos;
 var flip=0;
 
 $(document).ready( function () {
     tablaDeRegistros=$('.contenedorRegistros').html();
+    tablaDeRegistrosArchivos=$('.contRegFilesPres').html();
     fillRegistros();
     $('.overlayPagina').css("display","none");
 } );
-
+function finalizarProceso(element)
+{
+    // alert($(element).attr('data-idPre'));
+    Swal.fire({
+        title: 'Esta seguro de finalizar el proceso?',
+        text: "¡Una vez finalize el proceso, se podra realizar el CONTRATO DE PRESTACION DE SERVICIOS DE SANEAMIENTO (ANEXO 2)!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Si, Finalizar Proceso!'
+    }).then((result) => {
+        if(result.isConfirmed)
+        {
+            $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+            jQuery.ajax(
+            { 
+                url: "{{url('presupuesto/finalizarProceso')}}",
+                data: {idPre:$(element).attr('data-idPre')},
+                method: 'get',
+                success: function(result){
+                    construirTabla();
+                    fillRegistros();
+                    msjRee(result);
+                }
+            });
+        }
+    });
+}
+function estadoDeProceso(est,idPre)
+{
+    return est=='1'?'<span class="badge badge-success shadow">Finalizado</span>':'<span class="badge badge-danger shadow btn" onclick="finalizarProceso(this)" data-idPre="'+idPre+'">Finalizar Proceso</span>';
+}
 function fillRegistros()
 {
 
@@ -91,22 +131,26 @@ function fillRegistros()
     { 
         url: "{{url('presupuesto/listar')}}",
         method: 'get',
-        success: function(result){
+        success: function(r){
             var html = '';
-            for (var i = 0; i < result.data.length; i++) 
+            for (var i = 0; i < r.data.length; i++) 
             {
-                print = '<a href="{{url('presupuesto')}}/print/'+result.data[i].idPre+'" target="_blank" class="btn text-info" title="Imprimir presupuesto"><i class="fa fa-print"></i></a>';
+                loadFiles = '<button type="button" class="btn text-info" title="Subir archivo" onclick="loadFile(this)" data-solnro="'+r.data[i].solnro+'" data-idPre="'+r.data[i].idPre+'"><i class="fa fa-upload" ></i></button>';
+                print = '<a href="{{url('presupuesto')}}/print/'+r.data[i].idPre+'" target="_blank" class="btn text-info" title="Imprimir presupuesto"><i class="fa fa-print"></i></a>';
 
-                edit = '<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+result.data[i].idPre+');"><i class="fa fa-edit"></i></button>';
-                dele = '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+result.data[i].idPre+');"><i class="fa fa-trash"></i></button>';
+                edit = r.data[i].culminacionProceso=='1'?'':'<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+r.data[i].idPre+');"><i class="fa fa-edit"></i></button>';
+                dele = r.data[i].culminacionProceso=='1'?'':'<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+r.data[i].idPre+');"><i class="fa fa-trash"></i></button>';
                 html += '<tr>' +
-                    '<td class="text-center font-weight-bold">' + result.data[i].codigo + '</td>' +
-                    '<td class="text-center">' + novDato(result.data[i].usuario) +'</td>' +
-                    '<td class="text-center">' + novDato(result.data[i].direccion) + '</td>' +
-                    '<td class="text-center">' + novDato(result.data[i].total) + '</td>' +
-                    '<td class="text-center">' + formatoDateHours(result.data[i].fr) + '</td>' +
-                    '<td class="text-center">' + verificarFecha(novDato(result.data[i].fa)) + '</td>' +
+                    '<td class="text-center font-weight-bold">' + r.data[i].numSoli + '</td>' +
+                    '<td class="text-center font-weight-bold">' + r.data[i].codigo + '</td>' +
+                    '<td class="text-center">' + novDato(r.data[i].usuario) +'</td>' +
+                    '<td class="text-center">' + novDato(r.data[i].direccion) + '</td>' +
+                    '<td class="text-center font-weight-bold"> S/. ' + novDato(r.data[i].total) + '</td>' +
+                    '<td class="text-center">' + estadoDeProceso(r.data[i].culminacionProceso,r.data[i].idPre) + '</td>' +
+                    '<td class="text-center">' + formatoDateHours(r.data[i].fr) + '</td>' +
+                    '<td class="text-center">' + verificarFecha(novDato(r.data[i].fa)) + '</td>' +
                     '<td class="text-center"><div class="btn-group btn-group-sm" role="group">'+
+                    loadFiles+
                     print+
                     edit+
                     dele+

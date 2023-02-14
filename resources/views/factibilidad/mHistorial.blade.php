@@ -30,13 +30,14 @@
 <script>
 function fillRegistrosHistorial(element)
 {
-    // alert($(element).attr('data-solnro'));
+    // alert($(element).attr('data-solnro'));marcador(element);
     jQuery.ajax(
     { 
         url: "{{url('factibilidad/listarHistorial')}}",
         data: {solnro:$(element).attr('data-solnro')},
         method: 'get',
         success: function(result){
+            marcador(element);
             var html = '';
             for (var i = 0; i < result.data.length; i++) 
             {

@@ -137,6 +137,7 @@
 $(document).ready( function () {
     sideBarCollapse();
     sideBarActive();
+    navBarActive();
 } );
 $('.logout').on('click',function(){
     jQuery.ajax(

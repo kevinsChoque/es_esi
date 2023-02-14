@@ -4,7 +4,7 @@
 <div class="main-header p-1">
     <div class="row">
         <div class="col-lg-6 col-sm-6 col-12 m-auto">
-            <h6 class="my-0 ml-3">Listar clientes</h6>
+            <h6 class="my-0 ml-3">(Anexo 2) Contratos</h6>
         </div>
         <div class="col-lg-6 col-sm-6 col-12">
             <button class="btn btn-sm btn-success float-right btnPmsRegistrar" data-toggle="modal" data-target="#modalRegistrar" style="display: none;">
@@ -25,7 +25,12 @@
                     <img src="{{asset('img/imgAdicionales/spinerLetter.svg')}}" class="svgLoadLetter">
                 </div>
                 <div class="card-header border-transparent py-2">
-                    <h3 class="card-title m-0 font-weight-bold"><i class="fa fa-person"></i> Listado de clientes</h3>
+                    <h3 class="card-title m-0 font-weight-bold"><i class="fa fa-file"></i> Contratos disponibles.</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool colapsar" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning msjPms" style="display: none;">
@@ -62,6 +67,57 @@
         </div>
     </div>
 </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-default card-info card-outline">
+                <div class="overlay dark overlayRegDBL">
+                    <img src="{{asset('img/imgAdicionales/spinerLetter.svg')}}" class="svgLoadLetter">
+                </div>
+                <div class="card-header border-transparent py-2">
+                    <h3 class="card-title m-0 font-weight-bold"><i class="fa fa-file"></i> Contratos</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning msjPms" style="display: none;">
+                        <p class="m-0 font-weight-bold font-italic">El usuario no cuenta con el acceso a registros.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 table-responsive contRegSolDBL" style="display: none;">
+                            <table id="registrosDBL" class="table table-hover table-striped table-bordered dt-responsive nowrap">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center" data-priority="2">Num.Sol.</th>
+                                        <th class="text-center" data-priority="2">Dni</th>
+                                        <th class="text-center" data-priority="2">Nombre</th>
+                                        <th class="text-center" data-priority="1">Direccion</th>
+                                        <th class="text-center" data-priority="1">Opc.</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataDBL">
+                                </tbody>
+                                <tfoot class="thead-light">
+                                    <tr>
+                                        <th class="text-center" data-priority="2">Num.Sol.</th>
+                                        <th class="text-center" data-priority="2">Dni</th>
+                                        <th class="text-center" data-priority="2">Nombre</th>
+                                        <th class="text-center" data-priority="1">Direccion</th>
+                                        <th class="text-center" data-priority="1">Opc.</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@include('doc.mAddData')
 <form method="post" action="{{url('doc/download')}}" id="formtest">
     <input type="hidden" name="inscrinro" id="inscrinro">
     <input type="hidden" name="docNombre" id="docNombre">
@@ -77,10 +133,15 @@
     @csrf
 </form>
 <script>
+localStorage.setItem("nb",5);
+localStorage.setItem("sbd",2);
+localStorage.setItem("sba",6);
     $(document).ready( function () {
+        $('.colapsar').click();
         tablaDeRegistros=$('.contenedorRegistros').html();
         // fillRegistros();
         takeRegistros();
+        listarFromApp()
         // $('.overlayPagina').css("display","none");
     } );
     function fillRegistros()
@@ -108,6 +169,38 @@
                 $('#data').html(html);
                 initDatatable('registros');
                 $('.overlayRegistros').css('display','none');
+            }
+        });
+    }
+    function listarFromApp()
+    {
+        $('.contRegSolDBL').css('display','block');
+        jQuery.ajax(
+        { 
+            url: "{{url('contrato/listarFromApp')}}",
+            method: 'get',
+            success: function(r){
+                var html = '';
+                // let helpForNumSoli = '';
+                for (var i = 0; i < r.data.length; i++) 
+                {
+                    html += '<tr class="text-center">' +
+                        '<td class="font-weight-bold">' + novDato(r.data[i].numSoli) + '</td>' +
+                        '<td class="font-weight-bold">' + novDato(r.data[i].dniTit) + '</td>' +
+                        '<td>' + novDato(r.data[i].nombreTit) + '</td>' +
+                        '<td>' + r.data[i].domicilioTit + '</td>' +
+                        '<td>'+
+                            '<div class="btn-group btn-group-sm" role="group">'+
+                                // '<a href="'+pathPublic+r.data[i].solnro1+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
+                                '<a href="{{url('contrato/download')}}/'+r.data[i].solnro+'" class="btn text-info" title="Descargar documento"><i class="fa fa-download"></i></a>'+
+                                '<button type="button" class="btn text-info" title="Agregar datos a contrato" onclick="registrarAdicional(this);" data-solnro="'+r.data[i].solnro1+'"><i class="fa-solid fa-plus"></i></button>'+
+                            '</div>'+
+                        '</td>'+
+                        '</tr>';
+                }
+                $('#dataDBL').append(html);
+                initDatatable('registrosDBL');
+                $('.overlayRegDBL').css('display','none');
             }
         });
     }

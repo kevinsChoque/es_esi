@@ -81,6 +81,9 @@
     </div>
 </div>
 <script>
+localStorage.setItem("nb",0);
+localStorage.setItem("sbd",2);
+localStorage.setItem("sba",5);
 $(document).ready( function () {
     fillNumero();
 } );

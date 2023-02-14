@@ -152,6 +152,7 @@
         construirTablaFiles();
         listarFileSoli($('#solnroFileSoli').val());
         $('#modalLoadFile').modal('show');
+        marcador(element);
     }
     function validateForm(myDropzone2)
     {

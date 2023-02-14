@@ -509,7 +509,11 @@ function dataNewSoli()
 function saveNewSoli()
 {
     if($('#formValidateRegNewSol').valid()==false)
+    {
+        msjSimple(false,'Ingrese los datos obligatorios (*).');
         return;
+    }
+    $('.overlayPagina').css("display","block");
     jQuery.ajax(
     { 
         url: "{{url('solicitud/saveNewSoli')}}",
@@ -522,6 +526,7 @@ function saveNewSoli()
             construirTablaDBL();
             listarFromApp();
             $('#modalRegNewSol').modal('hide');
+            $('.overlayPagina').css("display","none");
             msjRee(r);
         }
     });

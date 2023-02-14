@@ -67,6 +67,8 @@
 
 @include('user.modals')
 <script>
+localStorage.setItem("sbd",0);
+localStorage.setItem("sba",2);
     var tablaDeRegistros;
     var flip=0;
     $(document).ready( function () {

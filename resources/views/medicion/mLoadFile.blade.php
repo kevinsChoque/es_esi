@@ -152,6 +152,7 @@
         construirTablaFiles();
         listarFileMedi($('#idRegistro').val());
         $('#modalLoadFile').modal('show');
+        marcador(element)
     }
     function validateForm(myDropzone2)
     {

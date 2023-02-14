@@ -16,6 +16,7 @@ class TArchivo extends Model
         'idSolicitud',
         'idFac',
         'idMed',
+        'idPre',
         'nombreFile', 
         'descripcion', 
         'tipo',

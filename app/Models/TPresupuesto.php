@@ -13,10 +13,13 @@ class TPresupuesto extends Model
 	public $timestamps=false;
 
     protected $fillable = [
+        'solnro', 
         'codigo', 
         'usuario', 
         'direccion', 
         'total',
+        'estado',
+        'culminacionProceso',
     ];
 
     // public function tConductor()

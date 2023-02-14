@@ -74,6 +74,8 @@
 @include('plantilla.modals')
 @include('plantilla.modalsEdit')
 <script>
+localStorage.setItem("sbd",3);
+localStorage.setItem("sba",10);
     var tablaDeRegistros;
     var flip=0;
     $(document).ready( function () {

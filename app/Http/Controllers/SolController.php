@@ -32,6 +32,11 @@ class SolController extends Controller
     {
     	$dateActual = date("d-m-Y");
     	// dd($req->all());
+        // ----------------------
+        $domPdfPath = base_path('vendor/dompdf/dompdf');
+        \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
+        \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
+        // ------------------------------
         setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
         $tp = new TemplateProcessor('plantillas/solicitud.docx');
         // ----------------------
@@ -177,7 +182,17 @@ class SolController extends Controller
 
         $fileName='solicitud.docx';
         $tp->saveAs($fileName);
-        return response()->download($fileName)->deleteFileAfterSend(true);
+        // ----------------
+        $Content = \PhpOffice\PhpWord\IOFactory::load($saveDocPath); 
+        $savePdfPath = public_path('new-result.pdf');
+        if ( file_exists($savePdfPath) ) {
+            unlink($savePdfPath);
+        }
+        $PDFWriter = \PhpOffice\PhpWord\IOFactory::createWriter($Content,'PDF');
+        $PDFWriter->save($savePdfPath); 
+        return response()->download($savePdfPath)->deleteFileAfterSend(true);
+        // --------------------------------------
+        // return response()->download($fileName)->deleteFileAfterSend(true);
     }
     public function actRegistrar(Request $req)
     {
@@ -403,11 +418,20 @@ class SolController extends Controller
     }
     public function actListarFromApp()
     {
-        $listSoli = TSolicitud::whereNull('estadoProceso')->whereNull('estado')->orderBy('fechaRegistro','desc')->get();
+        $listSoli = TSolicitud::whereNull('estadoProceso')
+            ->orWhere('estadoProceso','=','1')
+            ->whereNull('estado')
+            ->orderBy('fechaRegistro','desc')
+            ->get();
         return response()->json(["data"=>$listSoli,"estado"=>true]);
     }
     public function actSolDownload(Request $req,$solnro=null)
     {
+        // ----------------------
+        // $domPdfPath = base_path('vendor/dompdf/dompdf');
+        // \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
+        // \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
+        // ------------------------------
         setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
         $tp = new TemplateProcessor('plantillas/newSolicitud.docx');
         $ts = TSolicitud::where('solnro',$solnro)->first();
@@ -542,9 +566,19 @@ class SolController extends Controller
             $tp->setValue('solfirmadni',$ts!=null && $ts->nombreRep!='' && $ts->nombreRep!=null && $ts->dniRep!='' && $ts->dniRep!=null?$ts->dniRep:'');
         }
 
-        $fileName='test.docx';
+        $fileName='test.doc';
         $tp->saveAs($fileName);
-        // $tp->save($fileName,'PDF');  
+        // $tp->save($fileName,'PDF');
+        // ----------------
+        // $Content = \PhpOffice\PhpWord\IOFactory::load($fileName); 
+        // $savePdfPath = public_path('new-result.pdf');
+        // if ( file_exists($savePdfPath) ) {
+        //     unlink($savePdfPath);
+        // }
+        // $PDFWriter = \PhpOffice\PhpWord\IOFactory::createWriter($Content,'PDF');
+        // $PDFWriter->save($savePdfPath); 
+        // return response()->download($savePdfPath)->deleteFileAfterSend(true);
+        // --------------------------------------  
         return response()->download($fileName)->deleteFileAfterSend(false);
     }
     public function actEliminar(Request $req)

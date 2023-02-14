@@ -160,3 +160,7 @@ select.form-control-sm~.select2-container--default .select2-selection--single .s
 .svgLoadLetter1 {
     width: 25% !important;
 }
+/*para marcar registro de quien sale modal*/
+.marcador{
+  background: #4b5a89 !important;
+}

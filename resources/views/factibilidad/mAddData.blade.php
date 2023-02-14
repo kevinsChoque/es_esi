@@ -1,5 +1,5 @@
 <div class="modal fade" id="modDataFactibilidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header py-1 border-transparent" style="background-color: rgba(0, 0, 0, 0.03);">
                 <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa-solid fa-plus"></i> Factibilidad</h5>
@@ -8,13 +8,40 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- <form id="formValRegFac"> -->
+                <form id="formValRegAddData">
                     <input type="hidden" name="solnroDataAdd" id="solnroDataAdd">
                     <div class="row contFormAddData">
-                        <!-- <div class="col-lg-12">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0">II. DATOS DE REPRESENTANTE:</p></div>
-                        </div> -->
-                        <div class="col-lg-3">
+                        <div class="col-lg-12 form-group">
+                            <label class="m-0">Codigo Catastral: <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" id="codigo" name="codigo">
+                        </div>
+                        <div class="col-lg-12 form-group bg-warning pb-3 shadow">
+                            <label class="m-0">Resultado del analisis de factibilidad:</label>
+                            <select class="form-control form-control-sm" name="resultado" id="resultado">
+                                <option selected disabled value="0">Seleccione</option>
+                                <option value="Positivo">Positivo</option>
+                                <option value="Negativo">Negativo</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <label class="m-0">Explicar motivo:</label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
+                                </div>
+                                <input type="text" class="form-control form-control-sm" id="motivo1" name="motivo1">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <label class="m-0">Observacion (del trabajador y/o el solicitante):</label>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
+                                </div>
+                                <textarea class="form-control" id="obs" name="obs" cols="20" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-3">
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">2. DATOS DEL USUARIO</p></div>
                             <div class="form-group mb-1">
                                 <label class="m-0">Codigo:</label>
@@ -120,7 +147,6 @@
                             </div>
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">5. SERVICIO SOLICITADO</p></div>
                             <div class="form-group mb-1">
-                                <!-- <label class="m-0">Servicio solicitado:</label> -->
                                 <select class="form-control form-control-sm" name="servicio" id="servicio">
                                     <option selected disabled value="0">Seleccione</option>
                                     <option value="Agua y desague">Agua y desague</option>
@@ -130,7 +156,6 @@
                             </div>
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">6. FORMA DE PAGO DE LA CONEXION DOMICILIARIA SOLICITADA</p></div>
                             <div class="form-group mb-1">
-                                <!-- <label class="m-0">Forma de pago de la conexion domiciliaria solicitada:</label> -->
                                 <select class="form-control form-control-sm" name="formaPago" id="formaPago">
                                     <option selected disabled value="0">Seleccione</option>
                                     <option value="Pago hobligatorio del 100%">Pago hobligatorio del 100%</option>
@@ -173,7 +198,6 @@
                             </div>  
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">8. CUENTA CON TANQUE DE ALMACENAMIENTO</p></div> 
                             <div class="form-group mb-1">
-                                <!-- <label class="m-0">Cuenta con tanque de almacenamiento:</label> -->
                                 <select class="form-control form-control-sm" name="cuenta" id="cuenta">
                                     <option selected disabled value="0">Seleccione</option>
                                     <option value="Tanque alto y bajo">Tanque alto y bajo</option>
@@ -184,7 +208,6 @@
                             </div>
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">9. PERIODICIDAD DE FACTURACION Y FECHA DE VENCIMIENTODE RECIBO</p></div> 
                             <div class="form-group mb-1">
-                                <!-- <label class="m-0">Periodicidad de facturacion y fecha de vencimiento de recibo:</label> -->
                                 <select class="form-control form-control-sm" name="periodicidad" id="periodicidad">
                                     <option selected disabled value="0">Seleccione</option>
                                     <option value="Mensual">Mensual</option>
@@ -204,7 +227,6 @@
                         <div class="col-lg-3">
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">10. PUNTO DE AGUA</p></div> 
                             <div class="form-group mb-1">
-                                <!-- <label class="m-0">Punto de agua:</label> -->
                                 <select class="form-control form-control-sm" name="cuentaPunto" id="cuentaPunto">
                                     <option selected disabled value="0">Seleccione</option>
                                     <option value="Si cuenta">Si cuenta</option>
@@ -213,7 +235,6 @@
                             </div>
                             <div class="alert alert-info py-1 mb-1 shadow-lg bg-warning font-weight-bold"><p class="m-0">11. RESULTADO DEL ANALISIS DE FACTIBILIDAD</p></div> 
                             <div class="form-group mb-1 shadow-lg">
-                                <!-- <label class="m-0">Resultado de analisis de factibilidad:</label> -->
                                 <select class="form-control form-control-sm" name="resultado" id="resultado">
                                     <option selected disabled value="0">Seleccione</option>
                                     <option value="Positivo">Positivo</option>
@@ -231,27 +252,24 @@
                             </div>
                             <div class="alert alert-info py-1 mb-1"><p class="m-0">Observacion (del trabajador y/o el solicitante)</p></div> 
                             <div class="form-group mb-1">
-                                <!-- <label class="m-0">Explicar motivo:</label> -->
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
                                     </div>
                                     <textarea class="form-control" id="obs" name="obs" cols="20" rows="4"></textarea>
-                                    <!-- <input type="text" class="form-control form-control-sm" id="obs" name="obs"> -->
                                 </div>
                             </div>
                             <div class="alert alert-primary py-1 mb-1"><p class="m-0">Atendido de manera</p></div> 
                             <div class="form-group mb-1">
-                                <!-- <label class="m-0">Atendido de manera:</label> -->
                                 <select class="form-control form-control-sm" name="atendido" id="atendido">
                                     <option selected disabled value="0">Seleccione</option>
                                     <option value="Presencial">Presencial</option>
                                     <option value="Mediante telefono">Mediante telefono</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                <!-- </form> -->
+                </form>
             </div>
             <div class="modal-footer py-1 border-transparent">
                 <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancelar</button>
@@ -264,10 +282,21 @@
 $('.saveDataFac').on('click',function(){
     saveDataFac();
 });
+
+$('#resultado').on('change',function(){
+    if($(this).val()=='Negativo')
+    {
+        $('#motivo1').attr('disabled',false);
+    }
+    else
+    {
+        $('#motivo1').attr('disabled',true);
+    }
+});
 function registrarAdicional(element)
 {
     // $('#modDataFactibilidad').modal('show');
-    alert($(element).attr('data-solnro'));
+    // alert($(element).attr('data-solnro'));
     $('#solnroDataAdd').val($(element).attr('data-solnro'));
     jQuery.ajax(
     { 
@@ -275,6 +304,7 @@ function registrarAdicional(element)
         data: {solnro:$(element).attr('data-solnro')},
         method: 'get',
         success: function(r){
+            marcador(element);
             limpiarFormAddData();
             console.log(r);
             if(r.estado)
@@ -356,16 +386,19 @@ function dataAddFac()
 }
 function saveDataFac()
 {
-    // if($('#formValRegFac').valid()==false)
-    //     return;
+    if($('#formValRegAddData').valid()==false)
+        return;
     jQuery.ajax(
     { 
         url: "{{url('factibilidad/saveDataFac')}}",
         data: dataAddFac(),
         method: 'get',
         success: function(r){
-            construirTabla();
-            fillRegistros();
+            if($('#resultado').val()=='Positivo')
+            {
+                construirTabla();
+                fillRegistros();
+            }
             $('#modDataFactibilidad').modal('hide');
             msjRee(r);
         }
@@ -378,4 +411,11 @@ function limpiarFormAddData()
     $('.contFormAddData select').val('0');
     $('input[name=cuentaAlcantarillado]').attr('checked',false)
 }
+$("#formValRegAddData").validate({
+    errorClass: "text-danger font-italic font-weight-normal",
+    ignore: ".ignore",
+    rules: {
+        codigo: "required",
+    },
+});
 </script>

@@ -7,10 +7,10 @@
             <h6 class="my-0 ml-3">Costos Colaterales</h6>
         </div>
         <div class="col-lg-6 col-sm-6 col-12">
-            <a href="{{url('presupuesto/cuadroPresupuestal')}}" class="btn btn-sm btn-success float-right">
+            <!-- <a href="{{url('presupuesto/cuadroPresupuestal')}}" class="btn btn-sm btn-success float-right">
                 <i class="fa fa-plus"></i> 
                 Registrar presupuesto
-            </a>
+            </a> -->
         </div>
     </div>
 </div>
@@ -73,6 +73,8 @@
 </div>
 
 <script>
+localStorage.setItem("sbd",1);
+localStorage.setItem("sba",4);
 var tablaDeRegistros;
 
 $(document).ready( function () {
