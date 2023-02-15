@@ -321,6 +321,9 @@ class SolController extends Controller
         {
             $tsql = "select * from regsoli r
                     where r.SolFec=CONVERT(varchar,GETDATE(),5) and r.SerCod='1005'";
+            $tsql = "select * from regsoli r
+                    where r.SolFec=CONVERT(varchar,GETDATE(),5) and 
+                        r.SerCod='1005' or SolNro in ('109825','112694','113756')";
             $stmt = sqlsrv_query($conn_sis, $tsql); 
             $arreglo = array(); 
             $html='';
@@ -351,7 +354,6 @@ class SolController extends Controller
                     '</td>'.
                 '</tr>';
             }
-            // echo $html;
             return response()->json([
                 "data"=>$arreglo,
             ]);

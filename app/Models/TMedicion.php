@@ -62,5 +62,9 @@ class TMedicion extends Model
         'dddo',
         'calidadAgua',
         'obs2',
+
+        'nombre',
+        'direccion',
+        'estadoEli',
     ];
 }

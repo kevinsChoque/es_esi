@@ -36,10 +36,9 @@
                             <table id="registros" class="table table-hover table-striped table-bordered dt-responsive nowrap">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th class="text-center" data-priority="1"># Sol.</th>
-                                        <th class="text-center" data-priority="4">DNI del Titular</th>
+                                        <th class="text-center" data-priority="1">Numero de Solicitud</th>
                                         <th class="text-center" data-priority="2">Nombre del Titular</th>
-                                        <th class="text-center" data-priority="3">Direccion del predio</th>
+                                        <th class="text-center" data-priority="3">Direccion del Predio</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
                                     </tr>
                                 </thead>
@@ -47,10 +46,9 @@
                                 </tbody>
                                 <tfoot class="thead-light">
                                     <tr>
-                                        <th class="text-center" data-priority="1"># Sol.</th>
-                                        <th class="text-center" data-priority="4">DNI del Titular</th>
+                                        <th class="text-center" data-priority="1">Numero de Solicitud</th>
                                         <th class="text-center" data-priority="2">Nombre del Titular</th>
-                                        <th class="text-center" data-priority="3">Direccion del predio</th>
+                                        <th class="text-center" data-priority="3">Direccion del Predio</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
                                     </tr>
                                 </tfoot>
@@ -63,6 +61,7 @@
     </div>
 </div>
 <script>
+localStorage.setItem("nb",0);
 localStorage.setItem("sbd",3);
 localStorage.setItem("sba",11);
     var tablaDeRegistros;
@@ -86,10 +85,9 @@ localStorage.setItem("sba",11);
                 for (var i = 0; i < result.data.length; i++) 
                 {
                     html += '<tr class="text-center">' +
-                        '<td class="align-middle font-weight-bold">' + novDato(result.data[i].numSoli) + '</td>' +
-                        '<td class="align-middle">' + novDato(result.data[i].dniTit) +'</td>' +
-                        '<td class="align-middle">' + novDato(result.data[i].nombreTit) +'</td>' +
-                        '<td class="align-middle">' + novDato(result.data[i].ubicacionPre) +'</td>' +
+                        '<td class="align-middle font-weight-bold">' + novDato(result.data[i].solnro) + '</td>' +
+                        '<td class="align-middle">' + novDato(result.data[i].nombre) +'</td>' +
+                        '<td class="align-middle">' + novDato(result.data[i].direccion) +'</td>' +
                         '<td class="align-middle">'+
                             '<div class="btn-group btn-group-sm" role="group">'+
                                 // '<button type="button" class="btn text-info" title="Lista de Reprogramaciones" onclick="fillRegistrosHistorial('+result.data[i].solnrof+');"><i class="fa fa-list-ol"></i></button>'+

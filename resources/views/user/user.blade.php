@@ -67,6 +67,7 @@
 
 @include('user.modals')
 <script>
+localStorage.setItem("nb",0);
 localStorage.setItem("sbd",0);
 localStorage.setItem("sba",2);
     var tablaDeRegistros;

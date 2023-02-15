@@ -17,7 +17,7 @@
                             <option selected disabled value="0"> Seleccione...</option>
                         </select>
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-4">
                         <label for="" class="m-0">Usuario: <span class="text-danger">*</span></label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
@@ -26,13 +26,27 @@
                             <input type="text" class="form-control form-control-sm" id="usuario" name="usuario">
                         </div>
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-4">
                         <label for="" class="m-0">Contraseña: <span class="text-danger">*</span></label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
                                 <span class="input-group-text font-weight-bold"><i class="fa fa-clipboard-user"></i></span>
                             </div>
                             <input type="text" class="form-control form-control-sm" id="password" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="" class="m-0">Acceso como: <span class="text-danger">*</span></label>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text font-weight-bold"><i class="fa fa-clipboard-user"></i></span>
+                            </div>
+                            <select name="cargoUser" id="cargoUser" class="form-control form-control-sm">
+                                <option value="">Seleccione . . . </option>
+                                <option value="Cat. usuario admin">Cat. usuario admin</option>
+                                <option value="Cat. usuario atencion">Cat. usuario atencion</option>
+                                <option value="Gerencia de mantenimiento">Gerencia de mantenimiento</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -65,7 +79,7 @@
                             <option selected disabled value="0"> Seleccione...</option>
                         </select>
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-4">
                         <label for="" class="m-0">Usuario: <span class="text-danger">*</span></label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
@@ -74,13 +88,27 @@
                             <input type="text" class="form-control form-control-sm" id="eusuario">
                         </div>
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-4">
                         <label for="" class="m-0">Contraseña: <span class="text-danger">*</span></label>
                         <div class="input-group input-group-sm">
                             <div class="input-group-prepend">
                                 <span class="input-group-text font-weight-bold"><i class="fa fa-clipboard-user"></i></span>
                             </div>
                             <input type="text" class="form-control form-control-sm" id="epassword">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="" class="m-0">Acceso como: <span class="text-danger">*</span></label>
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text font-weight-bold"><i class="fa fa-clipboard-user"></i></span>
+                            </div>
+                            <select name="ecargoUser" id="ecargoUser" class="form-control form-control-sm">
+                                <option value="0" disabled selected>Seleccione . . . </option>
+                                <option value="Cat. usuario admin">Cat. usuario admin</option>
+                                <option value="Cat. usuario atencion">Cat. usuario atencion</option>
+                                <option value="Gerencia de mantenimiento">Gerencia de mantenimiento</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -160,6 +188,7 @@ function data(tipo)
         idPersona:$('#'+segunAccion+'personas').val(),
         usuario:$('#'+segunAccion+'usuario').val(),
     	password:$('#'+segunAccion+'password').val(),
+        cargoUser:$('#'+segunAccion+'cargoUser').val(),
 	}
 }
 function guardar()
@@ -228,6 +257,7 @@ function editar(id)
             $("#epersonas").val(r.data.idPersona).trigger("change.select2");
             $('#eusuario').val(r.data.usuario);
             $('#epassword').val(r.data.password);
+            $('#ecargoUser').val(r.data.cargoUser);
             $('#modalEditar').modal('show');
         }
     });

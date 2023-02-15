@@ -12,9 +12,15 @@
                 <form id="formValRegMed">
                     <input type="hidden" name="solnroDataAdd" id="solnroDataAdd">
                     <div class="row contFormAddData">
-                        <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="callout callout-info py-2">
+                                <h6 class="m-0">Nombre: <p class="text-dark" id="nombre"></p></h6>
+                                <h6 class="m-0">Direccion: <p class="text-muted" id="direccion"></p></h6>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
                             <div class="row justify-content-center">
-                                <div class="col-lg-2 shadow bg-warning">
+                                <div class="col-lg-12 shadow bg-warning">
                                     <div class="form-group">
                                         <label class="m-0">Estado de medicion:</label>
                                         <select name="estado" id="estado" class="form-control form-control-sm">
@@ -27,10 +33,10 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="alert alert-warning py-1 mb-1 text-center"><p class="m-0">PARA CONEXIONES DE AGUA POTABLE</p></div>
+                            <div class="alert alert-warning py-1 mb-1 text-center bg-primary"><p class="m-0">PARA CONEXIONES DE AGUA POTABLE</p></div>
                         </div>
                         <div class="col-lg-5">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">1. DIAMETRO DE TUBERIA DE AGUA SOLICITADO</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">1. DIAMETRO DE TUBERIA DE AGUA SOLICITADO</p></div>
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group mb-1">
@@ -57,7 +63,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">2. LONGUITUD DE TUBERIA REQUERIDA</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">2. LONGUITUD DE TUBERIA REQUERIDA</p></div>
                             <div class="form-group mb-1">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
@@ -71,7 +77,7 @@
                             </div> 
                         </div>
                         <div class="col-lg-3">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">3. DIAMETRO DE MATRIZ DE AGUA</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">3. DIAMETRO DE MATRIZ DE AGUA</p></div>
                             <div class="form-group mb-1">
                                 <div class="input-group input-group-sm">
                                     <input type="text" id="diametroAgua" name="diametroAgua" class="form-control">
@@ -82,7 +88,7 @@
                             </div> 
                         </div>
                         <div class="col-lg-12">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">4. TIPO DE TERRENO SOBRE EL QUE SE TRABAJARA LA CONEXION</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">4. TIPO DE TERRENO SOBRE EL QUE SE TRABAJARA LA CONEXION</p></div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group mb-1">
@@ -176,22 +182,22 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">5. TIPO DE PREDIO</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">5. TIPO DE PREDIO</p></div>
                             <div class="form-group mb-1">
                                 <input type="text" class="form-control form-control-sm" id="tipoPredio" name="tipoPredio">
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">6. OBSERVACIONES</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">6. OBSERVACIONES</p></div>
                             <div class="form-group mb-1">
                                 <input type="text" class="form-control form-control-sm" id="obs1" name="obs1">
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="alert alert-warning py-1 mb-1 text-center"><p class="m-0">PARA CONEXIONES DE DESAGUE</p></div>
+                            <div class="alert alert-warning py-1 mb-1 text-center bg-primary"><p class="m-0">PARA CONEXIONES DE DESAGUE</p></div>
                         </div>
                         <div class="col-lg-5">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">1. DIAMETRO DE TUBERIA DE DESAGUE SOLICITADO</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">1. DIAMETRO DE TUBERIA DE DESAGUE SOLICITADO</p></div>
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group mb-1">
@@ -216,7 +222,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">2. LONGUITUD DE TUBERIA REQUERIDA</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">2. LONGUITUD DE TUBERIA REQUERIDA</p></div>
                             <div class="form-group mb-1">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
@@ -230,7 +236,7 @@
                             </div> 
                         </div>
                         <div class="col-lg-3">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">3. DIAMETRO DE COLECTOR DE DESAGUE</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">3. DIAMETRO DE COLECTOR DE DESAGUE</p></div>
                             <div class="form-group mb-1">
                                 <div class="input-group input-group-sm">
                                     <input type="text" id="diametroDesague" name="diametroDesague" class="form-control">
@@ -244,14 +250,14 @@
                             <div class="form-group mb-1">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-append">
-                                        <span class="input-group-text alert alert-info m-0">4. PROFUNDIDAD MAXIMA A CUAL LA CAJA DE REGISTRO DEBE TRABAJAR</span>
+                                        <span class="input-group-text alert alert-info m-0 font-weight-bold">4. PROFUNDIDAD MAXIMA A CUAL LA CAJA DE REGISTRO DEBE TRABAJAR</span>
                                     </div>
                                     <input type="text" id="profundidad" name="profundidad" class="form-control">
                                 </div>
                             </div> 
                         </div>
                         <div class="col-lg-12">
-                            <div class="alert alert-info py-1 mb-1"><p class="m-0" style="font-size: .9rem;">5. TIPO DE TERRENO SOBRE EL QUE SE TRABAJARA LA CONEXION</p></div>
+                            <div class="alert alert-info py-1 mb-1"><p class="m-0 font-weight-bold" style="font-size: .9rem;">5. TIPO DE TERRENO SOBRE EL QUE SE TRABAJARA LA CONEXION</p></div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group mb-1">
@@ -348,7 +354,7 @@
                             <div class="form-group mb-1">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-append">
-                                        <span class="input-group-text alert alert-info m-0">6. BREVE EXPOSICION DEL TIPO O CALIDAD DE LAS AGUAS RESIDUALES AUTORIZADOS PARA SU VERTIMIENTO A LA RED PUBLICA</span>
+                                        <span class="input-group-text alert alert-info m-0 font-weight-bold">6. BREVE EXPOSICION DEL TIPO O CALIDAD DE LAS AGUAS RESIDUALES AUTORIZADOS PARA SU VERTIMIENTO A LA RED PUBLICA</span>
                                     </div>
                                     <input type="text" id="calidadAgua" name="calidadAgua" class="form-control">
                                 </div>
@@ -358,7 +364,7 @@
                             <div class="form-group mb-1">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-append">
-                                        <span class="input-group-text alert alert-info m-0">7. OBSERVACIONES</span>
+                                        <span class="input-group-text alert alert-info m-0 font-weight-bold">7. OBSERVACIONES</span>
                                     </div>
                                     <input type="text" id="obs2" name="obs2" class="form-control">
                                 </div>
@@ -385,6 +391,7 @@ function registrarAdicional(element)
     // marcador(element);
     var solnro = $(element).attr('data-solnro');
     $('#solnroDataAdd').val(solnro);
+    // alert(solnro);
     jQuery.ajax(
     { 
         url: "{{url('medicion/show')}}",
@@ -396,6 +403,8 @@ function registrarAdicional(element)
             console.log(r);
             if(r.estado)
             {
+                $('#nombre').html(r.data.nombre);
+                $('#direccion').html(r.data.direccion);
                 // $('#estado').attr('selected',r.data.estado);
                 $('#estado').val(r.data.estado);
                 $('#diametroTuberiaA').val(r.data.diametroTuberiaA);
@@ -442,6 +451,11 @@ function registrarAdicional(element)
                 $('#dddo').val(r.data.dddo);
                 $('#calidadAgua').val(r.data.calidadAgua);
                 $('#obs2').val(r.data.obs2);
+            }
+            else
+            {
+                $('#nombre').html($(element).attr('data-nombre'));
+                $('#direccion').html($(element).attr('data-direccion'));
             }
             $('#modDataMedicion').modal('show');
         }
@@ -498,15 +512,18 @@ function dataAddMed()
         dddo:$('#dddo').val(),
         calidadAgua:$('#calidadAgua').val(),
         obs2:$('#obs2').val(),
+
+        nombre:$('#nombre').html(),
+        direccion:$('#direccion').html(),
+        estadoEli:'1',
     }
 }
 function saveDataMed()
 {
-    // if($('#formValRegMed').valid()==false)
-    //     return;
+    // saveDataMed
     jQuery.ajax(
     { 
-        url: "{{url('medicion/saveDataMed')}}",
+        url: "{{url('medicion/registrar')}}",
         data: dataAddMed(),
         method: 'get',
         success: function(r){

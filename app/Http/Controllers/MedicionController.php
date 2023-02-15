@@ -20,30 +20,18 @@ class MedicionController extends Controller
     }
     public function actListar()
     {
-        // $registros = TFactibilidad::select('factibilidad.*','solicitud.*','historial_fac.*','persona.*','medicion.idMed')
-        //     ->leftjoin('solicitud','solicitud.solnro','=','factibilidad.solnro')
+        // $registros = TSolicitud::select('solicitud.*','historial_fac.*','persona.*','medicion.idMed')
+        //     ->leftjoin('factibilidad','factibilidad.solnro','=','solicitud.solnro')
         //     ->leftjoin('historial_fac','historial_fac.idFac','=','factibilidad.idFac')
-        //     ->leftjoin('medicion','medicion.solnro','=','factibilidad.solnro')
         //     ->leftjoin('persona','persona.idPersona','=','historial_fac.idPersona')
-        //     // ->leftjoin('data_med','data_med.solnromedicion','=','data_fac.solnrof')
-        //     ->where('medicion.estado','=','0')
-        //     ->orWhereNull('medicion.estado')
-        //     ->where('factibilidad.resultado','=','1')
+        //     ->leftjoin('medicion','medicion.solnro','=','factibilidad.solnro')
+        //     ->where('solicitud.estadoProceso','=','3')
         //     ->where('historial_fac.estado','=','1')
-        //     ->where('medicion.estadoEli','=','1')
-        //     // ->where('data_med.estado','=','1')
         //     ->orderBy('factibilidad.idFac', 'DESC')
-        //     // ->groupby('factibilidad.idFac')
         //     ->get();
-
-        $registros = TSolicitud::select('solicitud.*','historial_fac.*','persona.*','medicion.idMed')
-            ->leftjoin('factibilidad','factibilidad.solnro','=','solicitud.solnro')
-            ->leftjoin('historial_fac','historial_fac.idFac','=','factibilidad.idFac')
-            ->leftjoin('persona','persona.idPersona','=','historial_fac.idPersona')
-            ->leftjoin('medicion','medicion.solnro','=','factibilidad.solnro')
-            ->where('solicitud.estadoProceso','=','3')
-            ->where('historial_fac.estado','=','1')
-            ->orderBy('factibilidad.idFac', 'DESC')
+        $registros = TMedicion::select('medicion.*')
+            ->where('medicion.estado','=','0')
+            ->orderBy('medicion.idMed', 'DESC')
             ->get();
         return response()->json([
             "data"=>$registros,
@@ -324,5 +312,37 @@ class MedicionController extends Controller
         }
         else
             return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);
+    }
+    public function actEliminarNew(Request $req)
+    {
+        $tm = TMedicion::where('solnro',$req->solnro)->first();
+        $tm->estadoEli = '0';
+        if($tm->delete())
+            return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+        else
+            return response()->json(["msg"=>"No se pudo proceder.","estado"=>false]);
+    }
+    public function actRegistrar(Request $req)
+    {
+        // dd($req->all());
+        $tm = TMedicion::where('solnro',$req->solnro)->first();
+        if($tm==null)
+        {
+            $req['fechaRegistro']=now();
+            $tm=TMedicion::create($req->all());
+            if($tm!=null)
+                return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+            else
+                return response()->json(["msg"=>"Ocurrio un error.","estado"=>false]);
+        }
+        else
+        {
+            $req['fechaActualizacion']=now();
+            $tm->fill($req->all());
+            if($tm->save())
+                return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+            else
+                return response()->json(["msg"=>"Ocurrio un error.","estado"=>false]);
+        }
     }
 }

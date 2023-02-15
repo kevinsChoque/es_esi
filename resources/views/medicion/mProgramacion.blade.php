@@ -24,15 +24,6 @@
                                 <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
                             </div>
                         </div>
-                        <!-- <div class="form-group col-lg-12">
-                            <label for="" class="m-0">Motivo:</label>
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-bold"><i class="fa fa-angle-right"></i></span>
-                                </div>
-                                <textarea class="form-control" name="motivoProgramacion" id="motivoProgramacion" cols="30" rows="5"></textarea>
-                            </div>
-                        </div> -->
                     </div>
                 </form>
             </div>
@@ -80,22 +71,6 @@ function proMedicion(element)
     $('#solnro').val(solnro);
     $('#modRegMedicion').modal('show');
     marcador(element);
-    // jQuery.ajax(
-    // { 
-    //     url: "{{url('medicion/showLastMedicion')}}",
-    //     data: {solnro:solnro},
-    //     method: 'get',
-    //     success: function(r){
-    //         // limpiarFormFac();
-    //         if(r.estado)
-    //         {
-    //             $('#personal').val(r.data.idPersona).trigger("change.select2");
-    //             $('#fecha').val(r.data.fecha);
-    //             $('#motivoProgramacion').val(r.data.motivo);
-    //         }
-    //         $('#modRegMedicion').modal('show');
-    //     }
-    // });
 }
 function saveProMed()
 {
@@ -107,9 +82,9 @@ function saveProMed()
         data: dataMedicion(),
         method: 'get',
         success: function(r){
-            $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
-            construirTabla();
-            fillRegistros();
+            // $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+            // construirTabla();
+            // fillRegistros();
             $('#modRegMedicion').modal('hide');
             limpiarFormFac();
             msjRee(r);

@@ -15,7 +15,8 @@ class TUser extends Model
     protected $fillable = [
         'idPersona', 
         'usuario', 
-        'password', 
+        'password',
+        'cargoUser' ,
         'estado', 
         'fechaRegistro',
         'fechaActualizacion',

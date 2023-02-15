@@ -44,8 +44,8 @@
                                     <tr>
                                         <th class="text-center" data-priority="1"># Sol.</th>
                                         <th class="text-center" data-priority="1">Cod. catastral</th>
-                                        <th class="text-center" data-priority="3">Usuario</th>
-                                        <th class="text-center" data-priority="2">Direccion</th>
+                                        <th class="text-center" data-priority="3">Nombre del Titular</th>
+                                        <th class="text-center" data-priority="2">Direccion del Predio</th>
                                         <th class="text-center" data-priority="2">Total</th>
                                         <th class="text-center" data-priority="2">Estado</th>
                                         <th class="text-center" data-priority="4">F.Reg.</th>
@@ -59,8 +59,8 @@
                                     <tr>
                                         <th class="text-center" data-priority="1"># Sol.</th>
                                         <th class="text-center" data-priority="1">Cod. catastral</th>
-                                        <th class="text-center" data-priority="3">Usuario</th>
-                                        <th class="text-center" data-priority="2">Direccion</th>
+                                        <th class="text-center" data-priority="3">Nombre del Titular</th>
+                                        <th class="text-center" data-priority="2">Direccion del Predio</th>
                                         <th class="text-center" data-priority="2">Total</th>
                                         <th class="text-center" data-priority="2">Estado</th>
                                         <th class="text-center" data-priority="4">F.Reg.</th>
@@ -79,6 +79,7 @@
 
 @include('presupuesto.mLoadFile')
 <script>
+localStorage.setItem("nb",0);
 localStorage.setItem("sbd",3);
 localStorage.setItem("sba",13);
 var tablaDeRegistros,tablaDeRegistrosArchivos;
@@ -141,7 +142,7 @@ function fillRegistros()
                 edit = r.data[i].culminacionProceso=='1'?'':'<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+r.data[i].idPre+');"><i class="fa fa-edit"></i></button>';
                 dele = r.data[i].culminacionProceso=='1'?'':'<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+r.data[i].idPre+');"><i class="fa fa-trash"></i></button>';
                 html += '<tr>' +
-                    '<td class="text-center font-weight-bold">' + r.data[i].numSoli + '</td>' +
+                    '<td class="text-center font-weight-bold">' + r.data[i].solnro + '</td>' +
                     '<td class="text-center font-weight-bold">' + r.data[i].codigo + '</td>' +
                     '<td class="text-center">' + novDato(r.data[i].usuario) +'</td>' +
                     '<td class="text-center">' + novDato(r.data[i].direccion) + '</td>' +

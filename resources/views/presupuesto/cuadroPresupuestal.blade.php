@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label for="" class="m-0">Codigo: <span class="text-danger">*</span></label>
+                            <label for="" class="m-0">Codigo Catastral: <span class="text-danger">*</span></label>
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text font-weight-bold"><i class="fa fa-clipboard-user"></i></span>
@@ -207,9 +207,9 @@ localStorage.setItem("sba",12);
             method: 'get',
             success: function(r){
                 console.log(r);
-                $('#codigo').val(r.codigo);
-                $('#usuario').val(r.data.nombreTit);
-                $('#direccion').val(r.data.ubicacionPre);
+                // $('#codigo').val(r.codigo);
+                $('#usuario').val(r.data.nombre);
+                $('#direccion').val(r.data.direccion);
             }
         });
     }
@@ -222,7 +222,7 @@ localStorage.setItem("sba",12);
             success: function(r){
                 console.log(r.data);
                 $.each(r.data,function(indice,fila){
-                    $('#usuarios').append("<option value='"+fila.solnro+"'>"+novDato(fila.dniTit)+ ' | ' +novDato(fila.nombreTit)+ ' | ' + novDato(fila.ubicacionPre)+"</option>");
+                    $('#usuarios').append("<option value='"+fila.solnro+"'>"+novDato(fila.nombre)+ ' | ' +novDato(fila.direccion)+"</option>");
                 });
                 $('#usuarios').select2({
                     width:"resolve",
@@ -286,7 +286,7 @@ localStorage.setItem("sba",12);
         console.log('--------------');
         jQuery.ajax(
         { 
-            url: "{{url('presupuesto/registrar')}}",
+            url: "{{url('presupuesto/registrarNew')}}",
             data: datos,
             method: 'get',
             success: function(result){

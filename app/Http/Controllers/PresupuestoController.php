@@ -34,10 +34,14 @@ class PresupuestoController extends Controller
     }
     public function actListarListos()
     {
-        $registros = TMedicion::select('medicion.*','solicitud.*')
-            ->leftjoin('solicitud','solicitud.solnro','=','medicion.solnro')
+        // $registros = TMedicion::select('medicion.*','solicitud.*')
+        //     ->leftjoin('solicitud','solicitud.solnro','=','medicion.solnro')
+        //     ->where('medicion.estado','=','1')
+        //     ->where('solicitud.estadoProceso','=','4')
+        //     ->orderBy('medicion.idMed', 'DESC')
+        //     ->get();
+        $registros = TMedicion::select('medicion.*')
             ->where('medicion.estado','=','1')
-            ->where('solicitud.estadoProceso','=','4')
             ->orderBy('medicion.idMed', 'DESC')
             ->get();
         return response()->json([
@@ -123,6 +127,21 @@ class PresupuestoController extends Controller
                 // else
                 // {   return response()->json(["msg"=>"Error en la conexion a la BD principal.","estado"=>true]);}
             }
+        }
+        return response()->json([
+            "msg"=>"Ocurrio un error.",
+            "estado"=>false
+        ]);
+    }
+    public function actRegistrarNew(Request $req)
+    {
+        $tPre=TPresupuesto::create($req->all());
+        if($this->agregarCampAdi($tPre,1,$req))
+        {
+            if($this->saveDetalle($req,$tPre->idPre))
+                return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
+            else
+                return response()->json(["msg"=>"Ocurrio un error al momento de guardar detalle.","estado"=>false]);
         }
         return response()->json([
             "msg"=>"Ocurrio un error.",
@@ -494,24 +513,25 @@ $this->fpdf->Ln(0.5);
     }
     public function actGetDatos(Request $req)
     {
-        $ts = TSolicitud::where('solnro',$req->solnro)->first();
-        $codigo = TFactibilidad::where('solnro',$req->solnro)->first()->codigo;
+        // $ts = TSolicitud::where('solnro',$req->solnro)->first();
+        // $codigo = TFactibilidad::where('solnro',$req->solnro)->first()->codigo;
+        $tm = TMedicion::where('solnro',$req->solnro)->first();
         return response()->json([
-            "data"=>$ts,
-            "codigo"=>$codigo,
+            "data"=>$tm,
+            // "codigo"=>$codigo,
         ]);
     }
     public function actFinalizarProceso(Request $req)
     {
         $tp = TPresupuesto::find($req->idPre);
         $tp->culminacionProceso='1';
-        $ts = TSolicitud::where('solnro',$tp->solnro)->first();
-        $ts->estadoProceso='6';
-        if($tp->save() && $ts->save())
+        // $ts = TSolicitud::where('solnro',$tp->solnro)->first();
+        // $ts->estadoProceso='6';
+        if($tp->save())
         {
             return response()->json(["msg"=>"Operacion exitosa.","estado"=>true]);
         }
-        return response()->json(["msg"=>"No se pudo cambiar de personal.","estado"=>false]);
+        return response()->json(["msg"=>"No se pudo finalizar el proceso.","estado"=>false]);
     }
 
 }
